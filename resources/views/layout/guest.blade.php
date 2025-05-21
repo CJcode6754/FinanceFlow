@@ -1,3 +1,4 @@
-<div>
-    <!-- Always remember that you are absolutely unique. Just like everyone else. - Margaret Mead -->
-</div>
+@props(['title' => '', 'pageName' => ''])
+<x-base-layout :$title>
+    {{$slot}}
+</x-base-layout>
