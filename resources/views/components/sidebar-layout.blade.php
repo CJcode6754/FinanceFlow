@@ -19,13 +19,13 @@
         
         <ul class="space-y-3 font-medium">
             <li>
-                <a href="#" class="flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100 group">
+                <a href="{{route('dashboard')}}" class="flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100 group">
                     <i class="fa-solid fa-house"></i>
                     <span class="ms-3">Dashboard</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100 group">
+                <a href="{{route('wallet')}}" class="flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100 group">
                     <i class="fa-solid fa-wallet"></i>
                     <span class="flex-1 ms-3 whitespace-nowrap">My Wallet</span>
                 </a>
