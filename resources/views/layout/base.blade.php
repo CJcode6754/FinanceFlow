@@ -9,7 +9,7 @@
     <title>{{$title}} | {{config('app.name', default: 'Laravel')}}</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    
     <link rel="shortcut icon" href="{{asset('assets/logo.png')}}" type="image/x-icon">
     {{-- font awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
