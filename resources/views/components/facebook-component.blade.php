@@ -1,5 +1,5 @@
 <button
-    class="flex items-center gap-2 px-4 py-2 ring-1 ring-gray-300 hover:ring-gray-800 rounded-lg transition duration-150 w-full sm:auto">
+    class="flex items-center w-full gap-2 px-4 py-2 transition duration-150 rounded-lg ring-1 ring-gray-300 hover:ring-gray-800 sm:auto">
     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 48 48">
         <path fill="#039be5" d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"></path>
         <path fill="#fff"
