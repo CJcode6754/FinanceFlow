@@ -1,37 +1,63 @@
 <x-guest-layout title="Register" pageText="Sign up" headerText="Please input to create an account"
     image="{{ asset('assets/pic 2.jpg') }}">
     <div>
-        <form action="" method="post" class="space-y-4">
+        <form action="{{route('register.store')}}" method="POST" class="space-y-4">
+            @csrf
             <div>
-                <label for="name" class="block text-sm font-medium mb-2">Full Name</label>
+                <label for="name" class="block mb-2 text-sm font-medium">Full Name</label>
                 <input type="text" name="name" id="name"
-                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('name')
+                        ring-red-400
+                    @enderror"
+                    value="{{old('name')}}"
                     placeholder="ex: Juan Dele Cruz">
+                @error('name')
+                    <p class="text-xs text-red-600">{{$message}}</p>
+                @enderror
             </div>
             <div>
-                <label for="email" class="block text-sm font-medium mb-2">Email</label>
-                <input type="email" name="email" id="email"
-                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                <label for="email" class="block mb-2 text-sm font-medium">Email</label>
+                <input type="text" name="email" id="email"
+                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('email')
+                        ring-red-400
+                    @enderror"
+                    value="{{old('email')}}"
                     placeholder="ex: example123@gmail.com">
+                @error('email')
+                    <p class="text-xs text-red-600">{{$message}}</p>
+                @enderror
             </div>
 
-            <div>
-                <label for="password" class="block text-sm font-medium mb-2">Password</label>
+            <div class="relative">
+                <label for="password" class="block mb-2 text-sm font-medium">Password</label>
                 <input type="password" name="password" id="password"
-                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('password')
+                        ring-red-500
+                    @enderror"
                     placeholder="ex: 12345678">
+                @error('password')
+                    <p class="text-xs text-red-600">{{$message}}</p>
+                @enderror
+
+                <span id="togglePassword" class="absolute" style="right: 15px; top: 40px; cursor: pointer;">
+                    <i class="fas fa-eye" id="toggleIcon"></i>
+                </span>
             </div>
 
-            <div>
-                <label for="password_confirmation" class="block text-sm font-medium mb-2">Confirm
+            <div class="relative">
+                <label for="password_confirmation" class="block mb-2 text-sm font-medium">Confirm
                     Password</label>
                 <input type="password" name="password_confirmation" id="password_confirmation"
                     class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="ex: 12345678">
+
+                <span id="toggleConfirmPassword" class="absolute" style="right: 15px; top: 40px; cursor: pointer;">
+                    <i class="fas fa-eye" id="toggleConfirmIcon"></i>
+                </span>
             </div>
 
             <button type="submit"
-                class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition duration-150">Login</button>
+                class="w-full p-3 text-white transition duration-150 bg-blue-600 rounded-lg hover:bg-blue-700">Register</button>
         </form>
     </div>
 

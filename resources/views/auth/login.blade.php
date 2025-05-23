@@ -2,28 +2,47 @@
     image="{{ asset('assets/pic 1.jpg') }}">
 
     <div>
-        <form action="" method="post" class="space-y-4">
+        <form action="{{route('loginUser')}}" method="POST" class="space-y-4">
+            @csrf
             <div>
-                <label for="email" class="block text-sm font-medium mb-2">Email</label>
-                <input type="email" name="email" id="email"
-                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                <label for="email" class="block mb-2 text-sm font-medium">Email</label>
+                <input type="text" name="email" id="email"
+                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('email')
+                        ring-red-400
+                    @enderror"
+                    value="{{old('email')}}"
                     placeholder="ex: example123@gmail.com">
+                @error('email')
+                    <p class="text-xs text-red-600">{{$message}}</p>
+                @enderror
             </div>
 
-            <div>
-                <label for="password" class="block text-sm font-medium mb-2">Password</label>
+            <div class="relative">
+                <label for="password" class="block mb-2 text-sm font-medium">Password</label>
                 <input type="password" name="password" id="password"
-                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('password')
+                        ring-red-400
+                    @enderror"
                     placeholder="ex: 12345678">
+                @error('password')
+                    <p class="text-xs text-red-600">{{$message}}</p>
+                @enderror
+
+                <span id="togglePassword" class="absolute" style="right: 15px; top: 40px; cursor: pointer;">
+                    <i class="fas fa-eye" id="toggleIcon"></i>
+                </span>
             </div>
 
+            @error('errors')
+                <p class="text-xs text-red-600">{{$message}}</p>
+            @enderror
             <button type="submit"
-                class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition duration-150">Login</button>
+                class="w-full p-3 text-white transition duration-150 bg-blue-600 rounded-lg hover:bg-blue-700">Login</button>
 
             <div class="flex items-center justify-between text-sm">
                 <div class="flex items-center gap-2 text-gray-700">
-                    <input type="checkbox" name="check" id="check" class="form-checkbox">
-                    Remember me
+                    <input type="checkbox" name="remember" id="remember" class="form-checkbox">
+                    <label for="remember">Remember me</label>
                 </div>
                 <a href="" class="text-blue-500 hover:underline">Forgot Password?</a>
             </div>
