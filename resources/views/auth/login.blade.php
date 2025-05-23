@@ -1,6 +1,10 @@
-<x-guest-layout title="Login" pageText="Sign in" headerText="Login to Finance Flow Dashboard"
-    image="{{ asset('assets/pic 1.jpg') }}">
+<x-guest-layout title="Login" pageText="Or Sign in with" headerText="Login to Finance Flow Dashboard"
+    image="{{ asset('assets/pic 1.jpg') }}" header="Hi, Welcome">
 
+    <x-slot:socials>
+        <x-google-component/>
+        <x-facebook-component/>
+    </x-slot:socials>
     <div>
         <form action="{{route('loginUser')}}" method="POST" class="space-y-4">
             @csrf
@@ -44,7 +48,7 @@
                     <input type="checkbox" name="remember" id="remember" class="form-checkbox">
                     <label for="remember">Remember me</label>
                 </div>
-                <a href="" class="text-blue-500 hover:underline">Forgot Password?</a>
+                <a href="{{route('password.request')}}" class="text-blue-500 hover:underline">Forgot Password?</a>
             </div>
         </form>
     </div>

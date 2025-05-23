@@ -1,5 +1,10 @@
-<x-guest-layout title="Register" pageText="Sign up" headerText="Please input to create an account"
-    image="{{ asset('assets/pic 2.jpg') }}">
+<x-guest-layout title="Register" pageText="Or Sign up with" headerText="Please input to create an account"
+    image="{{ asset('assets/pic 2.jpg') }}" header="Hi, Welcome">
+
+    <x-slot:socials>
+        <x-google-component/>
+        <x-facebook-component/>
+    </x-slot:socials>
     <div>
         <form action="{{route('register.store')}}" method="POST" class="space-y-4">
             @csrf
