@@ -67,33 +67,44 @@
                 <!-- Money Report -->
                 <div class="w-full p-4 space-y-4 overflow-x-auto bg-gray-200 rounded-lg md:w-3/5">
                     <div class="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
-                        <h2 class="text-lg font-bold">Money Report</h2>
-                        <button class="px-4 py-2 text-sm transition duration-150 border border-blue-500 rounded-lg cursor-pointer hover:bg-blue-500 hover:text-white">
-                            <i class="fa-solid fa-plus"></i> New Report
-                        </button>
+                        <h2 class="text-lg font-semibold text-gray-700">Transaction History</h2>
+                        <div class="flex gap-2">
+                            <select class="px-3 py-1 text-sm border border-gray-300 rounded-lg">
+                                <option>This Month</option>
+                                <option>Last Month</option>
+                            </select>
+                            <button
+                                class="px-4 py-2 text-sm transition duration-150 border border-blue-500 rounded-lg cursor-pointer hover:bg-blue-500 hover:text-white">
+                                <i class="fa-solid fa-plus"></i> New Transaction
+                            </button>
+                        </div>
                     </div>
 
                     <div class="overflow-x-auto">
-                        <table class="min-w-full text-sm border border-collapse border-gray-300">
-                            <thead class="bg-gray-100">
-                                <tr>
-                                    <th class="px-4 py-2 text-left border">Category</th>
-                                    <th class="px-4 py-2 text-left border">Note</th>
-                                    <th class="px-4 py-2 text-left border">Time</th>
-                                    <th class="px-4 py-2 text-left border">Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="px-4 py-2 border">Lunch</td>
-                                    <td class="px-4 py-2 border">Buy Pizza</td>
-                                    <td class="px-4 py-2 border">Today</td>
-                                    <td class="px-4 py-2 border">PHP 350.00</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left min-w-[600px]">
+                                <thead class="text-gray-500 border-b">
+                                    <tr>
+                                        <th class="pb-2">Category</th>
+                                        <th>Business Name</th>
+                                        <th>Amount</th>
+                                        <th>Time</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-700">
+                                    <tr class="border-t">
+                                        <td class="py-2">Lunch</td>
+                                        <td>Buy Pizza</td>
+                                        <td class="font-semibold">₱350.00</td>
+                                        <td>Today</td>
+                                        <td>Pending</td>
+                                    </tr>
+                                    <!-- More rows as needed -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
             </section>
         </main>
     </div>

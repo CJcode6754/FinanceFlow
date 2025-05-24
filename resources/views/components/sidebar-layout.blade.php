@@ -32,13 +32,31 @@
             </li>
             <li>
                 <a href="#" class="flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100 group">
-                    <i class="fa-solid fa-piggy-bank"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Piggy Bank</span>
+                    <i class="fa-solid fa-right-left"></i>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Transactions</span>
                 </a>
             </li>
             <li>
                 <a href="#" class="flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100 group">
-                    <i class="fa-solid fa-chart-simple"></i>
+                    <i class="fa-solid fa-tags"></i>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100 group">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Budgets</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100 group">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Saving goals</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100 group">
+                    <i class="fa-solid fa-chart-line"></i>
                     <span class="flex-1 ms-3 whitespace-nowrap">Analytics</span>
                 </a>
             </li>
