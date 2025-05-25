@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
@@ -31,4 +32,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/email/verification-notification', [AuthController::class, 'resendEmail'])->middleware(['throttle:6,1'])->name('verification.send');
 
     Route::post('/logout', [DashboardController::class, 'logout'])->name('logout');
+
+    Route::resource('/category', CategoryController::class);
 });

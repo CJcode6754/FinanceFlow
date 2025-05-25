@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -12,7 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        return view('admin.category.index', compact('categories'));
     }
 
     /**
@@ -20,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.category.create');
     }
 
     /**
@@ -28,7 +31,26 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'max:100', 'string'],
+            'type' => ['required', 'in:expense, income'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
+        ]);
+
+        $path = null;
+
+        if($request->hasFile('image')){
+            $path = Storage::disk('public')->put('category_image', $request->image);
+        }
+
+        Category::create([
+            'user_id' => Auth::user()->id,
+            'name' => $request->input('name'),
+            'type' => $request->input('type'),
+            'image' => $path
+        ]);
+
+        return redirect()->route('category.index')->with('success', 'Succesfully created category');
     }
 
     /**
