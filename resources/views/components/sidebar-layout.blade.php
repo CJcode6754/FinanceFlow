@@ -1,5 +1,4 @@
-<button id="hamburger-button" aria-controls="default-sidebar"
-    type="button"
+<button id="hamburger-button" aria-controls="default-sidebar" type="button"
     class="inline-flex items-center p-2 mt-2 text-sm text-gray-500 rounded-lg ms-3 sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:focus:ring-gray-600">
     <span class="sr-only">Open sidebar</span>
     <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -12,60 +11,87 @@
 <aside id="default-sidebar"
     class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar">
-    <div class="h-full px-3 overflow-y-auto bg-gray-50">
-        <div class="flex justify-center">
-            <img class="w-32" src="{{asset('assets/logo.png')}}" alt="Logo  ">
+    <div class="flex flex-col justify-between h-full px-3 overflow-y-auto bg-gray-50">
+        <div>
+            <div class="flex justify-center">
+                <img class="w-32" src="{{ asset('assets/logo.png') }}" alt="Logo  ">
+            </div>
+
+            <ul class="space-y-3 font-medium">
+                <li>
+                    <a href="{{ route('dashboard') }}"
+                        class="sidebar-link group">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="ms-3">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('wallet') }}"
+                        class="sidebar-link group">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span class="flex-1 ms-3 whitespace-nowrap">My Wallet</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="sidebar-link group">
+                        <i class="fa-solid fa-right-left"></i>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Transactions</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('category.index') }}"
+                        class="sidebar-link group">
+                        <i class="fa-solid fa-tags"></i>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Categories</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="sidebar-link group">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Budgets</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="sidebar-link group">
+                        <i class="fa-solid fa-bullseye"></i>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Saving goals</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="sidebar-link group">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Analytics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="sidebar-link group">
+                        <i class="fa-solid fa-gear"></i>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Setting</span>
+                    </a>
+                </li>
+            </ul>
         </div>
-        
-        <ul class="space-y-3 font-medium">
-            <li>
-                <a href="{{route('dashboard')}}" class="flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100 group">
-                    <i class="fa-solid fa-house"></i>
-                    <span class="ms-3">Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{route('wallet')}}" class="flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100 group">
-                    <i class="fa-solid fa-wallet"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">My Wallet</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100 group">
-                    <i class="fa-solid fa-right-left"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Transactions</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100 group">
-                    <i class="fa-solid fa-tags"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Categories</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100 group">
-                    <i class="fa-solid fa-scale-balanced"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Budgets</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100 group">
-                    <i class="fa-solid fa-bullseye"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Saving goals</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100 group">
-                    <i class="fa-solid fa-chart-line"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Analytics</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100 group">
-                    <i class="fa-solid fa-gear"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Setting</span>
-                </a>
-            </li>
-        </ul>
+
+        <div class="pb-4 space-y-2 sm:hidden">
+            <div class="flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer hover:bg-gray-100">
+                <i class="p-3 text-sm text-white bg-gray-500 rounded-full fa-solid fa-user"></i>
+                <div class="flex items-center gap-3 text-sm">
+                    <h3 class="font-medium">{{auth()->user()->name}}</h3>
+                </div>
+
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit"
+                        class="flex items-center w-full gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 </aside>

@@ -1,4 +1,4 @@
-<header class="px-4 py-4 mb-4 bg-white shadow md:px-8">
+<header class="hidden px-4 py-4 mb-4 bg-white shadow md:block md:px-8">
     <div class="flex flex-col items-center justify-between gap-4 md:flex-row">
         <div class="flex items-center w-full px-3 py-1 border border-gray-200 rounded-lg md:w-auto">
             <i class="text-gray-500 fa-solid fa-magnifying-glass"></i>
@@ -10,7 +10,7 @@
             <div class="flex items-center gap-3 cursor-pointer" id="profileToggle">
                 <i class="p-3 text-sm text-white bg-gray-500 rounded-full fa-solid fa-user"></i>
                 <div class="flex items-center gap-3 text-sm">
-                    <h3 class="font-medium">Ceejay Ibabiosa</h3>
+                    <h3 class="font-medium">{{auth()->user()->name}}</h3>
                     <i class="text-xs fa-solid fa-caret-down"></i>
                 </div>
             </div>
