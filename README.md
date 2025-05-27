@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://laravel.com" target="_blank">
-    <img src="{{asset('assets/logo.png')}}" width="400" alt="Laravel Logo">
+    <img src="{{asset('/assets/logo.png')}}" width="400" alt="Laravel Logo">
     <p>Finance Flow</p>
   </a>
 </p>
