@@ -33,7 +33,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{route('transaction.index')}}"
                         class="sidebar-link group">
                         <i class="fa-solid fa-right-left"></i>
                         <span class="flex-1 ms-3 whitespace-nowrap">Transactions</span>

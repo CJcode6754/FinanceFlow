@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Transaction;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class TransactionController extends Controller
 {
@@ -12,7 +16,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $transaction = Transaction::with('wallet', 'category')->get();
+        return view('admin.transaction.index', compact('transaction'));
     }
 
     /**
@@ -20,7 +25,9 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        //
+        $category = Category::all();
+        $wallet = Wallet::all();
+        return view('admin.transaction.create', compact('category', 'wallet'));
     }
 
     /**
@@ -28,7 +35,26 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'category_id' => ['required', 'integer'],
+            'note' => ['required', 'max:100', 'string'],
+            'amount' => ['integer', 'required'],
+            'type' => ['required'],
+            'wallet_id' => ['required', 'integer'],
+            'date' => ['date', 'required'],
+        ]);
+
+        Transaction::create([
+            'user_id' => Auth::user()->id,
+            'wallet_id' => $request->input('wallet_id'),
+            'category_id' => $request->input('category_id'),
+            'type' => $request->input('type'),
+            'amount' => $request->input('amount'),
+            'note' => $request->input('note'),
+            'date' => $request->input('date')
+        ]);
+
+        return redirect()->route('transaction.index')->with('success', 'Successfully create new transaction');
     }
 
     /**
@@ -52,7 +78,7 @@ class TransactionController extends Controller
      */
     public function update(Request $request, Transaction $transaction)
     {
-        //
+        Gate::authorize('update', $transaction);
     }
 
     /**
