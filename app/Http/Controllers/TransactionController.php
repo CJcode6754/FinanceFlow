@@ -23,6 +23,12 @@ class TransactionController extends Controller
             $query->where('type', $request->type);
         }
 
+        if($request->filled('wallet')){
+            $query->whereHas('wallet', function($q) use ($request) {
+                $q->where('type', $request->wallet);
+            });
+        }
+
         if ($request->filled('date_filter')) {
             $today = Carbon::today();
 
