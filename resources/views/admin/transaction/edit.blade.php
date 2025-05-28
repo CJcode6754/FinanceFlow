@@ -7,18 +7,19 @@
         <main class="w-full px-8 py-6 mx-auto mt-8 bg-white rounded-lg shadow-lg md:w-1/2 md:px-8">
             <h1 class="mb-6 text-2xl font-bold text-center">Create Your Own Transaction</h1>
 
-            <form action="{{ route('transaction.store') }}" method="POST" class="space-y-5">
+            <form action="{{ route('transaction.update', $transaction->id) }}" method="POST" class="space-y-5">
                 @csrf
 
+                @method('PATCH')
                 <!-- Category Dropdown -->
                 <div class="mb-4">
                     <label for="categoryDropdown" class="label">Category</label>
                     <select id="categoryDropdown" name="category_id"
                         class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="">Select category</option>
-                        @foreach ($category as $item)
-                            <option value="{{ $item->id }}" {{ old('category') == $item->id ? 'selected' : '' }}>
-                                {{ $item->name }}
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}" {{ old('category', $transaction->category_id) == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
                             </option>
                         @endforeach
                     </select>
@@ -32,7 +33,7 @@
                     <label for="note" class="label">Notes</label>
                     <input type="text" name="note" id="note"
                         class="w-full px-4 py-3 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 @error('note') border-red-400 @enderror"
-                        value="{{ old('note') }}" placeholder="e.g., Buy Pizza, Grocery">
+                        value="{{ old('note', $transaction->note) }}" placeholder="e.g., Buy Pizza, Grocery">
                     @error('note')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                     @enderror
@@ -44,9 +45,9 @@
                     <select id="typeDropdown" name="type"
                         class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="">Select Type</option>
-                        <option value="income" {{ old('type') == 'income' ? 'selected' : '' }}>income</option>
-                        <option value="expense" {{ old('type') == 'expense' ? 'selected' : '' }}>expense</option>
-                        <option value="transfer" {{ old('type') == 'transfer' ? 'selected' : '' }}>transfer</option>
+                        <option value="income" {{ old('type', $transaction->type) == 'income' ? 'selected' : '' }}>Income</option>
+                        <option value="expense" {{ old('type', $transaction->type) == 'expense' ? 'selected' : '' }}>Expense</option>
+                        <option value="transfer" {{ old('type', $transaction->type) == 'transfer' ? 'selected' : '' }}>Transfer</option>
                     </select>
                     @error('type')
                         <span class="mt-1 text-xs text-red-600">{{ $message }}</span>
@@ -58,7 +59,7 @@
                     <label for="amount" class="label">Amount</label>
                     <input type="number" name="amount" id="amount"
                         class="w-full px-4 py-3 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 @error('amount') border-red-400 @enderror"
-                        value="{{ old('amount') }}" placeholder="e.g., 1000.00, 2000.00">
+                        value="{{ old('amount', $transaction->amount) }}" placeholder="e.g., 1000.00, 2000.00">
                     @error('amount')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                     @enderror
@@ -70,9 +71,9 @@
                     <select id="walletDropdown" name="wallet_id"
                         class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="">Select Wallet</option>
-                        @foreach ($wallet as $item)
-                            <option value="{{ $item->id }}" {{ old('wallet') == $item->id ? 'selected' : '' }}>
-                                {{ $item->name }}
+                        @foreach ($wallets as $wallet)
+                            <option value="{{ $wallet->id }}" {{ old('wallet_id', $transaction->wallet_id) == $wallet->id ? 'selected' : '' }}>
+                                {{ $wallet->name }}
                             </option>
                         @endforeach
                     </select>
@@ -83,7 +84,7 @@
 
                 <div class="mb-4">
                     <label for="date">Date</label>
-                    <input type="date" name="date" id="date" value="{{ old('date') }}"
+                    <input type="date" name="date" id="date" value="{{ old('date', \Carbon\Carbon::parse($transaction->date)->format('Y-m-d')) }}"
                         class="w-full px-4 py-3 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 @error('date') border-red-400 @enderror">
 
                 </div>

@@ -90,6 +90,7 @@
                                 <th class="pb-2">Category</th>
                                 <th>Notes</th>
                                 <th>Amount</th>
+                                <th>Type</th>
                                 <th>Wallet</th>
                                 <th>Time</th>
                                 <th>Edit</th>
@@ -101,14 +102,14 @@
                                 <tr class="border-t">
                                     <td class="py-2">{{$item->category->name}}</td>
                                     <td>{{$item->note}}</td>
-                                    <td class="font-semibold">₱{{$item->amount}}</td>
+                                    <td class="font-semibold">₱ {{$item->amount}}</td>
                                     <td class="capitalize">{{$item->type}}</td>
                                     <td>{{$item->wallet->name}}</td>
                                     <td>{{$item->date}}</td>
-                                    <td><a href="{{$item->id}}"><i
+                                    <td><a href="{{route('transaction.edit', $item->id)}}"><i
                                                 class="fa-solid fa-pen-to-square text-blue-500 hover:text-blue-700 cursor-pointer transition duration-150"></i></a>
                                     </td>
-                                    <td><button onclick="showModal($item->id)"><i
+                                    <td><button onclick="showModal({{$item->id}})"><i
                                                 class="fa-solid fa-trash text-red-500 hover:text-red-700 cursor-pointer transition duration-150"></i></button>
                                     </td>
                                 </tr>
@@ -169,13 +170,13 @@
     </div>
 
     <script>
-        function showModal(categoryID) {
+        function showModal(itemID) {
             const modal = document.getElementById('modal');
             const backdrop = document.getElementById('modal-backdrop');
             const wrapper = document.getElementById('modal-wrapper');
             const form = document.getElementById('deleteForm');
 
-            form.action = `transaction/${categoryID}`;
+            form.action = `transaction/${itemID}`;
             modal.classList.remove('hidden');
 
             // Animate in

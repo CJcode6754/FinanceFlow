@@ -70,7 +70,11 @@ class TransactionController extends Controller
      */
     public function edit(Transaction $transaction)
     {
-        //
+        Gate::authorize('update', $transaction);
+
+        $categories = Category::all();
+        $wallets = Wallet::all();
+        return view('admin.transaction.edit', compact('transaction', 'categories', 'wallets'));
     }
 
     /**
@@ -79,6 +83,26 @@ class TransactionController extends Controller
     public function update(Request $request, Transaction $transaction)
     {
         Gate::authorize('update', $transaction);
+
+        $request->validate([
+            'category_id' => ['required', 'integer'],
+            'note' => ['required', 'max:100', 'string'],
+            'amount' => ['integer', 'required'],
+            'type' => ['required'],
+            'wallet_id' => ['required', 'integer'],
+            'date' => ['date', 'required'],
+        ]);
+
+        $transaction->update([
+            'category_id' => $request->input('category_id'),
+            'note' => $request->input('note'),
+            'amount' => $request->input('amount'),
+            'type' => $request->input('type'),
+            'wallet_id' => $request->input('wallet_id'),
+            'date' => $request->input('date'),
+        ]);
+
+        return redirect()->route('transaction.index')->with('success', 'Successdully update transaction');
     }
 
     /**
@@ -86,6 +110,9 @@ class TransactionController extends Controller
      */
     public function destroy(Transaction $transaction)
     {
-        //
+        Gate::authorize('delete', $transaction);
+        $transaction->delete();
+
+        return redirect()->route('transaction.index')->with('success', 'Successfully deleted the transaction');
     }
 }
