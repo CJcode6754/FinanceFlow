@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Transaction;
 use App\Models\Wallet;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -14,9 +15,45 @@ class TransactionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $transaction = Transaction::with('wallet', 'category')->get();
+        $query = Transaction::with(['category', 'wallet'])->where('user_id', Auth::user()->id);
+
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        }
+
+        if ($request->filled('date_filter')) {
+            $today = Carbon::today();
+
+            switch ($request->date_filter) {
+                case 'today':
+                    $query->where('date', $today);
+                    break;
+                case 'this_week':
+                    $query->whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+                    break;
+                case 'this_month':
+                    $query->whereMonth('date', $today->month)->whereYear('date', $today->year);
+                    break;
+                case 'last_month':
+                    $query->whereMonth('date', $today->copy()->subMonth()->month)
+                        ->whereYear('date', $today->copy()->subMonth()->year);
+                    break;
+                case 'last_3_months':
+                    $query->whereBetween('date', [Carbon::now()->subMonths(3), Carbon::now()]);
+                    break;
+                case 'last_6_months':
+                    $query->whereBetween('date', [Carbon::now()->subMonths(6), Carbon::now()]);
+                    break;
+                case 'this_year':
+                    $query->whereYear('date', $today->year);
+                    break;
+            }
+        }
+
+        $transaction = $query->latest()->get();
+
         return view('admin.transaction.index', compact('transaction'));
     }
 

@@ -52,27 +52,44 @@
             <div class="flex flex-col items-center justify-center gap-4 py-6 md:flex-row md:justify-between md:gap-12">
                 <h1 class="text-3xl font-bold">Transactions</h1>
                 <div class="flex items-center gap-4">
-                    <div class="">
-                        <select id="categoryDropdown" name="type"
-                            class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-blue-500">
-                            <option value="">Filter by Category</option>
-                            <option value="expense" {{ old('type') == 'expense' ? 'selected' : '' }}>Expense</option>
-                            <option value="income" {{ old('type') == 'income' ? 'selected' : '' }}>Income</option>
-                        </select>
-                        @error('type')
-                            <span class="mt-1 text-xs text-red-600">{{ $message }}</span>
-                        @enderror
-                    </div>
+                    <form action="{{route('transaction.index')}}" method="get" class="flex gap-4">
+                        <div>
+                            <select id="categoryDropdown" name="type"
+                                class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-blue-500">
+                                <option value="">Filter by Category</option>
+                                <option value="expense" {{request('type') == 'expense' ? 'selected' : ''}}>Expense</option>
+                                <option value="income" {{request('type') == 'income' ? 'selected' : ''}}>Income</option>
+                                <option value="transfer" {{request('type') == 'transfer' ? 'selected' : ''}}>Transfer</option>
+                            </select>
+                            @error('type')
+                                <span class="mt-1 text-xs text-red-600">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-                    <div>
-                        <input type="date" name="" id="">
-                    </div>
+                        <div>
+                            <select id="categoryDropdown" name="date_filter"
+                                class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-blue-500">
+                                <option value="">Filter by Date</option>
+                                <option value="today" {{request('date_filter') == 'today' ? 'selected' : ''}}>Today</option>
+                                <option value="this_week" {{request('date_filter') == 'this_week' ? 'selected' : ''}}>This Week</option>
+                                <option value="this_month" {{request('date_filter') == 'this_month' ? 'selected' : ''}}>This Month</option>
+                                <option value="last_month" {{request('date_filter') == 'last_month' ? 'selected' : ''}}>Last Month</option>
+                                <option value="last_3_month" {{request('date_filter') == 'last_3_month' ? 'selected' : ''}}>Last Three Months</option>
+                                <option value="last_6_month" {{request('date_filter') == 'last_6_month' ? 'selected' : ''}}>Last 6 Months</option>
+                                <option value="this_year" {{request('date_filter') == 'this_year' ? 'selected' : ''}}>This Year</option>
+                            </select>
+                            @error('type')
+                                <span class="mt-1 text-xs text-red-600">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-                    <button type="submit"
-                        class="px-6 py-2 border border-blue-500 rounded-lg cursor-pointer hover:bg-blue-600 hover:text-white group"
-                        title="Filter">
-                        <p>Filter</p>
-                    </button>
+                        <button type="submit"
+                            class="px-6 py-2 border border-blue-500 rounded-lg cursor-pointer hover:bg-blue-600 hover:text-white group"
+                            title="Filter">
+                            <p>Filter</p>
+                        </button>
+                    </form>
+
                     <a href="{{ route('transaction.create') }}"
                         class="px-6 py-2 border border-blue-500 rounded-lg cursor-pointer hover:bg-blue-600 hover:text-white group"
                         title="Add Category">
@@ -100,16 +117,16 @@
                         <tbody class="text-gray-700 text-center">
                             @foreach ($transaction as $item)
                                 <tr class="border-t">
-                                    <td class="py-2">{{$item->category->name}}</td>
-                                    <td>{{$item->note}}</td>
-                                    <td class="font-semibold">₱ {{$item->amount}}</td>
-                                    <td class="capitalize">{{$item->type}}</td>
-                                    <td>{{$item->wallet->name}}</td>
-                                    <td>{{$item->date}}</td>
-                                    <td><a href="{{route('transaction.edit', $item->id)}}"><i
+                                    <td class="py-2">{{ $item->category->name }}</td>
+                                    <td>{{ $item->note }}</td>
+                                    <td class="font-semibold">₱ {{ $item->amount }}</td>
+                                    <td class="capitalize">{{ $item->type }}</td>
+                                    <td>{{ $item->wallet->name }}</td>
+                                    <td>{{ $item->date }}</td>
+                                    <td><a href="{{ route('transaction.edit', $item->id) }}"><i
                                                 class="fa-solid fa-pen-to-square text-blue-500 hover:text-blue-700 cursor-pointer transition duration-150"></i></a>
                                     </td>
-                                    <td><button onclick="showModal({{$item->id}})"><i
+                                    <td><button onclick="showModal({{ $item->id }})"><i
                                                 class="fa-solid fa-trash text-red-500 hover:text-red-700 cursor-pointer transition duration-150"></i></button>
                                     </td>
                                 </tr>
