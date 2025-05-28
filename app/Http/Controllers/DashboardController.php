@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index(){
-        return view('admin.dashboard');
+        $transactions = Transaction::with('category', 'wallet')->get();
+        return view('admin.dashboard', compact('transactions'));
     }
 
     public function wallet(){

@@ -11,7 +11,7 @@
 
             <section class="grid grid-cols-1 gap-2 py-4 sm:grid-cols-3">
                 <div class="p-4 space-y-1 rounded-lg bg-gray-50">
-                    <div class="flex items-center gap-2">
+                    <div class="flex transactions-center gap-2">
                         <i class="fa-solid fa-dollar-sign"></i>
                         <h4 class="font-medium">Income</h4>
                     </div>
@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="p-4 space-y-1 rounded-lg bg-gray-50">
-                    <div class="flex items-center gap-2">
+                    <div class="flex transactions-center gap-2">
                         <i class="fa-solid fa-cart-shopping"></i>
                         <h4 class="font-medium">Expense</h4>
                     </div>
@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="p-4 space-y-1 rounded-lg bg-gray-50">
-                    <div class="flex items-center gap-2">
+                    <div class="flex transactions-center gap-2">
                         <i class="fa-solid fa-piggy-bank"></i>
                         <h4 class="font-medium">Saving</h4>
                     </div>
@@ -39,7 +39,7 @@
             </section>
 
             <section>
-                <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex flex-wrap transactions-center justify-between gap-4">
                     <h2 class="text-lg font-semibold">Statistics</h2>
 
                     <select class="px-2 py-1 text-sm border rounded-lg">
@@ -66,41 +66,44 @@
 
                 <!-- Money Report -->
                 <div class="w-full p-4 space-y-4 overflow-x-auto bg-gray-200 rounded-lg md:w-3/5">
-                    <div class="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
+                    <div class="flex flex-col transactions-start justify-between gap-2 sm:flex-row sm:transactions-center">
                         <h2 class="text-lg font-semibold text-gray-700">Transaction History</h2>
-                        <div class="flex gap-2">
+                        <div class="flex gap-4">
                             <select class="px-3 py-1 text-sm border border-gray-300 rounded-lg">
                                 <option>This Month</option>
                                 <option>Last Month</option>
                             </select>
-                            <button
+                            <a href="{{route('transaction.index')}}"
                                 class="px-4 py-2 text-sm transition duration-150 border border-blue-500 rounded-lg cursor-pointer hover:bg-blue-500 hover:text-white">
                                 <i class="fa-solid fa-plus"></i> New Transaction
-                            </button>
+                            </a>
                         </div>
                     </div>
 
                     <div class="overflow-x-auto">
                         <div class="overflow-x-auto">
                             <table class="w-full text-sm text-left min-w-[600px]">
-                                <thead class="text-gray-500 border-b">
+                                <thead class="text-gray-500 border-b text-center">
                                     <tr>
                                         <th class="pb-2">Category</th>
-                                        <th>Business Name</th>
+                                        <th>Notes</th>
                                         <th>Amount</th>
+                                        <th>Type</th>
+                                        <th>Wallet</th>
                                         <th>Time</th>
-                                        <th>Status</th>
                                     </tr>
                                 </thead>
-                                <tbody class="text-gray-700">
-                                    <tr class="border-t">
-                                        <td class="py-2">Lunch</td>
-                                        <td>Buy Pizza</td>
-                                        <td class="font-semibold">₱350.00</td>
-                                        <td>Today</td>
-                                        <td>Pending</td>
-                                    </tr>
-                                    <!-- More rows as needed -->
+                                <tbody class="text-gray-700 text-center">
+                                    @foreach ($transactions as $transaction)
+                                        <tr class="border-t">
+                                            <td class="py-2">{{ $transaction->category->name }}</td>
+                                            <td>{{ $transaction->note }}</td>
+                                            <td class="font-semibold">₱ {{ $transaction->amount }}</td>
+                                            <td class="capitalize">{{ $transaction->type }}</td>
+                                            <td>{{ $transaction->wallet->name }}</td>
+                                            <td>{{ $transaction->date }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
