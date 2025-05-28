@@ -49,74 +49,70 @@
         <x-header />
 
         <main class="px-4 py-2 md:py-8 md:px-16">
-            <div class="flex flex-col items-center justify-center gap-4 py-6 md:flex-row md:justify-between md:gap-12">
-                <h1 class="text-3xl font-bold">Transactions</h1>
-                <div class="flex items-center gap-4">
-                    <form action="{{route('transaction.index')}}" method="get" class="flex gap-4">
-                        <div>
-                            <select id="categoryDropdown" name="type"
-                                class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-blue-500">
-                                <option value="">Filter by Category</option>
-                                <option value="expense" {{request('type') == 'expense' ? 'selected' : ''}}>Expense</option>
-                                <option value="income" {{request('type') == 'income' ? 'selected' : ''}}>Income</option>
-                                <option value="transfer" {{request('type') == 'transfer' ? 'selected' : ''}}>Transfer</option>
-                            </select>
-                            @error('type')
-                                <span class="mt-1 text-xs text-red-600">{{ $message }}</span>
-                            @enderror
-                        </div>
+            <div class="flex flex-col gap-4 md:flex-row md:justify-between md:items-center">
+                <h1 class="text-2xl font-bold text-gray-800">Transactions</h1>
 
-                        <div>
-                            <select id="categoryDropdown" name="date_filter"
-                                class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-blue-500">
-                                <option value="">Filter by Date</option>
-                                <option value="today" {{request('date_filter') == 'today' ? 'selected' : ''}}>Today</option>
-                                <option value="this_week" {{request('date_filter') == 'this_week' ? 'selected' : ''}}>This Week</option>
-                                <option value="this_month" {{request('date_filter') == 'this_month' ? 'selected' : ''}}>This Month</option>
-                                <option value="last_month" {{request('date_filter') == 'last_month' ? 'selected' : ''}}>Last Month</option>
-                                <option value="last_3_month" {{request('date_filter') == 'last_3_month' ? 'selected' : ''}}>Last Three Months</option>
-                                <option value="last_6_month" {{request('date_filter') == 'last_6_month' ? 'selected' : ''}}>Last 6 Months</option>
-                                <option value="this_year" {{request('date_filter') == 'this_year' ? 'selected' : ''}}>This Year</option>
-                            </select>
-                            @error('type')
-                                <span class="mt-1 text-xs text-red-600">{{ $message }}</span>
-                            @enderror
-                        </div>
+                {{-- Filters --}}
+                <div class="flex flex-wrap gap-3">
+                    <form action="{{ route('transaction.index') }}" method="GET" class="flex flex-wrap gap-3">
+                        <select name="type"
+                            class="px-4 py-2 text-sm border-gray-300 rounded-md apperance-none focus:border-blue-500 focus:ring-blue-500">
+                            <option value="">Filter by Type</option>
+                            <option value="expense" {{ request('type') == 'expense' ? 'selected' : '' }}>Expense</option>
+                            <option value="income" {{ request('type') == 'income' ? 'selected' : '' }}>Income</option>
+                            <option value="transfer" {{ request('type') == 'transfer' ? 'selected' : '' }}>Transfer</option>
+                        </select>
+
+                        <select name="wallet"
+                            class="px-4 py-2 text-sm border-gray-300 rounded-md apperance-none focus:border-blue-500 focus:ring-blue-500">
+                            <option value="">Filter by Wallet</option>
+                            <option value="bank" {{ request('wallet') == 'bank' ? 'selected' : '' }}>Bank</option>
+                            <option value="cash" {{ request('wallet') == 'cash' ? 'selected' : '' }}>Cash</option>
+                            <option value="e-wallet" {{ request('wallet') == 'e-wallet' ? 'selected' : '' }}>E-wallet</option>
+                        </select>
+
+                        <select name="date_filter"
+                            class="px-4 py-2 text-sm border-gray-300 rounded-md focus:border-blue-500 focus:ring-blue-500">
+                            <option value="">Filter by Date</option>
+                            <option value="today" {{ request('date_filter') == 'today' ? 'selected' : '' }}>Today</option>
+                            <option value="this_week" {{ request('date_filter') == 'this_week' ? 'selected' : '' }}>This Week</option>
+                            <option value="this_month" {{ request('date_filter') == 'this_month' ? 'selected' : '' }}>This Month</option>
+                            <option value="last_month" {{ request('date_filter') == 'last_month' ? 'selected' : '' }}>Last Month</option>
+                            <option value="last_3_month" {{ request('date_filter') == 'last_3_month' ? 'selected' : '' }}>Last 3 Months</option>
+                            <option value="last_6_month" {{ request('date_filter') == 'last_6_month' ? 'selected' : '' }}>Last 6 Months</option>
+                            <option value="this_year" {{ request('date_filter') == 'this_year' ? 'selected' : '' }}>This Year</option>
+                        </select>
 
                         <button type="submit"
-                            class="px-6 py-2 border border-blue-500 rounded-lg cursor-pointer hover:bg-blue-600 hover:text-white group"
-                            title="Filter">
-                            <p>Filter</p>
+                            class="px-4 py-2 text-sm text-white transition bg-blue-600 rounded-md cursor-pointer hover:bg-blue-700">
+                            Filter
                         </button>
                     </form>
 
                     <a href="{{ route('transaction.create') }}"
-                        class="px-6 py-2 border border-blue-500 rounded-lg cursor-pointer hover:bg-blue-600 hover:text-white group"
-                        title="Add Category">
-                        <i class="fa-solid fa-plus"></i>
+                        class="px-4 py-2 text-sm text-blue-600 transition border border-blue-600 rounded-md hover:bg-blue-600 hover:text-white">
+                        <i class="mr-1 fa-solid fa-plus"></i> Add
                     </a>
-
                 </div>
             </div>
 
-            <div class="overflow-x-auto mt-4">
-                <div class="overflow-x-auto flex items-center justify-center">
-                    <table class="w-3/4 text-sm text-left">
-                        <thead class="text-gray-500 border-b text-center">
-                            <tr class="text-base font-semibold">
-                                <th class="pb-2">Category</th>
+            <div class="mt-4 overflow-x-auto">
+                    <table class="w-full overflow-hidden text-sm border rounded-md">
+                        <thead class="text-center text-gray-600 bg-gray-100">
+                            <tr class="text-sm font-semibold">
+                                <th class="px-2 py-3">Category</th>
                                 <th>Notes</th>
                                 <th>Amount</th>
                                 <th>Type</th>
                                 <th>Wallet</th>
-                                <th>Time</th>
+                                <th>Date/Time</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
-                        <tbody class="text-gray-700 text-center">
+                        <tbody class="text-center text-gray-700">
                             @foreach ($transaction as $item)
-                                <tr class="border-t">
+                                <tr class="border-t hover:bg-gray-100">
                                     <td class="py-2">{{ $item->category->name }}</td>
                                     <td>{{ $item->note }}</td>
                                     <td class="font-semibold">₱ {{ $item->amount }}</td>
@@ -124,34 +120,33 @@
                                     <td>{{ $item->wallet->name }}</td>
                                     <td>{{ $item->date }}</td>
                                     <td><a href="{{ route('transaction.edit', $item->id) }}"><i
-                                                class="fa-solid fa-pen-to-square text-blue-500 hover:text-blue-700 cursor-pointer transition duration-150"></i></a>
+                                                class="text-blue-500 transition duration-150 cursor-pointer fa-solid fa-pen-to-square hover:text-blue-700"></i></a>
                                     </td>
                                     <td><button onclick="showModal({{ $item->id }})"><i
-                                                class="fa-solid fa-trash text-red-500 hover:text-red-700 cursor-pointer transition duration-150"></i></button>
+                                                class="text-red-500 transition duration-150 cursor-pointer fa-solid fa-trash hover:text-red-700"></i></button>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                </div>
             </div>
         </main>
 
         {{-- Modal for Car deletion --}}
-        <div id="modal" class="hidden relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div id="modal-backdrop" class="fixed inset-0 bg-gray-500/75 opacity-0 transition-opacity duration-300"
+        <div id="modal" class="relative z-10 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div id="modal-backdrop" class="fixed inset-0 transition-opacity duration-300 opacity-0 bg-gray-500/75"
                 aria-hidden="true"></div>
 
             <div id="modal-wrapper"
-                class="fixed inset-0 z-10 w-screen overflow-y-auto opacity-0 scale-95 transition duration-300 ease-out">
-                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                class="fixed inset-0 z-10 w-screen overflow-y-auto transition duration-300 ease-out scale-95 opacity-0">
+                <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
                     <div
-                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        class="relative overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-lg">
+                        <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
                             <div class="sm:flex sm:items-start">
                                 <div
-                                    class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10">
-                                    <svg class="size-6 text-red-600" fill="none" viewBox="0 0 24 24"
+                                    class="flex items-center justify-center mx-auto bg-red-100 rounded-full size-12 shrink-0 sm:mx-0 sm:size-10">
+                                    <svg class="text-red-600 size-6" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
@@ -169,16 +164,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                        <div class="px-4 py-3 bg-gray-50 sm:flex sm:flex-row-reverse sm:px-6">
                             <form id="deleteForm" action="" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
-                                    class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 sm:ml-3 sm:w-auto cursor-pointer">Yes,
+                                    class="inline-flex justify-center w-full px-3 py-2 text-sm font-semibold text-white bg-red-600 rounded-md shadow-xs cursor-pointer hover:bg-red-500 sm:ml-3 sm:w-auto">Yes,
                                     Delete</button>
                             </form>
                             <button onclick="hideModal()" type="button"
-                                class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto cursor-pointer">Cancel</button>
+                                class="inline-flex justify-center w-full px-3 py-2 mt-3 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-xs cursor-pointer ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
                         </div>
                     </div>
                 </div>
