@@ -87,7 +87,7 @@ class TransactionController extends Controller
             'date' => ['date', 'required'],
         ]);
 
-        Transaction::create([
+        $transaction = Transaction::create([
             'user_id' => Auth::user()->id,
             'wallet_id' => $request->input('wallet_id'),
             'category_id' => $request->input('category_id'),
@@ -96,6 +96,16 @@ class TransactionController extends Controller
             'note' => $request->input('note'),
             'date' => $request->input('date')
         ]);
+
+        $wallet = $transaction->wallet;
+
+        if($transaction->type === 'income'){
+            $wallet->balance += $transaction->amount;
+        }else{
+            $wallet->balance -= $transaction->amount;
+        }
+
+        $wallet->save();
 
         return redirect()->route('transaction.index')->with('success', 'Successfully create new transaction');
     }
