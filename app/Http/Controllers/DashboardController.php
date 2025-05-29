@@ -13,10 +13,6 @@ class DashboardController extends Controller
         return view('admin.dashboard', compact('transactions'));
     }
 
-    public function wallet(){
-        return view('admin.wallet');
-    }
-
     public function logout(Request $request){
         Auth::logout();
 
