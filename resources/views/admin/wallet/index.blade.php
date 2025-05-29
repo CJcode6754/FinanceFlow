@@ -1,5 +1,5 @@
 <x-app-layout title="My Wallet">
-        @if ($message = Session::get('success') ?? Session::get('error'))
+    @if ($message = Session::get('success') ?? Session::get('error'))
         <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show" x-transition.opacity
             class="fixed z-50 top-4 right-12">
             <div
@@ -42,7 +42,7 @@
             </div>
         </div>
     @endif
-    
+
     <x-sidebar-layout />
 
     <div class="flex-1 md:ml-64">
@@ -51,10 +51,10 @@
         <main class="px-2 md:px-8">
             <!-- Wallet Card + Balance -->
             <section class="flex flex-col gap-4 px-2 py-4 lg:flex-row md:gap-6 md:px-8">
-                <div class="w-full space-y-3 lg:w-1/2">
+                <div class="w-full space-y-3 lg:w-2/5">
                     <div class="flex items-center justify-between gap-4">
                         <h2 class="text-lg font-bold">Wallets</h2>
-                        <a href="{{route('wallet.create')}}"
+                        <a href="{{ route('wallet.create') }}"
                             class="px-4 py-2 text-sm font-semibold text-gray-500 transition duration-150 border border-blue-500 rounded-lg hover:bg-blue-600 hover:text-white group"><i
                                 class="fa-solid fa-plus"></i> Add</a>
                     </div>
@@ -63,19 +63,19 @@
                         <div
                             class="flex flex-col justify-between w-full h-48 p-5 text-white shadow-xl rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
                             <div class="flex items-center justify-between">
-                                <h1 class="text-lg font-semibold">{{$wallet->name}}</h1>
-                                
+                                <h1 class="text-lg font-semibold">{{ $wallet->name }}</h1>
+
                                 <div class="flex items-center gap-4">
                                     <a href="{{ route('wallet.edit', $wallet->id) }}"><i
-                                                class="text-gray-500 transition duration-150 cursor-pointer fa-solid fa-pen-to-square hover:text-gray-700"></i></a>
+                                            class="text-gray-500 transition duration-150 cursor-pointer fa-solid fa-pen-to-square hover:text-gray-700"></i></a>
                                     <button onclick="showModal({{ $wallet->id }})"><i
-                                                class="text-gray-500 transition duration-150 cursor-pointer fa-solid fa-trash hover:text-gray-700"></i></button>
+                                            class="text-gray-500 transition duration-150 cursor-pointer fa-solid fa-trash hover:text-gray-700"></i></button>
                                 </div>
                             </div>
-                            <div class="font-mono text-lg tracking-widest">Balance: {{$wallet->balance}}</div>
+                            <div class="font-mono text-lg tracking-widest">Balance: {{ $wallet->balance }}</div>
                             <div class="text-sm">
                                 <div class="mb-2 text-xs uppercase">Card Holder</div>
-                                <div class="text-sm font-semibold capitalize">{{$wallet->user->name}}</div>
+                                <div class="text-sm font-semibold capitalize">{{ $wallet->user->name }}</div>
                             </div>
                         </div>
                     @endforeach
@@ -88,7 +88,7 @@
                         class="flex flex-col gap-4 p-6 bg-white rounded-lg shadow-md md:flex-row md:items-center md:justify-between">
                         <div class="flex flex-col gap-1">
                             <h3 class="text-sm font-medium text-gray-500">Total Balance</h3>
-                            <p class="text-3xl font-bold text-gray-800">PHP {{number_format($totalBalance, 2)}}</p>
+                            <p class="text-3xl font-bold text-gray-800">PHP {{ number_format($totalBalance, 2) }}</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-full gap-6 p-6 bg-gray-800 lg:flex-row rounded-2xl md:w-auto">
@@ -100,7 +100,7 @@
                                         <i class="fa-solid fa-arrow-up"></i> 2.89%
                                     </p>
                                 </div>
-                                <p class="text-2xl font-bold">PHP {{number_format($income, 2) ?? 0}}</p>
+                                <p class="text-2xl font-bold">PHP {{ number_format($income, 2) ?? 0 }}</p>
                             </div>
 
                             <!-- Expense -->
@@ -111,7 +111,8 @@
                                         <i class="fa-solid fa-arrow-down"></i> 2.89%
                                     </p>
                                 </div>
-                                <p class="text-2xl font-bold text-gray-700">PHP {{number_format($expense, 2) ?? 0}}</p>
+                                <p class="text-2xl font-bold text-gray-700">PHP {{ number_format($expense, 2) ?? 0 }}
+                                </p>
                             </div>
                         </div>
                     </section>
@@ -151,59 +152,21 @@
                     <section class="flex flex-col gap-4 p-4 bg-white shadow-md lg:flex-row rounded-xl">
                         <!-- Graph -->
                         <div
-                            class="flex items-center justify-center w-full h-48 font-bold text-white bg-gray-400 rounded lg:w-1/2">
-                            Graph
+                            class="flex items-center justify-center w-full h-48 font-bold text-white bg-white shadow lg:w-5/6">
+                            <canvas id="categoryDoughnutChart" class="w-full h-full"></canvas>
                         </div>
 
-                        <!-- Subscriptions -->
+                        <!-- Categories -->
                         <div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
-                            <div class="flex items-center gap-3 p-4 bg-white rounded shadow">
-                                <i class="text-2xl text-red-400 fa-solid fa-money-bill"></i>
-                                <div>
-                                    <h5 class="font-semibold text-gray-800">Subscription</h5>
-                                    <h6 class="text-gray-600">PHP 500</h6>
+                            @foreach ($categories as $item)
+                                <div class="flex items-center gap-3 p-4 bg-white rounded shadow">
+                                    <img src="{{asset('storage/' . $item->image)}}" alt="Category Image" class="rounded-full w-15">
+                                    <div>
+                                        <h5 class="font-semibold text-gray-800">{{$item->name}}</h5>
+                                        <h6 class="text-gray-600">PHP {{number_format($item->transactions->sum('amount'), 2)}}</h6>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="flex items-center gap-3 p-4 bg-white rounded shadow">
-                                <i class="text-2xl fa-solid fa-wallet text-amber-300"></i>
-                                <div>
-                                    <h5 class="font-semibold text-gray-800">Investing</h5>
-                                    <h6 class="text-gray-600">PHP 500</h6>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center gap-3 p-4 bg-white rounded shadow">
-                                <i class="text-2xl fa-solid fa-bowl-food text-violet-400"></i>
-                                <div>
-                                    <h5 class="font-semibold text-gray-800">Food</h5>
-                                    <h6 class="text-gray-600">PHP 500</h6>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center gap-3 p-4 bg-white rounded shadow">
-                                <i class="text-2xl fa-solid fa-person text-emerald-500"></i>
-                                <div>
-                                    <h5 class="font-semibold text-gray-800">Lifestyle</h5>
-                                    <h6 class="text-gray-600">PHP 500</h6>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center gap-3 p-4 bg-white rounded shadow">
-                                <i class="text-2xl text-blue-400 fa-solid fa-film"></i>
-                                <div>
-                                    <h5 class="font-semibold text-gray-800">Entertainment</h5>
-                                    <h6 class="text-gray-600">PHP 500</h6>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center gap-3 p-4 bg-white rounded shadow">
-                                <i class="text-2xl text-pink-400 fa-solid fa-house"></i>
-                                <div>
-                                    <h5 class="font-semibold text-gray-800">Mortgage</h5>
-                                    <h6 class="text-gray-600">PHP 500</h6>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </section>
                 </div>
@@ -225,7 +188,8 @@
                                 <div
                                     class="flex items-center justify-center mx-auto bg-red-100 rounded-full size-12 shrink-0 sm:mx-0 sm:size-10">
                                     <svg class="text-red-600 size-6" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                        stroke-width="1.5" stroke="currentColor" aria-hidden="true"
+                                        data-slot="icon">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
                                     </svg>
@@ -261,6 +225,8 @@
 
 
     <script>
+        const ctx = document.getElementById('categoryDoughnutChart').getContext('2d');
+
         function showModal(walletID) {
             const modal = document.getElementById('modal');
             const backdrop = document.getElementById('modal-backdrop');
@@ -291,5 +257,54 @@
                 modal.classList.add('hidden');
             }, 300);
         }
+
+        // CHART
+        const data = {
+            labels: @json($chartLabels),
+            datasets: [{
+                label: 'Transaction Amount',
+                data: @json($chartData),
+                backgroundColor: [
+                    '#4F46E5', // Indigo-600
+                    '#10B981', // Emerald-500
+                    '#F59E0B', // Amber-500
+                    '#EF4444', // Red-500
+                    '#3B82F6', // Blue-500
+                    '#8B5CF6', // Purple-500
+                    '#EC4899', // Pink-500
+                    '#22D3EE', // Cyan-400
+                    '#F97316', // Orange-500
+                    '#14B8A6'  // Teal-500
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        const config = {
+            type: 'doughnut',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            boxWidth: 15,
+                            padding: 20,
+                        }
+
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `PHP ${context.parsed.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+                            }
+                        }
+                    }
+                }
+            },
+        };
+
+        new Chart(ctx, config);
     </script>
 </x-app-layout>

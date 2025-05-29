@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Transaction;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
@@ -16,12 +17,20 @@ class WalletController extends Controller
     public function index()
     {
         $wallets = Wallet::with('user')->get();
-        $transactions = Transaction::with('wallet')->get();
+        $transactions = Transaction::with('wallet', 'category')->get();
+        $categories = Category::with('transactions')->get();
+
+        $chartLabels = $categories->pluck('name')->toArray();
+
+        $chartData = $categories->map(function ($category){
+            return $category->transactions->sum('amount');
+        })->toArray();
 
         $income = $transactions->where('type', 'income')->sum('amount');
         $expense = $transactions->where('type', 'expense')->sum('amount');
         $totalBalance = $wallets->sum('balance');
-        return view('admin.wallet.index', compact('wallets', 'expense', 'income', 'totalBalance'));
+
+        return view('admin.wallet.index', compact('wallets', 'expense', 'income', 'totalBalance', 'categories', 'chartLabels', 'chartData'));
     }
 
     /**
