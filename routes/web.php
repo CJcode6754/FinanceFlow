@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -24,7 +25,6 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('verified');
-    Route::get('/wallet', [DashboardController::class, 'wallet'])->name('wallet');
 
     Route::get('/email/verify', [AuthController::class, 'verifyNotice'])->name('verification.notice');
 
@@ -36,4 +36,5 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/category', CategoryController::class);
     Route::resource('/transaction', TransactionController::class);
+    Route::resource('/wallet', WalletController::class);
 });

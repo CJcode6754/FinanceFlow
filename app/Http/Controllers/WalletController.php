@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class WalletController extends Controller
 {
@@ -12,7 +15,13 @@ class WalletController extends Controller
      */
     public function index()
     {
-        //
+        $wallets = Wallet::with('user')->get();
+        $transactions = Transaction::with('wallet')->get();
+
+        $income = $transactions->where('type', 'income')->sum('amount');
+        $expense = $transactions->where('type', 'expense')->sum('amount');
+        $totalBalance = $wallets->sum('balance');
+        return view('admin.wallet.index', compact('wallets', 'expense', 'income', 'totalBalance'));
     }
 
     /**
@@ -20,7 +29,7 @@ class WalletController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.wallet.create');
     }
 
     /**
@@ -28,7 +37,20 @@ class WalletController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'max:45', 'string'],
+            'type' => ['required'],
+            'balance' => ['integer', 'required']
+        ]);
+
+        Wallet::create([
+            'user_id' => Auth::user()->id,
+            'name' => $request->input('name'),
+            'type' => $request->input('type'),
+            'balance' => $request->input('balance')
+        ]);
+
+        return redirect()->route('wallet.index')->with('success', 'Successfully created new wallet');
     }
 
     /**
@@ -44,7 +66,9 @@ class WalletController extends Controller
      */
     public function edit(Wallet $wallet)
     {
-        //
+        Gate::authorize('update', $wallet);
+
+        return view('admin.wallet.edit', compact('wallet'));
     }
 
     /**
@@ -52,7 +76,21 @@ class WalletController extends Controller
      */
     public function update(Request $request, Wallet $wallet)
     {
-        //
+        Gate::authorize('update', $wallet);
+
+        $request->validate([
+            'name' => ['required', 'max:45', 'string'],
+            'type' => ['required'],
+            'balance' => ['integer', 'required']
+        ]);
+
+        $wallet->update([
+            'name' => $request->input('name'),
+            'type' => $request->input('type'),
+            'balance' => $request->input('balance')
+        ]);
+
+        return redirect()->route('wallet.index')->with('success', 'Successfully edited your own wallet');
     }
 
     /**
@@ -60,6 +98,10 @@ class WalletController extends Controller
      */
     public function destroy(Wallet $wallet)
     {
-        //
+        Gate::authorize('delete', $wallet);
+
+        $wallet->delete();
+
+        return redirect()->route('wallet.index')->with('success', 'Successfully deleted the wallet');
     }
 }

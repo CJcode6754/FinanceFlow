@@ -26,7 +26,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('wallet') }}"
+                    <a href="{{ route('wallet.index') }}"
                         class="sidebar-link group">
                         <i class="fa-solid fa-wallet"></i>
                         <span class="flex-1 ms-3 whitespace-nowrap">My Wallet</span>
