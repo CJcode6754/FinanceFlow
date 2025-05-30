@@ -1,13 +1,13 @@
 <p align="center">
   <a href="https://laravel.com" target="_blank">
-    <img src="{{asset('/assets/logo.png')}}" width="400" alt="Laravel Logo">
+    <img src="public/assets/logo.png" width="400" alt="Finance Flow Logo">
     <p>Finance Flow</p>
   </a>
 </p>
 
 # 💸 FinanceFlow - Personal Money Tracker App
 
-**FinanceFlow** is a modern and user-friendly personal finance tracker built with **Laravel**, **Tailwind CSS**, **Chart.js**, and **MySQL**. Designed to help individuals manage income, track expenses, monitor savings goals, and gain insights through a beautifully crafted dashboard and analytics.
+**FinanceFlow** is a modern and user-friendly personal finance tracker built with **Laravel**, **JavaScript**, **Tailwind CSS**, **Chart.js**, and **MySQL**. Designed to help individuals manage income, track expenses, track budgets, monitor savings goals, and gain insights through a beautifully crafted dashboard and analytics.
 
 ---
 
@@ -16,7 +16,7 @@
 ### 📊 Dashboard
 - **Modern UI**: Clean, responsive interface with a consistent blue-red-white color theme.
 - **At-a-Glance Widgets**: Get a quick overview of your account balances, spending, and recent transactions.
-- **Interactive Charts**: Visualize your weekly income and expenses using dynamic Chart.js graphs.
+- **Interactive Charts**: Visualize your daily, weekly, monthly, and yearly income and expenses using dynamic Chart.js graphs.
 
 ### 💼 My Wallet
 - **Card-Based Layout**: Wallets and accounts are displayed in stylish cards for easy access.
@@ -68,7 +68,7 @@
 git clone https://github.com/CJcode6754/FinanceFlow.git
 
 # Navigate to the project folder
-cd financeflow
+cd FinanceFlow
 
 # Install PHP dependencies
 composer install
