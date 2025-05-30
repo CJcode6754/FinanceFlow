@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ResetPasswordController;
@@ -37,4 +38,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('/category', CategoryController::class);
     Route::resource('/transaction', TransactionController::class);
     Route::resource('/wallet', WalletController::class);
+    Route::resource('/budget', BudgetController::class);
 });

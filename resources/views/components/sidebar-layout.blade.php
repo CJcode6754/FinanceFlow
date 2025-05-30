@@ -47,7 +47,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{route('budget.index')}}"
                         class="sidebar-link group">
                         <i class="fa-solid fa-scale-balanced"></i>
                         <span class="flex-1 ms-3 whitespace-nowrap">Budgets</span>
