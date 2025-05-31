@@ -1,6 +1,6 @@
 <x-app-layout title="Categories">
     {{-- Toast Component --}}
-    <x-toast/>
+    <x-toast />
 
     {{-- Sidebar Component --}}
     <x-sidebar-layout />
@@ -37,13 +37,9 @@
                     <div
                         class="flex items-center justify-between w-full gap-4 px-6 py-4 transition bg-white rounded-lg shadow-lg hover:shadow-xl">
                         <div class="flex items-center gap-4">
-                            @if ($category->image)
-                                <img class="rounded-full w-15" src="{{ asset('storage/' . $category->image) }}"
-                                    alt="Category Image">
-                            @else
-                                <img class="rounded-full w-15" src="{{ asset('storage/category_image/default.png') }}"
-                                    alt="Category Image">
-                            @endif
+                            <img class="rounded-full w-15 h-15 object-cover"
+                                src="{{ asset('storage/' . $category->image ?? 'storage/category_image/default.png') }}"
+                                alt="Category Image">
                             <h2 class="text-lg font-semibold">{{ $category->name }}</h2>
                         </div>
 

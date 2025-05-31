@@ -1,6 +1,6 @@
 <x-app-layout title="My Wallet">
     {{-- Toast Component --}}
-    <x-toast/>
+    <x-toast />
 
     {{-- Sidebar Component --}}
     <x-sidebar-layout />
@@ -113,19 +113,24 @@
                     <!-- Graph + Subscriptions -->
                     <section class="flex flex-col gap-4 p-4 bg-white shadow-md lg:flex-row rounded-xl">
                         <!-- Graph -->
-                        <div
-                            class="flex items-center justify-center w-full h-48 font-bold text-white bg-white shadow lg:w-5/6">
-                            <canvas id="categoryDoughnutChart" class="w-full h-full"></canvas>
+                        <div class="w-full max-w-5xl p-4 bg-white rounded-lg shadow">
+                            <h2 class="mb-4 text-lg font-bold text-gray-800">Spending by Category</h2>
+                            <div class="flex items-center justify-center h-64">
+                                <canvas id="categoryDoughnutChart" class="w-full h-full"></canvas>
+                            </div>
                         </div>
+
 
                         <!-- Categories -->
                         <div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
                             @foreach ($categories as $item)
                                 <div class="flex items-center gap-3 p-4 bg-white rounded shadow">
-                                    <img src="{{asset('storage/' . $item->image)}}" alt="Category Image" class="rounded-full w-15">
+                                    <img src="{{ asset('storage/' . $item->image ?? 'storage/category_image/default.png') }}" alt="Category Image"
+                                        class="rounded-full w-15">
                                     <div>
-                                        <h5 class="font-semibold text-gray-800">{{$item->name}}</h5>
-                                        <h6 class="text-gray-600">PHP {{number_format($item->transactions->sum('amount'), 2)}}</h6>
+                                        <h5 class="font-semibold text-gray-800">{{ $item->name }}</h5>
+                                        <h6 class="text-gray-600">PHP
+                                            {{ number_format($item->transactions->sum('amount'), 2) }}</h6>
                                     </div>
                                 </div>
                             @endforeach
@@ -150,8 +155,7 @@
                                 <div
                                     class="flex items-center justify-center mx-auto bg-red-100 rounded-full size-12 shrink-0 sm:mx-0 sm:size-10">
                                     <svg class="text-red-600 size-6" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" aria-hidden="true"
-                                        data-slot="icon">
+                                        stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
                                     </svg>
@@ -236,7 +240,7 @@
                     '#EC4899', // Pink-500
                     '#22D3EE', // Cyan-400
                     '#F97316', // Orange-500
-                    '#14B8A6'  // Teal-500
+                    '#14B8A6' // Teal-500
                 ],
                 borderWidth: 1
             }]
