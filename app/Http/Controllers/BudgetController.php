@@ -6,6 +6,7 @@ use App\Models\Budget;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class BudgetController extends Controller
 {
@@ -84,7 +85,7 @@ class BudgetController extends Controller
             'end_date' => $request->input('end_date'),
         ]);
 
-        return redirect()->route('budget.index')->with('success', 'Successfuly created new budget');
+        return redirect()->route('budget.index')->with('success', 'Successfully created new budget');
     }
 
     /**
@@ -100,7 +101,12 @@ class BudgetController extends Controller
      */
     public function edit(Budget $budget)
     {
-        //
+        Gate::authorize('update', $budget);
+
+        $categories = Category::select('id', 'name')->get();
+        $budget->with('category')->get();
+
+        return view('admin.budget.edit', compact('categories', 'budget'));
     }
 
     /**
@@ -108,7 +114,23 @@ class BudgetController extends Controller
      */
     public function update(Request $request, Budget $budget)
     {
-        //
+        Gate::authorize('update', $budget);
+
+        $request->validate([
+            'category_id' => ['required', 'integer'],
+            'amount' => ['integer', 'required'],
+            'start_date' => ['date', 'required'],
+            'end_date' => ['date', 'required'],
+        ]);
+
+        $budget->update([
+            'category_id' => $request->input('category_id'),
+            'amount' => $request->input('amount'),
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
+        ]);
+
+        return redirect()->route('budget.index')->with('success', 'Successfully edit the selected budget');
     }
 
     /**
@@ -116,6 +138,10 @@ class BudgetController extends Controller
      */
     public function destroy(Budget $budget)
     {
-        //
+        Gate::authorize('delete', $budget);
+
+        $budget->delete();
+
+        return redirect()->route('budget.index')->with('success', 'Successfully deleted the selected budget');
     }
 }
