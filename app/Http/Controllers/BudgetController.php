@@ -15,18 +15,44 @@ class BudgetController extends Controller
     public function index()
     {
         $budgets = Budget::with('category')->get();
+        $totalSpent = 0;
+        $totalBudget = 0;
+        $totalRemaining = 0;
+        $category_IDs = [];
 
-        foreach($budgets as $budget){
+        foreach ($budgets as $budget) {
             $spentAmount = $budget->category->transactions()
                 ->whereBetween('date', [$budget->start_date, $budget->end_date])
                 ->sum('amount');
 
             $budget->spent = $spentAmount;
             $budget->remaining = $budget->amount - $spentAmount;
-            $budget->percentage = $budget->amount > 0 ? min(100, ($spentAmount/$budget->amount) * 100) : 0;
+            $budget->percentage = $budget->amount > 0 ? min(100, ($spentAmount / $budget->amount) * 100) : 0;
+
+            $totalSpent += $spentAmount;
+            $totalBudget += $budget->amount;
+            $totalRemaining += $budget->remaining;
+            $category_IDs[] = $budget->category_id;
+
+            $chartLabels[] = $budget->category->name;
+
         }
 
-        return view('admin.budget.index', compact('budgets'));
+        $totalCategoryIDs = count(array_unique($category_IDs));
+
+        $chartData = $budgets->map(function ($bg) {
+            return $bg->amount;
+        })->toArray();
+
+        return view('admin.budget.index', compact(
+            'budgets',
+            'totalSpent',
+            'totalBudget',
+            'totalRemaining',
+            'totalCategoryIDs',
+            'chartLabels',
+            'chartData'
+        ));
     }
 
     /**
