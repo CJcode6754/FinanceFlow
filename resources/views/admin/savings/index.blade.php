@@ -67,22 +67,22 @@
                 {{-- Overview --}}
                 <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
                     <div class="p-8 text-center bg-white rounded-lg shadow">
-                        <h2 class="text-xl font-bold text-gray-600">PHP 20,000</h2>
+                        <h2 class="text-xl font-bold text-gray-600">PHP {{number_format($totalSaved, 2)}}</h2>
                         <p class="text-sm font-medium text-gray-400">Total Saved</p>
                     </div>
 
                     <div class="p-8 text-center bg-white rounded-lg shadow">
-                        <h2 class="text-xl font-bold text-gray-600">PHP 30,000</h2>
+                        <h2 class="text-xl font-bold text-gray-600">PHP {{number_format($totalGoals, 2)}}</h2>
                         <p class="text-sm font-medium text-gray-400">Total Goals</p>
                     </div>
 
                     <div class="p-8 text-center bg-white rounded-lg shadow">
-                        <h2 class="text-xl font-bold text-gray-600">3</h2>
+                        <h2 class="text-xl font-bold text-gray-600">{{$activeGoals}}</h2>
                         <p class="text-sm font-medium text-gray-400">Active Goals</p>
                     </div>
 
                     <div class="p-8 text-center bg-white rounded-lg shadow">
-                        <h2 class="text-xl font-bold text-gray-600">50%</h2>
+                        <h2 class="text-xl font-bold text-gray-600">{{number_format($avgProgress, 2)}}%</h2>
                         <p class="text-sm font-medium text-gray-400">Avg Progress</p>
                     </div>
                 </div>
@@ -131,21 +131,22 @@
                                 </div>
 
                                 <div class="flex items-center justify-between text-sm text-gray-600">
-                                    <p>{{$saving->process_percent}}%</p>
-                                    <p>PHP {{number_format($saving->target_amount - $saving->current_amount, 2)}} to go</p>
+                                    <p>{{ $saving->process_percent }}%</p>
+                                    <p>PHP {{ number_format($saving->target_amount - $saving->current_amount, 2) }} to
+                                        go</p>
                                 </div>
                                 <div class="w-full h-3 overflow-hidden bg-gray-200 rounded-full">
                                     <div class="h-full transition-all duration-300 rounded-full bg-emerald-500"
-                                        style="width: {{$saving->process_percent}}%"></div>
+                                        style="width: {{ $saving->process_percent }}%"></div>
                                 </div>
                             </div>
 
                             <!-- Buttons -->
                             <div class="flex flex-col justify-center gap-4 lg:flex-row">
-                                <a href="#"
+                                <a href="{{ route('savings.transaction', [$saving->id, 'method' => 'deposit']) }}"
                                     class="w-full py-3 font-medium text-center text-white transition-all bg-emerald-500 hover:bg-emerald-600 lg:w-1/2 rounded-xl"><i
                                         class="mr-2 fa-solid fa-sack-dollar"></i>Deposit</a>
-                                <a href="#"
+                                <a href="{{ route('savings.transaction', [$saving->id, 'method' => 'withdraw']) }}"
                                     class="w-full py-3 font-medium text-center transition-all bg-gray-100 hover:bg-gray-400 hover:text-white lg:w-1/2 rounded-xl">
                                     <i class="mr-2 fa-solid fa-money-bill-wave"></i>Withdraw
                                 </a>
@@ -168,22 +169,33 @@
                                 <tr class="text-sm font-semibold">
                                     <td class="px-4 py-4">Type</td>
                                     <td>Saving Goals Name</td>
+                                    <td>Note</td>
                                     <td>Date and Time</td>
                                     <td>Amount</td>
                                 </tr>
                             </thead>
                             <tbody class="text-center text-gray-700">
-                                <tr class="font-medium border-t hover:bg-gray-50">
-                                    <td class="px-4 py-4"><i
-                                            class="p-2 mr-2 text-white bg-green-400 rounded-lg fa-solid fa-plus"></i>
-                                        Deposit
-                                    </td>
-                                    <td>Trip to Japan</td>
-                                    <td>Today, 2:00PM</td>
-                                    <td class="text-green-500"><i class="mr-2 fa-solid fa-plus"></i> PHP 500</td>
-                                </tr>
+                                @foreach ($transaction_history as $history)
+                                    <tr class="font-medium border-t hover:bg-gray-50">
+                                        <td class="px-4 py-4 capitalize">{!! $history->type == 'deposit' ? '<i
+                                                class="p-2 mr-2 text-white bg-green-400 rounded-lg fa-solid fa-plus"></i>' : '<i
+                                                class="p-2 mr-2 text-white bg-red-400 rounded-lg fa-solid fa-minus"></i>' !!}
+                                            {{ $history->type }}
+                                        </td>
+                                        <td>{{ $history->savings->name }}</td>
+                                        <td>{{ $history->note }}</td>
+                                        <td>
+                                            {{ $history->date->isToday() ? 'Today' : $history->date->format('M d') }},
+                                            {{ $history->date->format('g:iA') }}
+                                        </td>
+                                        <td>{!! $history->type == 'deposit' ? '<span class="text-green-500"><i class="mr-2 fa-solid fa-plus"></i> PHP ' . $history->amount .'</span>' : '<span class="text-red-500"><i class="mr-2 fa-solid fa-minus"></i> PHP '. $history->amount .'</span>' !!}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
+                    </div>
+                    <div>
+                        {{ $transaction_history->links() }}
                     </div>
                 </div>
             </section>
