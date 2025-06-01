@@ -9,11 +9,15 @@ class Saving extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id', 'name','icon', 'target_amount', 'current_amount', 'deadline', 'note'
+    ];
+
     public function user(){
         return $this->belongsTo(User::class);
     }
 
-    public function transactions(){
-        return $this->hasMany(Transaction::class);
+    public function savingsTransactions(){
+        return $this->hasMany(SavingsTransaction::class, 'saving_id');
     }
 }
