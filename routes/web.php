@@ -40,5 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/transaction', TransactionController::class);
     Route::resource('/wallet', WalletController::class);
     Route::resource('/budget', BudgetController::class);
+    Route::get('/savings/{id}/transaction', [SavingController::class, 'transaction'])->name('savings.transaction');
+    Route::post('/savings/transaction/store', [SavingController::class, 'transactionStore'])->name('savings.transaction.store');
     Route::resource('/savings', SavingController::class);
 });

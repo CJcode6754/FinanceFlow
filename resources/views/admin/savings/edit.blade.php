@@ -1,4 +1,4 @@
-<x-app-layout title="Create Savings">
+<x-app-layout title="Edit Savings">
     <x-sidebar-layout />
 
     <div class="flex-1 md:ml-64">

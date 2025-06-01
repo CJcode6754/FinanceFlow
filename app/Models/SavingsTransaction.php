@@ -9,7 +9,20 @@ class SavingsTransaction extends Model
 {
     use HasFactory;
 
-    public function savings(){
-        return $this->belongsTo(Saving::class);
+    protected $fillable = [
+        'saving_id',
+        'amount',
+        'type',
+        'date',
+        'note'
+    ];
+
+    protected $casts = [
+        'date' => 'datetime',
+    ];
+
+    public function savings()
+    {
+        return $this->belongsTo(Saving::class, 'saving_id');
     }
 }
