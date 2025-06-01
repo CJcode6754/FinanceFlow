@@ -5,6 +5,7 @@ use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\SavingController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
@@ -39,4 +40,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('/transaction', TransactionController::class);
     Route::resource('/wallet', WalletController::class);
     Route::resource('/budget', BudgetController::class);
+    Route::resource('/savings', SavingController::class);
 });

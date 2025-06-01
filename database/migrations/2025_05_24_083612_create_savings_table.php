@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('name');
+            $table->string('icon');
             $table->bigInteger('target_amount');
-            $table->bigInteger('current_amount');
+            $table->bigInteger('current_amount')->nullable();
             $table->date('deadline');
-            $table->text('note');
+            $table->text('note')->nullable();
             $table->timestamps();
         });
 
