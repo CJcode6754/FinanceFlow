@@ -21,38 +21,49 @@
 
                 <div class="flex items-center gap-2 md:gap-4">
                     {{-- Filter --}}
-                    <div>
-                        <select name="status_filter"
-                            class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="'all_goals'" {{ old('status_filter') == 'all_goals' ? 'selected' : '' }}>
-                                All Goals
-                            </option>
-                            <option value="'active'" {{ old('status_filter') == 'active' ? 'selected' : '' }}>
-                                Active
-                            </option>
-                            <option value="'completed'" {{ old('status_filter') == 'completed' ? 'selected' : '' }}>
-                                Completed
-                            </option>
-                        </select>
-                    </div>
+                    <form action="{{ route('savings.index') }}" method="get" class="flex items-center gap-4">
+                        <div>
+                            <select name="status_filter"
+                                class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="all_goals"
+                                    {{ request('status_filter') == 'all_goals' ? 'selected' : '' }}>All Goals</option>
+                                <option value="active" {{ request('status_filter') == 'active' ? 'selected' : '' }}>
+                                    Active</option>
+                                <option value="completed"
+                                    {{ request('status_filter') == 'completed' ? 'selected' : '' }}>Completed</option>
+                            </select>
+                        </div>
 
-                    <div>
-                        <select name="sort"
-                            class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="sort_by_date" {{ old('sort') == 'sort_by_date' ? 'selected' : '' }}>
-                                Sort by Date
-                            </option>
-                            <option value="sort_by_amount" {{ old('sort') == 'sort_by_amount' ? 'selected' : '' }}>
-                                Sort by Amount
-                            </option>
-                            <option value="sort_by_progress" {{ old('sort') == 'sort_by_progress' ? 'selected' : '' }}>
-                                Sort by Progress
-                            </option>
-                            <option value="sort_by_target" {{ old('sort') == 'sort_by_target' ? 'selected' : '' }}>
-                                Sort by Target
-                            </option>
-                        </select>
-                    </div>
+                        <div>
+                            <select name="sort"
+                                class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="sort_by">Sort by</option>
+                                <option value="sort_by_date" {{ request('sort') == 'sort_by_date' ? 'selected' : '' }}>
+                                    Sort by Date (Asc)
+                                </option>
+                                <option value="sort_by_date_desc" {{ request('sort') == 'sort_by_date' ? 'selected' : '' }}>
+                                    Sort by Date (Desc)
+                                </option>
+                                <option value="sort_by_amount" {{ request('sort') == 'sort_by_amount' ? 'selected' : '' }}>
+                                    Sort by Amount (Asc)
+                                </option>
+                                <option value="sort_by_amount_desc" {{ request('sort') == 'sort_by_amount' ? 'selected' : '' }}>
+                                    Sort by Amount (Desc)
+                                </option>
+                                <option value="sort_by_progress"
+                                    {{ request('sort') == 'sort_by_progress' ? 'selected' : '' }}>
+                                    Sort by Progress (Asc)
+                                </option>
+                                <option value="sort_by_progress_desc"
+                                    {{ request('sort') == 'sort_by_progress' ? 'selected' : '' }}>
+                                    Sort by Progress (Desc)
+                                </option>
+                            </select>
+                        </div>
+
+                        <button type="submit"
+                            class="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium text-blue-600 transition border border-blue-600 rounded-md hover:bg-blue-600 hover:text-white">Filter</button>
+                    </form>
 
                     <a href="{{ route('savings.create') }}"
                         class="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium text-blue-600 transition border border-blue-600 rounded-md hover:bg-blue-600 hover:text-white">
@@ -67,22 +78,22 @@
                 {{-- Overview --}}
                 <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
                     <div class="p-8 text-center bg-white rounded-lg shadow">
-                        <h2 class="text-xl font-bold text-gray-600">PHP {{number_format($totalSaved, 2)}}</h2>
+                        <h2 class="text-xl font-bold text-gray-600">PHP {{ number_format($totalSaved, 2) }}</h2>
                         <p class="text-sm font-medium text-gray-400">Total Saved</p>
                     </div>
 
                     <div class="p-8 text-center bg-white rounded-lg shadow">
-                        <h2 class="text-xl font-bold text-gray-600">PHP {{number_format($totalGoals, 2)}}</h2>
+                        <h2 class="text-xl font-bold text-gray-600">PHP {{ number_format($totalGoals, 2) }}</h2>
                         <p class="text-sm font-medium text-gray-400">Total Goals</p>
                     </div>
 
                     <div class="p-8 text-center bg-white rounded-lg shadow">
-                        <h2 class="text-xl font-bold text-gray-600">{{$activeGoals}}</h2>
+                        <h2 class="text-xl font-bold text-gray-600">{{ $activeGoals }}</h2>
                         <p class="text-sm font-medium text-gray-400">Active Goals</p>
                     </div>
 
                     <div class="p-8 text-center bg-white rounded-lg shadow">
-                        <h2 class="text-xl font-bold text-gray-600">{{number_format($avgProgress, 2)}}%</h2>
+                        <h2 class="text-xl font-bold text-gray-600">{{ number_format($avgProgress, 2) }}%</h2>
                         <p class="text-sm font-medium text-gray-400">Avg Progress</p>
                     </div>
                 </div>
@@ -177,9 +188,11 @@
                             <tbody class="text-center text-gray-700">
                                 @foreach ($transaction_history as $history)
                                     <tr class="font-medium border-t hover:bg-gray-50">
-                                        <td class="px-4 py-4 capitalize">{!! $history->type == 'deposit' ? '<i
-                                                class="p-2 mr-2 text-white bg-green-400 rounded-lg fa-solid fa-plus"></i>' : '<i
-                                                class="p-2 mr-2 text-white bg-red-400 rounded-lg fa-solid fa-minus"></i>' !!}
+                                        <td class="px-4 py-4 capitalize">{!! $history->type == 'deposit'
+                                            ? '<i
+                                                                                                                                                                                                                class="p-2 mr-2 text-white bg-green-400 rounded-lg fa-solid fa-plus"></i>'
+                                            : '<i
+                                                                                                                                                                                                                class="p-2 mr-2 text-white bg-red-400 rounded-lg fa-solid fa-minus"></i>' !!}
                                             {{ $history->type }}
                                         </td>
                                         <td>{{ $history->savings->name }}</td>
@@ -188,7 +201,9 @@
                                             {{ $history->date->isToday() ? 'Today' : $history->date->format('M d') }},
                                             {{ $history->date->format('g:iA') }}
                                         </td>
-                                        <td>{!! $history->type == 'deposit' ? '<span class="text-green-500"><i class="mr-2 fa-solid fa-plus"></i> PHP ' . $history->amount .'</span>' : '<span class="text-red-500"><i class="mr-2 fa-solid fa-minus"></i> PHP '. $history->amount .'</span>' !!}</td>
+                                        <td>{!! $history->type == 'deposit'
+                                            ? '<span class="text-green-500"><i class="mr-2 fa-solid fa-plus"></i> PHP ' . $history->amount . '</span>'
+                                            : '<span class="text-red-500"><i class="mr-2 fa-solid fa-minus"></i> PHP ' . $history->amount . '</span>' !!}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
