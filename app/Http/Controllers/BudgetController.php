@@ -15,12 +15,15 @@ class BudgetController extends Controller
      */
     public function index()
     {
-        $budgets = Budget::with('category')->get();
+        $budgets = Budget::with('category')
+            ->where('user_id', Auth::user()->id)
+            ->get();
         $totalSpent = 0;
         $totalBudget = 0;
         $totalRemaining = 0;
         $category_IDs = [];
-
+        $chartLabels = [];
+        
         foreach ($budgets as $budget) {
             $spentAmount = $budget->category->transactions()
                 ->whereBetween('date', [$budget->start_date, $budget->end_date])

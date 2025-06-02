@@ -126,7 +126,7 @@
                             @foreach ($categories as $item)
                                 <div class="flex items-center gap-3 p-4 bg-white rounded shadow">
                                     <img src="{{ asset('storage/' . $item->image ?? 'storage/category_image/default.png') }}" alt="Category Image"
-                                        class="rounded-full w-15">
+                                        class="rounded-full w-15 h-15 object-fill">
                                     <div>
                                         <h5 class="font-semibold text-gray-800">{{ $item->name }}</h5>
                                         <h6 class="text-gray-600">PHP

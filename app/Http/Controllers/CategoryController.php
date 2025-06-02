@@ -17,7 +17,8 @@ class CategoryController extends Controller
     {
         $type = $request->input('type', 'expense');
 
-        $query = Category::query();
+        $query = Category::query()
+            ->where('user_id', Auth::user()->id);
 
         if ($type && in_array($type, ['expense', 'income'])) {
             $query->where('type', $type);

@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     public function index(){
-        $transactions = Transaction::with('category', 'wallet')->get();
+        $transactions = Transaction::with('category', 'wallet')
+            ->where('user_id', Auth::user()->id)
+            ->get();
         return view('admin.dashboard', compact('transactions'));
     }
 

@@ -90,7 +90,8 @@
                                         class="p-2 text-white transition bg-blue-500 rounded-lg hover:bg-blue-600">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
-                                    <button onclick="showModal({{ $item->id }})" class="p-2 text-white transition bg-red-500 rounded-lg hover:bg-red-600 cursor-pointer">
+                                    <button onclick="showModal({{ $item->id }})"
+                                        class="p-2 text-white transition bg-red-500 rounded-lg hover:bg-red-600 cursor-pointer">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </div>
@@ -172,15 +173,17 @@
                                         }
                                     @endphp
 
-                                    <div class="w-full p-6 {{$bgcolor}} border-l-6 {{$bgborder}} shadow rounded-xl">
-                                        <h2>{{$budget->category->name}}: {{number_format($budget->percentage, 2)}}% of budget used</h2>
+                                    <div
+                                        class="w-full p-6 {{ $bgcolor }} border-l-6 {{ $bgborder }} shadow rounded-xl">
+                                        <h2>{{ $budget->category->name }}:
+                                            {{ number_format($budget->percentage, 2) }}% of budget used</h2>
                                     </div>
                                 @endif
-                            @endforeach
 
-                            @if (!$hasAlerts)
-                                <p>No Alerts</p>
-                            @endif
+                                @if (!$hasAlerts)
+                                    <p>No Alerts</p>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>

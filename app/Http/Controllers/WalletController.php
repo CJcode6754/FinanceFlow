@@ -16,9 +16,15 @@ class WalletController extends Controller
      */
     public function index()
     {
-        $wallets = Wallet::with('user')->get();
-        $transactions = Transaction::with('wallet', 'category')->get();
-        $categories = Category::with('transactions')->get();
+        $wallets = Wallet::with('user')
+            ->where('user_id', Auth::user()->id)
+            ->get();
+        $transactions = Transaction::with('wallet', 'category')
+            ->where('user_id', Auth::user()->id)
+            ->get();
+        $categories = Category::with('transactions')
+            ->where('user_id', Auth::user()->id)
+            ->get();
 
         $chartLabels = $categories->pluck('name')->toArray();
 
