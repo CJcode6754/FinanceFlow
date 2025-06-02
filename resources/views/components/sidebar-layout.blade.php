@@ -18,62 +18,45 @@
             </div>
 
             <ul class="space-y-3 font-medium">
-                <li>
-                    <a href="{{ route('dashboard') }}"
-                        class="sidebar-link group">
-                        <i class="fa-solid fa-house"></i>
-                        <span class="ms-3">Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('wallet.index') }}"
-                        class="sidebar-link group">
-                        <i class="fa-solid fa-wallet"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">My Wallet</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('transaction.index')}}"
-                        class="sidebar-link group">
-                        <i class="fa-solid fa-right-left"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Transactions</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('category.index') }}"
-                        class="sidebar-link group">
-                        <i class="fa-solid fa-tags"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Categories</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('budget.index')}}"
-                        class="sidebar-link group">
-                        <i class="fa-solid fa-scale-balanced"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Budgets</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('savings.index')}}"
-                        class="sidebar-link group">
-                        <i class="fa-solid fa-bullseye"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Saving goals</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="sidebar-link group">
-                        <i class="fa-solid fa-chart-line"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Analytics</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="sidebar-link group">
-                        <i class="fa-solid fa-gear"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Setting</span>
-                    </a>
-                </li>
+                <x-nav-link href="{{ route('dashboard') }}" :active="request()->is('/')">
+                    <x-slot name="icon"><i class="fa-solid fa-house"></i></x-slot>
+                    Dashboard
+                </x-nav-link>
+
+                <x-nav-link href="{{ route('wallet.index') }}" :active="request()->is('wallet')">
+                    <x-slot:icon><i class="fa-solid fa-wallet"></i></x-slot:icon>
+                    Wallet
+                </x-nav-link>
+
+                <x-nav-link href="{{ route('transaction.index') }}" :active="request()->is('transaction')">
+                    <x-slot:icon><i class="fa-solid fa-right-left"></i></x-slot:icon>
+                    Transaction
+                </x-nav-link>
+
+                <x-nav-link href="{{ route('category.index') }}" :active="request()->is('category')">
+                    <x-slot:icon><i class="fa-solid fa-tags"></i></x-slot:icon>
+                    Category
+                </x-nav-link>
+
+                <x-nav-link href="{{ route('budget.index') }}" :active="request()->is('budget')">
+                    <x-slot:icon><i class="fa-solid fa-scale-balanced"></i></x-slot:icon>
+                    Budget
+                </x-nav-link>
+
+                <x-nav-link href="{{ route('savings.index') }}" :active="request()->is('savings')">
+                    <x-slot:icon><i class="fa-solid fa-bullseye"></i></x-slot:icon>
+                    Savings
+                </x-nav-link>
+
+                <a href="#" class="sidebar-link group">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Analytics</span>
+                </a>
+
+                <a href="#" class="sidebar-link group">
+                    <i class="fa-solid fa-gear"></i>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Setting</span>
+                </a>
             </ul>
         </div>
 
@@ -81,7 +64,7 @@
             <div class="flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer hover:bg-gray-100">
                 <i class="p-3 text-sm text-white bg-gray-500 rounded-full fa-solid fa-user"></i>
                 <div class="flex items-center gap-3 text-sm">
-                    <h3 class="font-medium">{{auth()->user()->name}}</h3>
+                    <h3 class="font-medium">{{ auth()->user()->name }}</h3>
                 </div>
 
                 <form action="{{ route('logout') }}" method="POST">
