@@ -16,6 +16,10 @@
         @apply flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100;
     }
 
+    .sidebar-link-active{
+        @apply flex items-center py-2 pl-5 text-blue-800 bg-blue-100 rounded-lg;
+    }
+
     .label{
         @apply block mb-2 text-sm font-medium text-gray-700;
     }
