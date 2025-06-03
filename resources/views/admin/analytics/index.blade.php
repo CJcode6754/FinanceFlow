@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout title="Analytics">
     {{-- Sidebar Component --}}
     <x-sidebar-layout />
 
