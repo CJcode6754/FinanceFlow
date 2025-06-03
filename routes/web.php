@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
@@ -36,6 +37,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/logout', [DashboardController::class, 'logout'])->name('logout');
 
+    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
     Route::resource('/category', CategoryController::class);
     Route::resource('/transaction', TransactionController::class);
     Route::resource('/wallet', WalletController::class);

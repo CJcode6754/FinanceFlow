@@ -48,10 +48,10 @@
                     Savings
                 </x-nav-link>
 
-                <a href="#" class="sidebar-link group">
-                    <i class="fa-solid fa-chart-line"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Analytics</span>
-                </a>
+                <x-nav-link href="{{ route('analytics') }}" :active="request()->is('analytics')">
+                    <x-slot:icon><i class="fa-solid fa-chart-line"></i></x-slot:icon>
+                    Analytics
+                </x-nav-link>
 
                 <a href="#" class="sidebar-link group">
                     <i class="fa-solid fa-gear"></i>
