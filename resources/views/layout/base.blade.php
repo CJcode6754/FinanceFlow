@@ -19,6 +19,8 @@
 
     {{-- ChartJS --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
 </head>
 <body>
     {{$slot}}
