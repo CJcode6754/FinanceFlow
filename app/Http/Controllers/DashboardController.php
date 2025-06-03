@@ -24,4 +24,8 @@ class DashboardController extends Controller
 
         return redirect('/');
     }
+
+    public function setting(){
+        return view('admin.settings');
+    }
 }

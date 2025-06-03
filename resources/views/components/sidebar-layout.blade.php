@@ -53,10 +53,10 @@
                     Analytics
                 </x-nav-link>
 
-                <a href="#" class="sidebar-link group">
-                    <i class="fa-solid fa-gear"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Setting</span>
-                </a>
+                <x-nav-link href="{{ route('setting') }}" :active="request()->is('setting')">
+                    <x-slot:icon><i class="fa-solid fa-gear"></i></x-slot:icon>
+                    Setting
+                </x-nav-link>
             </ul>
         </div>
 

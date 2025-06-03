@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/email/verification-notification', [AuthController::class, 'resendEmail'])->middleware(['throttle:6,1'])->name('verification.send');
 
     Route::post('/logout', [DashboardController::class, 'logout'])->name('logout');
+    Route::get('/setting', [DashboardController::class, 'setting'])->name('setting');
 
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
     Route::resource('/category', CategoryController::class);
