@@ -10,27 +10,32 @@
 
             <!-- Welcome Section -->
             <div class="mb-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome back, John!</h2>
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome back, {{ auth()->user()->name }}!</h2>
                 <p class="text-gray-600">Here's what's happening with your finances today.</p>
             </div>
 
             <!-- Quick Action Buttons -->
             <div class="mb-8 flex flex-wrap gap-4">
-                <button
+                <a href="{{ route('transaction.index') }}"
                     class="inline-flex items-center px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-2xl transition-colors shadow-sm">
                     <i data-feather="plus" class="w-5 h-5 mr-2"></i>
                     Add Transaction
-                </button>
-                <button
+                </a>
+                <a href="{{ route('wallet.index') }}"
                     class="inline-flex items-center px-6 py-3 bg-indigo-500 hover:bg-indigo-600 text-white font-medium rounded-2xl transition-colors shadow-sm">
                     <i data-feather="credit-card" class="w-5 h-5 mr-2"></i>
                     Add Wallet
-                </button>
-                <button
+                </a>
+                <a href="{{ route('budget.index') }}"
                     class="inline-flex items-center px-6 py-3 bg-sky-500 hover:bg-sky-600 text-white font-medium rounded-2xl transition-colors shadow-sm">
                     <i data-feather="target" class="w-5 h-5 mr-2"></i>
                     Add Budget
-                </button>
+                </a>
+                <a href="{{ route('savings.index') }}"
+                    class="inline-flex items-center px-6 py-3 bg-fuchsia-500 hover:bg-fuchsia-600 text-white font-medium rounded-2xl transition-colors shadow-sm">
+                    <i data-feather="target" class="w-5 h-5 mr-2"></i>
+                    Add Savings
+                </a>
             </div>
 
             <!-- Top Cards Row -->
@@ -43,7 +48,7 @@
                             <i data-feather="dollar-sign" class="w-6 h-6 text-emerald-500"></i>
                         </div>
                     </div>
-                    <div class="text-4xl font-bold text-gray-900 mb-2">$12,450.80</div>
+                    <div class="text-4xl font-bold text-gray-900 mb-2">₱ {{ number_format($totalBalance, 2) }}</div>
                     <div class="flex items-center text-sm">
                         <span class="text-emerald-500 font-medium">+2.5%</span>
                         <span class="text-gray-500 ml-2">from last month</span>
@@ -58,9 +63,11 @@
                             <i data-feather="trending-up" class="w-6 h-6 text-emerald-500"></i>
                         </div>
                     </div>
-                    <div class="text-3xl font-bold text-gray-900 mb-2">$5,200.00</div>
+                    <div class="text-3xl font-bold text-gray-900 mb-2">₱{{ number_format($thisMonthIncome, 2) }}</div>
                     <div class="flex items-center text-sm">
-                        <span class="text-emerald-500 font-medium">+8.2%</span>
+                        <span class="{{ $incomeChange >= 0 ? 'text-emerald-500' : 'text-red-500' }} font-medium">
+                            {{ $incomeChange >= 0 ? '+' : '-' }}{{ number_format(abs($incomeChange), 2) }}%
+                        </span>
                         <span class="text-gray-500 ml-2">vs last month</span>
                     </div>
                 </div>
@@ -73,11 +80,14 @@
                             <i data-feather="trending-down" class="w-6 h-6 text-red-500"></i>
                         </div>
                     </div>
-                    <div class="text-3xl font-bold text-gray-900 mb-2">$3,180.45</div>
+                    <div class="text-3xl font-bold text-gray-900 mb-2">₱{{ number_format($thisMonthExpense, 2) }}</div>
                     <div class="flex items-center text-sm">
-                        <span class="text-red-500 font-medium">+12.1%</span>
+                        <span class="{{ $expenseChange >= 0 ? 'text-gree-500' : 'text-red-500' }} font-medium">
+                            {{ $expenseChange >= 0 ? '+' : '-' }}{{ number_format(abs($expenseChange), 2) }}%
+                        </span>
                         <span class="text-gray-500 ml-2">vs last month</span>
                     </div>
+
                 </div>
             </div>
 
