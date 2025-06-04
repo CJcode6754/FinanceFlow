@@ -19,11 +19,26 @@ class DashboardController extends Controller
 
         $transactions = $query->get();
 
-        $wallets = Wallet::with('user')
-            ->where('user_id', Auth::user()->id)
-            ->get();
+        $walletQuery = Wallet::with('user')
+            ->where('user_id', Auth::user()->id);
 
+        $wallets = $walletQuery->get();
         $totalBalance = $wallets->sum('balance');
+
+
+        $thisMonthBalance = (clone $walletQuery)->whereMonth('updated_at', $today->month)
+            ->whereYear('updated_at', $today->year)
+            ->sum('balance');
+
+        $lastMonth = $today->copy()->subMonth();
+        $lastMonthBalance = (clone $walletQuery)->whereMonth('updated_at', $lastMonth->month)
+            ->whereYear('updated_at', $lastMonth->year)
+            ->sum('balance');
+
+        $balanceChange = 0;
+        if ($lastMonthBalance > 0) {
+            $balanceChange = (($thisMonthBalance - $lastMonthBalance) / $lastMonthBalance) * 100;
+        }
 
         // Income: This Month & Last Month
         $thisMonthIncome = (clone $query)->whereMonth('date', $today->month)
@@ -62,11 +77,10 @@ class DashboardController extends Controller
             'transactions',
             'totalBalance',
             'thisMonthIncome',
-            'lastMonthIncome',
             'incomeChange',
             'thisMonthExpense',
-            'lastMonthExpense',
-            'expenseChange'
+            'expenseChange',
+            'balanceChange'
         ));
     }
 

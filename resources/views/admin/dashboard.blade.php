@@ -50,8 +50,10 @@
                     </div>
                     <div class="text-4xl font-bold text-gray-900 mb-2">₱ {{ number_format($totalBalance, 2) }}</div>
                     <div class="flex items-center text-sm">
-                        <span class="text-emerald-500 font-medium">+2.5%</span>
-                        <span class="text-gray-500 ml-2">from last month</span>
+                        <span class="{{ $balanceChange >= 0 ? 'text-emerald-500' : 'text-red-500' }} font-medium">
+                            {{ $balanceChange >= 0 ? '+' : '-' }}{{ number_format(abs($balanceChange), 2) }}%
+                        </span>
+                        <span class="text-gray-500 ml-2">vs last month</span>
                     </div>
                 </div>
 
