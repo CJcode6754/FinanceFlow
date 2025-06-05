@@ -41,13 +41,16 @@
                                 <option value="sort_by_date" {{ request('sort') == 'sort_by_date' ? 'selected' : '' }}>
                                     Sort by Date (Asc)
                                 </option>
-                                <option value="sort_by_date_desc" {{ request('sort') == 'sort_by_date' ? 'selected' : '' }}>
+                                <option value="sort_by_date_desc"
+                                    {{ request('sort') == 'sort_by_date' ? 'selected' : '' }}>
                                     Sort by Date (Desc)
                                 </option>
-                                <option value="sort_by_amount" {{ request('sort') == 'sort_by_amount' ? 'selected' : '' }}>
+                                <option value="sort_by_amount"
+                                    {{ request('sort') == 'sort_by_amount' ? 'selected' : '' }}>
                                     Sort by Amount (Asc)
                                 </option>
-                                <option value="sort_by_amount_desc" {{ request('sort') == 'sort_by_amount' ? 'selected' : '' }}>
+                                <option value="sort_by_amount_desc"
+                                    {{ request('sort') == 'sort_by_amount' ? 'selected' : '' }}>
                                     Sort by Amount (Desc)
                                 </option>
                                 <option value="sort_by_progress"
@@ -189,10 +192,8 @@
                                 @foreach ($transaction_history as $history)
                                     <tr class="font-medium border-t hover:bg-gray-50">
                                         <td class="px-4 py-4 capitalize">{!! $history->type == 'deposit'
-                                            ? '<i
-                                                                                                                                                                                                                class="p-2 mr-2 text-white bg-green-400 rounded-lg fa-solid fa-plus"></i>'
-                                            : '<i
-                                                                                                                                                                                                                class="p-2 mr-2 text-white bg-red-400 rounded-lg fa-solid fa-minus"></i>' !!}
+                                            ? '<i class="p-2 mr-2 text-white bg-green-400 rounded-lg fa-solid fa-plus"></i>'
+                                            : '<i class="p-2 mr-2 text-white bg-red-400 rounded-lg fa-solid fa-minus"></i>' !!}
                                             {{ $history->type }}
                                         </td>
                                         <td>{{ $history->savings->name }}</td>
