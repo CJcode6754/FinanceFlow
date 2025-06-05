@@ -84,7 +84,7 @@
                     </div>
                     <div class="text-3xl font-bold text-gray-900 mb-2">₱{{ number_format($thisMonthExpense, 2) }}</div>
                     <div class="flex items-center text-sm">
-                        <span class="{{ $expenseChange >= 0 ? 'text-gree-500' : 'text-red-500' }} font-medium">
+                        <span class="{{ $expenseChange >= 0 ? 'text-green-500' : 'text-red-500' }} font-medium">
                             {{ $expenseChange >= 0 ? '+' : '-' }}{{ number_format(abs($expenseChange), 2) }}%
                         </span>
                         <span class="text-gray-500 ml-2">vs last month</span>
@@ -101,69 +101,34 @@
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="text-xl font-semibold text-gray-900">Recent Transactions</h3>
-                            <button class="text-indigo-500 hover:text-indigo-600 font-medium text-sm">View All</button>
+                            <a href="{{ route('transaction.index') }}"
+                                class="text-indigo-500 hover:text-indigo-600 font-medium text-sm">View All</a>
                         </div>
                         <div class="space-y-4">
-                            <div class="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
-                                <div class="flex items-center">
-                                    <div class="p-2 bg-sky-50 rounded-xl mr-4">
-                                        <i data-feather="shopping-bag" class="w-5 h-5 text-sky-500"></i>
+                            @foreach ($recent as $item)
+                                <div
+                                    class="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+                                    <div class="flex items-center">
+                                        <div class="p-2 bg-sky-50 rounded-xl mr-4">
+                                            <img class="h5 w-5 object-contain"
+                                                src="{{ asset('storage/' . $item->category->image) }}"
+                                                alt="{{ $item->category->name }}">
+                                        </div>
+                                        <div>
+                                            <div class="font-medium text-gray-900">{{ $item->category->name }}
+                                            </div>
+                                            <div class="text-sm text-gray-500">
+                                                {{ \Carbon\Carbon::parse($item->date)->format('M d, Y') }}</div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <div class="font-medium text-gray-900">Grocery Store</div>
-                                        <div class="text-sm text-gray-500">June 2, 2025</div>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="font-semibold text-red-600">-$127.50</div>
-                                    <div class="text-xs text-gray-500">Food & Dining</div>
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
-                                <div class="flex items-center">
-                                    <div class="p-2 bg-emerald-50 rounded-xl mr-4">
-                                        <i data-feather="briefcase" class="w-5 h-5 text-emerald-500"></i>
-                                    </div>
-                                    <div>
-                                        <div class="font-medium text-gray-900">Salary Deposit</div>
-                                        <div class="text-sm text-gray-500">June 1, 2025</div>
+                                    <div class="text-right">
+                                        <div class="font-semibold text-red-600">{!! $item->type == 'income'
+                                            ? '<span class="text-green-500">+ ₱ ' . $item->amount . '</span>'
+                                            : '<span class="text-red-500">- </i> ₱ ' . $item->amount . '</span>' !!}</div>
+                                        <div class="text-xs text-gray-500 capitalize">{{ $item->type }}</div>
                                     </div>
                                 </div>
-                                <div class="text-right">
-                                    <div class="font-semibold text-emerald-600">+$2,600.00</div>
-                                    <div class="text-xs text-gray-500">Income</div>
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
-                                <div class="flex items-center">
-                                    <div class="p-2 bg-indigo-50 rounded-xl mr-4">
-                                        <i data-feather="zap" class="w-5 h-5 text-indigo-500"></i>
-                                    </div>
-                                    <div>
-                                        <div class="font-medium text-gray-900">Electric Bill</div>
-                                        <div class="text-sm text-gray-500">May 31, 2025</div>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="font-semibold text-red-600">-$89.30</div>
-                                    <div class="text-xs text-gray-500">Utilities</div>
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between py-3">
-                                <div class="flex items-center">
-                                    <div class="p-2 bg-purple-50 rounded-xl mr-4">
-                                        <i data-feather="film" class="w-5 h-5 text-purple-500"></i>
-                                    </div>
-                                    <div>
-                                        <div class="font-medium text-gray-900">Netflix Subscription</div>
-                                        <div class="text-sm text-gray-500">May 30, 2025</div>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="font-semibold text-red-600">-$15.99</div>
-                                    <div class="text-xs text-gray-500">Entertainment</div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -195,52 +160,24 @@
                         <div class="mb-4">
                             <div class="flex justify-between text-sm mb-2">
                                 <span class="text-gray-600">Spent this month</span>
-                                <span class="font-medium text-gray-900">$3,180 / $4,000</span>
+                                <span class="font-medium text-gray-900">₱{{ number_format($totalSpent, 2) }} /
+                                    ₱{{ number_format($totalBudget, 2) }}</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-3">
-                                <div class="bg-sky-500 h-3 rounded-full" style="width: 79.5%"></div>
+                                <div class="bg-sky-500 h-3 rounded-full" style="width: {{ $budgetPercentage }}%"></div>
                             </div>
                         </div>
                         <div class="text-sm text-gray-600">
-                            <span class="text-emerald-500 font-medium">$820 remaining</span> for this month
+                            <span class="text-emerald-500 font-medium">₱{{ $totalRemaining }} remaining</span> for this
+                            month
                         </div>
                     </div>
 
                     <!-- Spending by Category -->
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                         <h3 class="text-xl font-semibold text-gray-900 mb-6">Spending by Category</h3>
-                        <div class="h-48 mb-4">
+                        <div class="h-75 mb-4 flex items-center justify-center">
                             <canvas id="categoryChart"></canvas>
-                        </div>
-                        <div class="space-y-3">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <div class="w-3 h-3 bg-sky-500 rounded-full mr-3"></div>
-                                    <span class="text-sm text-gray-700">Food & Dining</span>
-                                </div>
-                                <span class="text-sm font-medium text-gray-900">$1,240</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <div class="w-3 h-3 bg-indigo-500 rounded-full mr-3"></div>
-                                    <span class="text-sm text-gray-700">Utilities</span>
-                                </div>
-                                <span class="text-sm font-medium text-gray-900">$890</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <div class="w-3 h-3 bg-emerald-500 rounded-full mr-3"></div>
-                                    <span class="text-sm text-gray-700">Transportation</span>
-                                </div>
-                                <span class="text-sm font-medium text-gray-900">$650</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <div class="w-3 h-3 bg-purple-500 rounded-full mr-3"></div>
-                                    <span class="text-sm text-gray-700">Entertainment</span>
-                                </div>
-                                <span class="text-sm font-medium text-gray-900">$400</span>
-                            </div>
                         </div>
                     </div>
 
@@ -251,36 +188,18 @@
                             <button class="text-indigo-500 hover:text-indigo-600 text-sm font-medium">Manage</button>
                         </div>
                         <div class="space-y-4">
-                            <div
+                            @foreach ($wallets as $item)
+                                <div
                                 class="flex items-center justify-between p-4 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl text-white">
                                 <div>
-                                    <div class="text-sm opacity-90">Main Checking</div>
-                                    <div class="font-bold text-lg">$8,450.30</div>
+                                    <div class="text-sm opacity-90">{{$item->name}}</div>
+                                    <div class="font-bold text-lg">₱{{number_format($item->balance)}}</div>
                                 </div>
                                 <div class="p-2 bg-white bg-opacity-20 rounded-lg">
                                     <i data-feather="credit-card" class="w-5 h-5"></i>
                                 </div>
                             </div>
-                            <div
-                                class="flex items-center justify-between p-4 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl text-white">
-                                <div>
-                                    <div class="text-sm opacity-90">Savings Account</div>
-                                    <div class="font-bold text-lg">$3,200.50</div>
-                                </div>
-                                <div class="p-2 bg-white bg-opacity-20 rounded-lg">
-                                    <i data-feather="piggy-bank" class="w-5 h-5"></i>
-                                </div>
-                            </div>
-                            <div
-                                class="flex items-center justify-between p-4 bg-gradient-to-r from-sky-500 to-blue-600 rounded-xl text-white">
-                                <div>
-                                    <div class="text-sm opacity-90">Investment</div>
-                                    <div class="font-bold text-lg">$800.00</div>
-                                </div>
-                                <div class="p-2 bg-white bg-opacity-20 rounded-lg">
-                                    <i data-feather="trending-up" class="w-5 h-5"></i>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -296,17 +215,17 @@
             new Chart(monthlyCtx, {
                 type: 'line',
                 data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                     datasets: [{
                         label: 'Income',
-                        data: [4800, 5200, 4900, 5100, 5300, 5200],
+                        data: @json($monthlyIncome),
                         borderColor: '#10b981',
                         backgroundColor: 'rgba(16, 185, 129, 0.1)',
                         tension: 0.4,
                         fill: true
                     }, {
                         label: 'Expenses',
-                        data: [2800, 3200, 2900, 3100, 2850, 3180],
+                        data: @json($monthlyExpense),
                         borderColor: '#ef4444',
                         backgroundColor: 'rgba(239, 68, 68, 0.1)',
                         tension: 0.4,
@@ -339,32 +258,56 @@
 
             // Category Spending Chart
             const categoryCtx = document.getElementById('categoryChart').getContext('2d');
-            new Chart(categoryCtx, {
+
+            const data = {
+                labels: @json($spcategoryLabels),
+                datasets: [{
+                    label: 'Spending per Category',
+                    data: @json($spCategory),
+                    backgroundColor: [
+                        '#4F46E5', // Indigo-600
+                        '#10B981', // Emerald-500
+                        '#F59E0B', // Amber-500
+                        '#EF4444', // Red-500
+                        '#3B82F6', // Blue-500
+                        '#8B5CF6', // Purple-500
+                        '#EC4899', // Pink-500
+                        '#22D3EE', // Cyan-400
+                        '#F97316', // Orange-500
+                        '#14B8A6' // Teal-500
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            const config = {
                 type: 'doughnut',
-                data: {
-                    labels: ['Food & Dining', 'Utilities', 'Transportation', 'Entertainment'],
-                    datasets: [{
-                        data: [1240, 890, 650, 400],
-                        backgroundColor: [
-                            '#0ea5e9',
-                            '#6366f1',
-                            '#10b981',
-                            '#8b5cf6'
-                        ],
-                        borderWidth: 0
-                    }]
-                },
+                data: data,
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            display: false
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 15,
+                                padding: 20,
+                                borderRadius: 50,
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                            }
+
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `PHP ${context.parsed.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+                                }
+                            }
                         }
-                    },
-                    cutout: '60%'
-                }
-            });
+                    }
+                },
+            };
+            new Chart(categoryCtx, config);
         </script>
     </div>
 

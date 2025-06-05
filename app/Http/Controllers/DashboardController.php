@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Budget;
+use App\Models\Category;
 use App\Models\Transaction;
 use App\Models\Wallet;
 use Carbon\Carbon;
@@ -10,77 +12,127 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
+    private function calculateMonthlyAmount($query, $month, $year, $type)
+    {
+        return (clone $query)
+            ->whereMonth('date', $month)
+            ->whereYear('date', $year)
+            ->where('type', $type)
+            ->sum('amount');
+    }
+
+    private function calculateChange($current, $previous)
+    {
+        return $previous > 0 ? (($current - $previous) / $previous) * 100 : 0;
+    }
+
+    private function calculateBalance($query, $month, $year)
+    {
+        return (clone $query)
+            ->whereMonth('updated_at', $month)
+            ->whereYear('updated_at', $year)
+            ->sum('balance');
+    }
+
     public function index()
     {
+        $userId = Auth::id();
         $today = Carbon::today();
-
-        $query = Transaction::with(['category', 'wallet'])
-            ->where('user_id', Auth::user()->id);
-
-        $transactions = $query->get();
-
-        $walletQuery = Wallet::with('user')
-            ->where('user_id', Auth::user()->id);
-
-        $wallets = $walletQuery->get();
-        $totalBalance = $wallets->sum('balance');
-
-
-        $thisMonthBalance = (clone $walletQuery)->whereMonth('updated_at', $today->month)
-            ->whereYear('updated_at', $today->year)
-            ->sum('balance');
-
         $lastMonth = $today->copy()->subMonth();
-        $lastMonthBalance = (clone $walletQuery)->whereMonth('updated_at', $lastMonth->month)
-            ->whereYear('updated_at', $lastMonth->year)
-            ->sum('balance');
 
-        $balanceChange = 0;
-        if ($lastMonthBalance > 0) {
-            $balanceChange = (($thisMonthBalance - $lastMonthBalance) / $lastMonthBalance) * 100;
-        }
+        $transactionQuery = Transaction::with(['category', 'wallet'])->where('user_id', $userId);
+
+        $walletQuery = Wallet::with('user')->where('user_id', $userId);
+
 
         // Income: This Month & Last Month
-        $thisMonthIncome = (clone $query)->whereMonth('date', $today->month)
-            ->whereYear('date', $today->year)
-            ->where('type', 'income')
-            ->sum('amount');
-
-        $lastMonth = $today->copy()->subMonth();
-        $lastMonthIncome = (clone $query)->whereMonth('date', $lastMonth->month)
-            ->whereYear('date', $lastMonth->year)
-            ->where('type', 'income')
-            ->sum('amount');
-
-        $incomeChange = 0;
-        if ($lastMonthIncome > 0) {
-            $incomeChange = (($thisMonthIncome - $lastMonthIncome) / $lastMonthIncome) * 100;
-        }
+        $thisMonthIncome = $this->calculateMonthlyAmount($transactionQuery, $today->month, $today->year, 'income');
+        $lastMonthIncome = $this->calculateMonthlyAmount($transactionQuery, $lastMonth->month, $lastMonth->year, 'income');
+        $incomeChange = $this->calculateChange($thisMonthIncome, $lastMonthIncome);
 
         // Expense: This Month & Last Month
-        $thisMonthExpense = (clone $query)->whereMonth('date', $today->month)
-            ->whereYear('date', $today->year)
-            ->where('type', 'expense')
-            ->sum('amount');
+        $thisMonthExpense = $this->calculateMonthlyAmount($transactionQuery, $today->month, $today->year, 'expense');
+        $lastMonthExpense = $this->calculateMonthlyAmount($transactionQuery, $lastMonth->month, $lastMonth->year, 'expense');
+        $expenseChange = $this->calculateChange($thisMonthExpense, $lastMonthExpense);
 
-        $lastMonthExpense = (clone $query)->whereMonth('date', $lastMonth->month)
-            ->whereYear('date', $lastMonth->year)
-            ->where('type', 'expense')
-            ->sum('amount');
+        //Balance: This Month & Last Month
+        $thisMonthBalance = $this->calculateBalance($walletQuery, $today->month, $today->year);
+        $lastMonthBalance = $this->calculateBalance($walletQuery, $lastMonth->month, $lastMonth->year);
+        $balanceChange = $this->calculateChange($thisMonthBalance, $lastMonthBalance);
 
-        $expenseChange = 0;
-        if ($lastMonthExpense > 0) {
-            $expenseChange = (($thisMonthExpense - $lastMonthExpense) / $lastMonthExpense) * 100;
+        $totalBalance = $walletQuery->sum('balance');
+        $recent = $transactionQuery->orderByDesc('date')->take(5)->get();
+
+        // --- Budget Summary (this month) ---
+        $budgets = Budget::with('category')
+            ->where('user_id', $userId)
+            ->whereYear('start_date', $today->year)
+            ->whereMonth('start_date', $today->month)
+            ->limit(3)
+            ->get();
+
+        $totalSpent = 0;
+        $totalBudget = 0;
+
+        foreach ($budgets as $budget) {
+            // Sum transactions in budget period for this category
+            $spentAmount = $budget->category->transactions()
+                ->whereBetween('date', [$budget->start_date, $budget->end_date])
+                ->where('user_id', $userId)
+                ->sum('amount');
+
+            $totalSpent += $spentAmount;
+            $totalBudget += $budget->amount;
         }
 
+        $totalRemaining = $totalBudget - $totalSpent;
+        $budgetPercentage = $totalBudget > 0 ? min(100, ($totalSpent / $totalBudget) * 100) : 0;
+
+        //Spending per category 
+        $categories = Category::with('transactions')->where('user_id', $userId)->get();
+
+        $spcategoryLabels = $categories->pluck('name')->toArray();
+
+        $spCategory = $categories->map(function ($category) {
+            return $category->transactions->sum('amount');
+        })->toArray();
+
+        $monthlyIncome = [];
+        $monthlyExpense = [];
+
+        for ($month = 1; $month <= 12; $month++) {
+            $monthlyIncome[] = (clone $transactionQuery)
+                ->whereMonth('date', $month)
+                ->whereYear('date', now()->year)
+                ->where('type', 'income')
+                ->sum('amount');
+
+            $monthlyExpense[] = (clone $transactionQuery)
+                ->whereMonth('date', $month)
+                ->whereYear('date', now()->year)
+                ->where('type', 'expense')
+                ->sum('amount');
+        }
+
+        $wallets = $walletQuery->select('name', 'balance')->get();
+
         return view('admin.dashboard', compact(
-            'transactions',
             'totalBalance',
             'thisMonthIncome',
             'incomeChange',
             'thisMonthExpense',
             'expenseChange',
-            'balanceChange'
+            'balanceChange',
+            'recent',
+            'totalSpent',
+            'totalBudget',
+            'totalRemaining',
+            'budgetPercentage',
+            'spcategoryLabels',
+            'spCategory',
+            'monthlyIncome',
+            'monthlyExpense',
+            'wallets'
         ));
     }
 
