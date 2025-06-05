@@ -21,6 +21,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body>
     {{$slot}}

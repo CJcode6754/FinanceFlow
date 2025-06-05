@@ -257,6 +257,9 @@
                         labels: {
                             boxWidth: 15,
                             padding: 20,
+                            borderRadius: 50,
+                            usePointStyle: true,
+                            pointStyle: 'circle',
                         }
 
                     },

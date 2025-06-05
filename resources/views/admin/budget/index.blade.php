@@ -179,10 +179,6 @@
                                             {{ number_format($budget->percentage, 2) }}% of budget used</h2>
                                     </div>
                                 @endif
-
-                                @if (!$hasAlerts)
-                                    <p>No Alerts</p>
-                                @endif
                             @endforeach
                         </div>
                     </div>
