@@ -1,4 +1,5 @@
 import "./bootstrap";
+feather.replace();
 
 document.addEventListener("DOMContentLoaded", () => {
     // Sidebar toggle
