@@ -136,10 +136,25 @@
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="text-xl font-semibold text-gray-900">Monthly Overview</h3>
-                            <select class="text-sm border border-gray-200 rounded-lg px-3 py-1.5 bg-white">
-                                <option>Last 6 months</option>
-                                <option>Last 12 months</option>
-                            </select>
+                            <form action="{{ route('dashboard') }}" method="get">
+                                <select name="filter_by_months" onchange="this.form.submit()"
+                                    class="text-sm border border-gray-200 rounded-lg px-3 py-1.5 bg-white">
+                                    <option value="">Select Filter</option>
+                                    <option value="1" {{ request('filter_by_months') == '1' ? 'selected' : '' }}>
+                                        Last month</option>
+                                    <option value="2" {{ request('filter_by_months') == '2' ? 'selected' : '' }}>
+                                        Last 2 months</option>
+                                    <option value="3" {{ request('filter_by_months') == '3' ? 'selected' : '' }}>
+                                        Last 3 months</option>
+                                    <option value="6" {{ request('filter_by_months') == '6' ? 'selected' : '' }}>
+                                        Last 6 months</option>
+                                    <option value="9" {{ request('filter_by_months') == '9' ? 'selected' : '' }}>
+                                        Last 9 months</option>
+                                    <option value="12" {{ request('filter_by_months') == '12' ? 'selected' : '' }}>
+                                        Last 12 months</option>
+                                </select>
+                            </form>
+
                         </div>
                         <div class="h-64">
                             <canvas id="monthlyChart"></canvas>
@@ -164,11 +179,13 @@
                                     ₱{{ number_format($totalBudget, 2) }}</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-3">
-                                <div class="bg-sky-500 h-3 rounded-full" style="width: {{ $budgetPercentage }}%"></div>
+                                <div class="bg-sky-500 h-3 rounded-full" style="width: {{ $budgetPercentage }}%">
+                                </div>
                             </div>
                         </div>
                         <div class="text-sm text-gray-600">
-                            <span class="text-emerald-500 font-medium">₱{{ $totalRemaining }} remaining</span> for this
+                            <span class="text-emerald-500 font-medium">₱{{ $totalRemaining }} remaining</span> for
+                            this
                             month
                         </div>
                     </div>
@@ -190,15 +207,15 @@
                         <div class="space-y-4">
                             @foreach ($wallets as $item)
                                 <div
-                                class="flex items-center justify-between p-4 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl text-white">
-                                <div>
-                                    <div class="text-sm opacity-90">{{$item->name}}</div>
-                                    <div class="font-bold text-lg">₱{{number_format($item->balance)}}</div>
+                                    class="flex items-center justify-between p-4 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl text-white">
+                                    <div>
+                                        <div class="text-sm opacity-90">{{ $item->name }}</div>
+                                        <div class="font-bold text-lg">₱{{ number_format($item->balance) }}</div>
+                                    </div>
+                                    <div class="p-2 bg-white bg-opacity-20 rounded-lg">
+                                        <i data-feather="credit-card" class="w-5 h-5"></i>
+                                    </div>
                                 </div>
-                                <div class="p-2 bg-white bg-opacity-20 rounded-lg">
-                                    <i data-feather="credit-card" class="w-5 h-5"></i>
-                                </div>
-                            </div>
                             @endforeach
                         </div>
                     </div>
@@ -215,17 +232,17 @@
             new Chart(monthlyCtx, {
                 type: 'line',
                 data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    labels: @json($monthLabels),
                     datasets: [{
                         label: 'Income',
-                        data: @json($monthlyIncome),
+                        data: @json($graphIncome),
                         borderColor: '#10b981',
                         backgroundColor: 'rgba(16, 185, 129, 0.1)',
                         tension: 0.4,
                         fill: true
                     }, {
                         label: 'Expenses',
-                        data: @json($monthlyExpense),
+                        data: @json($graphExpense),
                         borderColor: '#ef4444',
                         backgroundColor: 'rgba(239, 68, 68, 0.1)',
                         tension: 0.4,

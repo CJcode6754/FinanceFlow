@@ -34,7 +34,12 @@ class DashboardController extends Controller
             ->sum('balance');
     }
 
-    public function index()
+    private function filteredMonths($query, $selectedMonths, $today){
+        return (clone $query)
+            ->whereBetween('date', [$selectedMonths, $today]);
+    }
+
+    public function index(Request $request)
     {
         $userId = Auth::id();
         $today = Carbon::today();
@@ -97,21 +102,30 @@ class DashboardController extends Controller
             return $category->transactions->sum('amount');
         })->toArray();
 
-        $monthlyIncome = [];
-        $monthlyExpense = [];
+        $months = in_array($request->filter_by_months, [1, 2, 3, 6, 9, 12]) ? (int) $request->filter_by_months : 6;
 
-        for ($month = 1; $month <= 12; $month++) {
-            $monthlyIncome[] = (clone $transactionQuery)
+        $graphIncome = [];
+        $graphExpense = [];
+        $monthLabels = [];
+
+        for ($i = $months; $i >= 0; $i--) {
+            $date = now()->subMonths($i);
+            $month = $date->month;
+            $year = $date->year;
+
+            $graphIncome[] = (clone $transactionQuery)
                 ->whereMonth('date', $month)
-                ->whereYear('date', now()->year)
+                ->whereYear('date', $year)
                 ->where('type', 'income')
                 ->sum('amount');
 
-            $monthlyExpense[] = (clone $transactionQuery)
+            $graphExpense[] = (clone $transactionQuery)
                 ->whereMonth('date', $month)
-                ->whereYear('date', now()->year)
+                ->whereYear('date', $year)
                 ->where('type', 'expense')
                 ->sum('amount');
+
+            $monthLabels[] = $date->format('M Y');
         }
 
         $wallets = $walletQuery->select('name', 'balance')->get();
@@ -130,9 +144,10 @@ class DashboardController extends Controller
             'budgetPercentage',
             'spcategoryLabels',
             'spCategory',
-            'monthlyIncome',
-            'monthlyExpense',
-            'wallets'
+            'graphIncome',
+            'graphExpense',
+            'wallets',
+            'monthLabels'
         ));
     }
 
