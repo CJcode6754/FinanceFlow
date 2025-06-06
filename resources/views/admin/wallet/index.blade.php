@@ -110,31 +110,10 @@
                         </div>
                     </section>
 
-                    <!-- Graph + Subscriptions -->
-                    <section class="flex flex-col gap-4 p-4 bg-white shadow-md lg:flex-row rounded-xl">
-                        <!-- Graph -->
-                        <div class="w-full max-w-5xl p-4 bg-white rounded-lg shadow">
-                            <h2 class="mb-4 text-lg font-bold text-gray-800">Spending by Category</h2>
-                            <div class="flex items-center justify-center h-64">
-                                <canvas id="categoryDoughnutChart" class="w-full h-full"></canvas>
-                            </div>
-                        </div>
-
-
-                        <!-- Categories -->
-                        <div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
-                            @foreach ($categories as $item)
-                                <div class="flex items-center gap-3 p-4 bg-white rounded shadow">
-                                    <img src="{{ asset('storage/' . $item->image ?? 'storage/category_image/default.png') }}" alt="Category Image"
-                                        class="rounded-full w-15 h-15 object-fill">
-                                    <div>
-                                        <h5 class="font-semibold text-gray-800">{{ $item->name }}</h5>
-                                        <h6 class="text-gray-600">PHP
-                                            {{ number_format($item->transactions->sum('amount'), 2) }}</h6>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
+                    <!-- Graph -->
+                    <section class="w-full p-4 bg-white shadow-md rounded-xl">
+                         <!-- Spending by Category -->
+                        <x-category-chart :categoryLabels="$chartLabels" :categoryData="$chartData" />
                     </section>
                 </div>
             </section>
@@ -191,8 +170,6 @@
 
 
     <script>
-        const ctx = document.getElementById('categoryDoughnutChart').getContext('2d');
-
         function showModal(walletID) {
             const modal = document.getElementById('modal');
             const backdrop = document.getElementById('modal-backdrop');
@@ -223,57 +200,5 @@
                 modal.classList.add('hidden');
             }, 300);
         }
-
-        // CHART
-        const data = {
-            labels: @json($chartLabels),
-            datasets: [{
-                label: 'Transaction Amount',
-                data: @json($chartData),
-                backgroundColor: [
-                    '#4F46E5', // Indigo-600
-                    '#10B981', // Emerald-500
-                    '#F59E0B', // Amber-500
-                    '#EF4444', // Red-500
-                    '#3B82F6', // Blue-500
-                    '#8B5CF6', // Purple-500
-                    '#EC4899', // Pink-500
-                    '#22D3EE', // Cyan-400
-                    '#F97316', // Orange-500
-                    '#14B8A6' // Teal-500
-                ],
-                borderWidth: 1
-            }]
-        };
-
-        const config = {
-            type: 'doughnut',
-            data: data,
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'right',
-                        labels: {
-                            boxWidth: 15,
-                            padding: 20,
-                            borderRadius: 50,
-                            usePointStyle: true,
-                            pointStyle: 'circle',
-                        }
-
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return `PHP ${context.parsed.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-                            }
-                        }
-                    }
-                }
-            },
-        };
-
-        new Chart(ctx, config);
     </script>
 </x-app-layout>

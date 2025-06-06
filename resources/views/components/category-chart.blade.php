@@ -23,7 +23,7 @@
                     '#EC4899',
                 ];
             @endphp
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between gap-12 px-4 w-full">
                 <div class="flex items-center">
                     <div class="w-3 h-3 rounded-full mr-3"
                         style="background-color: {{ $categoryColors[$index] ?? '#6B7280' }}"></div>

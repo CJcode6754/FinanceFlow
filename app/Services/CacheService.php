@@ -14,6 +14,10 @@ class CacheService{
         return "dashboard.{$userId}.{$months}" . now()->format('Y-m-d-H');
     }
 
+    public function getWalletCacheKey(int $userId, int $months){
+        return "wallet.{$userId}.{$months}" . now()->format('Y-m-d-H');
+    }
+
     public function forget(string $key): bool
     {
         return Cache::forget($key);

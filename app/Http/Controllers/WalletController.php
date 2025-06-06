@@ -5,18 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Transaction;
 use App\Models\Wallet;
+use App\Services\WalletService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class WalletController extends Controller
 {
+    public function __construct(
+        private WalletService $walletService
+    ) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $userId = Auth::user()->id;
+
+        $chartDatas = $this->walletService->getWalletData($userId, 1);
 
         $wallets = Wallet::with('user')
             ->where('user_id', $userId)
@@ -28,17 +35,15 @@ class WalletController extends Controller
             ->where('user_id', $userId)
             ->get();
 
-        $chartLabels = $categories->pluck('name')->toArray();
-
-        $chartData = $categories->map(function ($category){
-            return $category->transactions->sum('amount');
-        })->toArray();
+        // Extract chart data from the service response
+        $chartLabels = $chartDatas['spcategoryLabels'] ?? [];
+        $chartData = $chartDatas['spCategory'] ?? [];
 
         $income = $transactions->where('type', 'income')->sum('amount');
         $expense = $transactions->where('type', 'expense')->sum('amount');
         $totalBalance = $wallets->sum('balance');
 
-        return view('admin.wallet.index', compact('wallets', 'expense', 'income', 'totalBalance', 'categories', 'chartLabels', 'chartData'));
+        return view('admin.wallet.index', compact('wallets', 'expense', 'income', 'totalBalance', 'categories', 'chartLabels', 'chartData', 'chartDatas'));
     }
 
     /**
