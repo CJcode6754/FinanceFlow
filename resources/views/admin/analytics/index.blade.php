@@ -75,40 +75,16 @@
                     <!-- Charts Grid -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <!-- Income vs Expense Chart -->
-                        <div class="bg-white shadow-sm border border-gray-200 rounded-2xl p-6">
-                            <div class="flex items-center gap-2 mb-6">
-                                <i class="fas fa-trending-up text-emerald-600"></i>
-                                <h2 class="text-lg font-semibold text-gray-900">Income vs Expenses</h2>
-                            </div>
-                            <div class="h-80">
-                                <canvas id="incomeExpenseChart"></canvas>
-                            </div>
-                        </div>
+                        <x-income-expense-bar-chart :monthLabels="$monthLabels" :graphIncome="$graphIncome" :graphExpense="$graphExpense"/>
 
-                        <!-- Category Breakdown Chart -->
-                        <div class="bg-white shadow-sm border border-gray-200 rounded-2xl p-6">
-                            <div class="flex items-center gap-2 mb-6">
-                                <i class="fas fa-filter text-indigo-600"></i>
-                                <h2 class="text-lg font-semibold text-gray-900">Category Breakdown</h2>
-                            </div>
-                            <div class="h-80">
-                                <canvas id="categoryChart"></canvas>
-                            </div>
-                        </div>
+                        <!-- Spending by Category -->
+                        <x-category-chart :categoryLabels="$categoryLabels" :categoryData="$categoryData" />
                     </div>
 
                     <!-- Second Row Charts -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <!-- Wallet Contribution Chart -->
-                        <div class="bg-white shadow-sm border border-gray-200 rounded-2xl p-6">
-                            <div class="flex items-center gap-2 mb-6">
-                                <i class="fas fa-wallet text-sky-600"></i>
-                                <h2 class="text-lg font-semibold text-gray-900">Wallet Distribution</h2>
-                            </div>
-                            <div class="h-80">
-                                <canvas id="walletChart"></canvas>
-                            </div>
-                        </div>
+                        <x-wallet-distribution-graph :walletLabels="$walletLabels" :walletData="$walletData"/>
 
                         <!-- Budget vs Actual Chart -->
                         <div class="bg-white shadow-sm border border-gray-200 rounded-2xl p-6">
@@ -262,103 +238,6 @@
             </div>
 
             <script>
-                // Income vs Expense Chart
-                const incomeExpenseCtx = document.getElementById('incomeExpenseChart').getContext('2d');
-                new Chart(incomeExpenseCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                        datasets: [{
-                            label: 'Income',
-                            data: [11200, 10800, 12100, 11900, 12800, 12450],
-                            backgroundColor: '#10b981',
-                            borderRadius: 4,
-                        }, {
-                            label: 'Expenses',
-                            data: [8300, 7900, 8500, 8200, 9100, 8750],
-                            backgroundColor: '#ef4444',
-                            borderRadius: 4,
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    callback: function(value) {
-                                        return '$' + (value / 1000) + 'k';
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-
-                // Category Breakdown Chart
-                const categoryCtx = document.getElementById('categoryChart').getContext('2d');
-                new Chart(categoryCtx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Housing', 'Food', 'Transportation', 'Entertainment', 'Utilities', 'Shopping'],
-                        datasets: [{
-                            data: [3200, 1850, 1200, 950, 750, 800],
-                            backgroundColor: ['#10b981', '#3b82f6', '#8b5cf6', '#f59e0b', '#ef4444', '#06b6d4'],
-                            borderWidth: 2,
-                            borderColor: '#ffffff'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                            }
-                        }
-                    }
-                });
-
-                // Wallet Distribution Chart
-                const walletCtx = document.getElementById('walletChart').getContext('2d');
-                new Chart(walletCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Checking', 'Savings', 'Investment', 'Emergency', 'Vacation'],
-                        datasets: [{
-                            label: 'Balance',
-                            data: [8500, 15200, 22800, 5500, 3200],
-                            backgroundColor: ['#10b981', '#3b82f6', '#8b5cf6', '#f59e0b', '#06b6d4'],
-                            borderRadius: 4,
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    callback: function(value) {
-                                        return '$' + (value / 1000) + 'k';
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-
                 // Budget vs Actual Chart
                 const budgetCtx = document.getElementById('budgetChart').getContext('2d');
                 new Chart(budgetCtx, {

@@ -37,7 +37,7 @@
                     <x-budget-summary :totalSpent="$totalSpent" :totalBudget="$totalBudget" :totalRemaining="$totalRemaining" :budgetPercentage="$budgetPercentage" />
 
                     <!-- Spending by Category -->
-                    <x-category-chart :categoryLabels="$spcategoryLabels" :categoryData="$spCategory" />
+                    <x-category-chart :categoryLabels="$categoryLabels" :categoryData="$categoryData" />
 
                     <!-- Wallet Overview -->
                     <x-wallet-overview :wallets="$wallets" />
