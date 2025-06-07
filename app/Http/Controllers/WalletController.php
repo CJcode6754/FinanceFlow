@@ -23,7 +23,7 @@ class WalletController extends Controller
     {
         $userId = Auth::user()->id;
 
-        $chartDatas = $this->walletService->getWalletData($userId, 1);
+        $chartDatas = $this->walletService->getWalletData($userId, 6);
 
         $wallets = Wallet::with('user')
             ->where('user_id', $userId)
@@ -36,14 +36,14 @@ class WalletController extends Controller
             ->get();
 
         // Extract chart data from the service response
-        $chartLabels = $chartDatas['spcategoryLabels'] ?? [];
-        $chartData = $chartDatas['spCategory'] ?? [];
+        $chartLabels = $chartDatas['categoryLabels'] ?? [];
+        $chartData = $chartDatas['categoryData'] ?? [];
 
         $income = $transactions->where('type', 'income')->sum('amount');
         $expense = $transactions->where('type', 'expense')->sum('amount');
         $totalBalance = $wallets->sum('balance');
 
-        return view('admin.wallet.index', compact('wallets', 'expense', 'income', 'totalBalance', 'categories', 'chartLabels', 'chartData', 'chartDatas'));
+        return view('admin.wallet.index', compact('wallets', 'expense', 'income', 'totalBalance', 'categories', 'chartLabels', 'chartData'));
     }
 
     /**
