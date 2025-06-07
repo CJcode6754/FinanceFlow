@@ -12,8 +12,9 @@ class ChartDataDTO
         public readonly array $categoryData,
         public readonly array $walletLabels,
         public readonly array $walletData,
-        // public readonly array $budgetLabels,
-        // public readonly array $budgetData
+        public readonly array $budgetName,
+        public readonly array $setBudget,
+        public readonly array $actualBudget
     ) {}
 
     public static function fromArray(array $data)
@@ -26,8 +27,9 @@ class ChartDataDTO
             $data['categoryData'],
             $data['walletLabels'],
             $data['walletData'],
-            // $data['budgetLabels'],
-            // $data['budgetData']
+            $data['budgetName'],
+            $data['setBudget'],
+            $data['actualBudget']
         );
     }
 
@@ -41,8 +43,9 @@ class ChartDataDTO
             'categoryData' => $this->categoryData,
             'walletLabels' => $this->walletLabels,
             'walletData' => $this->walletData,
-            // 'budgetLabels' => $this->budgetLabels,
-            // 'budgetData' => $this->budgetData
+            'budgetName' => $this->budgetName,
+            'setBudget' => $this->setBudget,
+            'actualBudget' => $this->actualBudget
         ];
     }
 }

@@ -24,4 +24,34 @@ class BudgetRepository{
             ->where('user_id', $userId)
             ->sum('amount');
     }
+
+    public function getBudgetVsActual(int $userId){
+        $budgets = Budget::with('category')
+            ->where('user_id', $userId)
+            ->get();
+
+        $budgetName = [];
+        $setBudget = [];
+        $actualBudget = [];
+
+        foreach($budgets as $budget){
+            $budgetName[] = $budget->category?->name ?? 'Uncategorized';
+            $setBudget[] = $budget->amount;
+
+
+            $actual = $budget->category?->transactions()
+                ->whereBetween('date', [$budget->start_date, $budget->end_date])
+                ->where('user_id', $userId)
+                ->where('type', 'expense')
+                ->sum('amount');
+
+            $actualBudget[] = $actual;
+        }
+
+        return [
+            'budgetName' => $budgetName,
+            'setBudget' => $setBudget,
+            'actualBudget' => $actualBudget
+        ];
+    }
 }
