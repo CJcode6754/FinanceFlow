@@ -13,7 +13,7 @@ trait FinancialCalculations
     }
 
     protected function calculateBudgetPercentage(float $spent, float $budget): float|int{
-       return $budget > 0 ? min(100, ($spent - $budget) * 100) : 0;
+       return $budget > 0 ? min(100, ($spent / $budget) * 100) : 0;
     }
 
     public function getChangeClass(float $change){
