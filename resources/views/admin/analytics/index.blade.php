@@ -18,7 +18,7 @@
                         </div>
 
                         <div class="flex flex-col sm:flex-row gap-3">
-                            <select class="w-48 px-3 py-2 border border-gray-300 rounded-md bg-white text-sm">
+                            <select class="w-full md:w-48 px-3 py-2 border border-gray-300 rounded-md bg-white text-sm">
                                 <option value="This Month">📅 This Month</option>
                                 <option value="Last Month">Last Month</option>
                                 <option value="Last 3 Months">Last 3 Months</option>
@@ -30,45 +30,6 @@
                                 <i class="fas fa-download text-gray-500"></i>
                                 Export Data
                             </button>
-                        </div>
-                    </div>
-
-                    <!-- Key Metrics Cards -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="bg-white shadow-sm border border-gray-200 rounded-2xl p-6">
-                            <div class="flex items-center gap-2 mb-3">
-                                <i class="fas fa-trending-up text-emerald-600"></i>
-                                <h3 class="text-sm font-medium text-gray-600">Total Income</h3>
-                            </div>
-                            <div class="text-2xl font-bold text-gray-900">$12,450</div>
-                            <p class="text-sm text-emerald-600 mt-1">+12.5% from last month</p>
-                        </div>
-
-                        <div class="bg-white shadow-sm border border-gray-200 rounded-2xl p-6">
-                            <div class="flex items-center gap-2 mb-3">
-                                <i class="fas fa-dollar-sign text-red-500"></i>
-                                <h3 class="text-sm font-medium text-gray-600">Total Expenses</h3>
-                            </div>
-                            <div class="text-2xl font-bold text-gray-900">$8,750</div>
-                            <p class="text-sm text-red-500 mt-1">+8.2% from last month</p>
-                        </div>
-
-                        <div class="bg-white shadow-sm border border-gray-200 rounded-2xl p-6">
-                            <div class="flex items-center gap-2 mb-3">
-                                <i class="fas fa-bullseye text-indigo-600"></i>
-                                <h3 class="text-sm font-medium text-gray-600">Net Savings</h3>
-                            </div>
-                            <div class="text-2xl font-bold text-gray-900">$3,700</div>
-                            <p class="text-sm text-indigo-600 mt-1">Savings rate: 29.7%</p>
-                        </div>
-
-                        <div class="bg-white shadow-sm border border-gray-200 rounded-2xl p-6">
-                            <div class="flex items-center gap-2 mb-3">
-                                <i class="fas fa-wallet text-sky-600"></i>
-                                <h3 class="text-sm font-medium text-gray-600">Active Wallets</h3>
-                            </div>
-                            <div class="text-2xl font-bold text-gray-900">5</div>
-                            <p class="text-sm text-sky-600 mt-1">2 primary, 3 savings</p>
                         </div>
                     </div>
 
@@ -96,7 +57,7 @@
                             <i class="fas fa-bullseye text-emerald-600"></i>
                             <h2 class="text-lg font-semibold text-gray-900">Savings Goals Progress</h2>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <!-- Emergency Fund -->
                             <div class="bg-gray-50 rounded-xl p-6">
                                 <div class="flex items-center justify-between mb-4">

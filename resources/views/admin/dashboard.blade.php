@@ -8,7 +8,7 @@
 
         <main class="px-8">
             <!-- Welcome Section -->
-            <div class="mb-8">
+            <div class="mb-8 mt-8">
                 <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome back, {{ auth()->user()->name }}!</h2>
                 <p class="text-gray-600">Here's what's happening with your finances today.</p>
             </div>

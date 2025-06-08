@@ -12,9 +12,9 @@
                         <i data-feather="{{ $transaction->type === 'income' ? 'arrow-up' : 'arrow-down' }}" 
                            class="w-5 h-5 {{ $transaction->type === 'income' ? 'text-emerald-600' : 'text-red-600' }}"></i>
                     </div>
-                    <div class="ml-4">
-                        <h4 class="font-medium text-gray-900">{{ $transaction->description }}</h4>
-                        <p class="text-sm text-gray-500">{{ $transaction->category->name }} • {{ $transaction->created_at->format('M d, Y') }}</p>
+                    <div class="ml-4 space-y-1">
+                        <p class="text-sm text-gray-500">{{ $transaction->category->name}}</p>
+                        <p class="text-sm text-gray-500">{{ $transaction->created_at->format('M d, Y') }}</p>
                     </div>
                 </div>
                 <div class="text-right">

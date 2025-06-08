@@ -45,7 +45,7 @@
                 </div>
 
                 <!-- Total Balance -->
-                <div class="w-full">
+                <div class="w-full space-y-4">
                     <section
                         class="flex flex-col gap-4 p-6 bg-white rounded-lg shadow-md md:flex-row md:items-center md:justify-between">
                         <div class="flex flex-col gap-1">
@@ -80,7 +80,7 @@
                     </section>
 
                     <!-- Actions -->
-                    <section class="py-4">
+                    {{-- <section class="py-4">
                         <div
                             class="grid grid-cols-2 gap-4 p-6 bg-white shadow rounded-xl sm:grid-cols-3 lg:grid-cols-5">
                             @php
@@ -108,7 +108,7 @@
                                 </div>
                             @endforeach
                         </div>
-                    </section>
+                    </section> --}}
 
                     <!-- Graph -->
                     <section class="w-full p-4 bg-white shadow-md rounded-xl">
