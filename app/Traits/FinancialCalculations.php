@@ -16,6 +16,10 @@ trait FinancialCalculations
        return $budget > 0 ? min(100, ($spent / $budget) * 100) : 0;
     }
 
+    protected function calculateSavingPercentage(float $currentAmount, float $targetAmount): float|int{
+       return $targetAmount > 0 ? min(100, ($currentAmount / $targetAmount) * 100) : 0;
+    }
+
     public function getChangeClass(float $change){
         return $change > 0 ? 'text-green-500' : 'text-red-500';
     }

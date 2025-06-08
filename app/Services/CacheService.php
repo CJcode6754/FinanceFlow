@@ -19,7 +19,11 @@ class CacheService{
     }
 
     public function getAnalyticsCacheKey(int $userId, int $months){
-        return "wallet.{$userId}.{$months}" . now()->format('Y-m-d-H');
+        return "analytics.{$userId}.{$months}" . now()->format('Y-m-d-H');
+    }
+
+    public function getSavingsCacheKey(int $userId, int $months){
+        return "savings.{$userId}.{$months}" . now()->format('Y-m-d-H');
     }
 
     public function forget(string $key): bool

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Saving;
 use App\Models\SavingsTransaction;
+use App\Services\SavingsService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,85 +12,25 @@ use Illuminate\Support\Facades\Gate;
 
 class SavingController extends Controller
 {
+    public function __construct(
+        private SavingsService $savingsService
+    ) {}
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $user = Auth::user();
-        $savings = Saving::with('savingsTransactions')
-            ->where('user_id', $user->id)
-            ->get();
+        $analytics = $this->savingsService->getAnalyticsData(Auth::user()->id, $request);
 
-        foreach ($savings as $saving) {
-            $deposit = $saving->savingsTransactions
-                ->where('type', 'deposit')
-                ->sum('amount');
-
-            $withdraw = $saving->savingsTransactions
-                ->where('type', 'withdraw')
-                ->sum('amount');
-
-            $currentAmount = $deposit - $withdraw;
-
-            $saving->current_amount = $currentAmount;
-
-            $saving->process_percent = $saving->target_amount > 0 ? min(100, round(($currentAmount / $saving->target_amount) * 100, 2)) : 0;
-        }
-
-        $totalSaved = SavingsTransaction::whereHas('savings', function ($query) use ($user): void {
-            $query->where('user_id', $user->id);
-        })->where('type', 'deposit')->sum('amount');
-
-        $totalGoals = $savings->sum('target_amount');
-
-        $activeGoals = $savings->filter(function ($saving) {
-            return $saving->current_amount < $saving->target_amount
-                && Carbon::parse($saving->deadline)->isFuture();
-        })->count();
-
-        $avgProgress = $savings->count() > 0
-            ? round($savings->avg('process_percent'), 2)
-            : 0;
-
-        $transaction_history = SavingsTransaction::with('savings')
-            ->whereHas('savings', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-            })
-            ->orderByDesc('created_at')
-            ->paginate(10);
-
-        if ($request->filled('status_filter') && $request->status_filter !== 'all_goals') {
-            if ($request->input('status_filter') == 'active') {
-                $savings = $savings->filter(function ($saving): bool {
-                    return $saving->current_amount < $saving->target_amount
-                        && Carbon::parse(time: $saving->deadline)->isFuture();
-                });
-            }else if ($request->input('status_filter') == 'completed'){
-                $savings = $savings->filter(function ($saving): bool {
-                    return $saving->current_amount > $saving->target_amount
-                        && Carbon::parse(time: $saving->deadline)->isPast();
-                });
-            }
-        }
-
-        if($request->filled('sort') && $request->sort !== 'sort_by'){
-            if($request->input('sort') == 'sort_by_amount'){
-                $savings = $savings->sortBy('target_amount');
-            }elseif($request->input('sort') == 'sort_by_amount_desc'){
-                $savings = $savings->sortByDesc('created_at');
-            }elseif($request->input('sort') == 'sort_by_date'){
-                $savings = $savings->sortBy('created_at');
-            }elseif($request->input('sort') == 'sort_by_date_desc'){
-                $savings = $savings->sortByDesc('created_at');
-            }elseif($request->input('sort') == 'sort_by_progress'){
-                $savings = $savings->sortBy('progress_percetage');
-            }elseif($request->input('sort') == 'sort_by_progress_desc'){
-                $savings = $savings->sortByDesc('progress_percetage');
-            }
-        }
-
-        return view('admin.savings.index', compact('savings', 'transaction_history', 'totalSaved', 'totalGoals', 'activeGoals', 'avgProgress'));
+        return view('admin.savings.index', [
+            'totalSaved' => $analytics->totalSaved,
+            'totalGoals' => $analytics->totalGoals,
+            'activeGoals' => $analytics->activeGoals,
+            'avgProgress' => $analytics->avgProgress,
+            'transactionHistory' => $analytics->transactionHistory,
+            'transaction_history' => $analytics->transactionHistory,
+            'savings' => $analytics->savings,
+        ]);
     }
 
     /**

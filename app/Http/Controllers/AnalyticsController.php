@@ -15,11 +15,11 @@ class AnalyticsController extends Controller
     public function index(Request $request){
         $userId = Auth::user()->id;
         $months = $this->getFilterMonths($request);
+        
+        $datas = $this->analyticsService->getAnalyticsData($userId, $months);
+        // dd($datas);
 
-        $walletDatas = $this->analyticsService->getAnalyticsData($userId, $months);
-        // dd($walletDatas);
-
-        return view('admin.analytics.index',$walletDatas);
+        return view('admin.analytics.index',$datas);
     }
 
     private function getFilterMonths(Request $request): int
