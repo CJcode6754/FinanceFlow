@@ -8,9 +8,9 @@
 
         <main class="px-8">
             <!-- Welcome Section -->
-            <div class="mb-8 mt-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome back, {{ auth()->user()->name }}!</h2>
-                <p class="text-gray-600">Here's what's happening with your finances today.</p>
+            <div class="mt-8 mb-8">
+                <h2 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Welcome back, {{ auth()->user()->name }}!</h2>
+                <p class="text-gray-600 dark:text-gray-300">Here's what's happening with your finances today.</p>
             </div>
 
             <!-- Quick Action Buttons -->
@@ -21,9 +21,9 @@
                 :thisMonthExpense="$thisMonthExpense" :expenseChange="$expenseChange"/>
 
             <!-- Main Dashboard Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
                 <!-- Left Column (2/3 width) -->
-                <div class="lg:col-span-2 space-y-6">
+                <div class="space-y-6 lg:col-span-2">
                     <!-- Recent Transactions -->
                     <x-recent-transactions :transactions="$recent" />
 

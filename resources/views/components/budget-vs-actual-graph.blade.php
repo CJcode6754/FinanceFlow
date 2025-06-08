@@ -1,7 +1,7 @@
-<div class="bg-white shadow-sm border border-gray-200 rounded-2xl p-6">
+<div class="p-6 bg-white border border-gray-200 shadow-sm dark:bg-gray-800 dark:border-0 rounded-2xl">
     <div class="flex items-center gap-2 mb-6">
-        <i class="fas fa-bullseye text-purple-600"></i>
-        <h2 class="text-lg font-semibold text-gray-900">Budget vs Actual</h2>
+        <i class="text-purple-600 fas fa-bullseye"></i>
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Budget vs Actual</h2>
     </div>
     <div class="h-80">
         <canvas id="budgetChart"></canvas>

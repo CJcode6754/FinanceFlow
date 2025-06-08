@@ -1,8 +1,8 @@
-<div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+<div class="p-6 bg-white border border-gray-100 shadow-sm dark:border-0 dark:bg-gray-800 rounded-2xl">
     <div class="flex items-center justify-between mb-6">
-        <h3 class="text-xl font-semibold text-gray-900">Spending by Category</h3>
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Spending by Category</h3>
         <a href="{{ route('category.index') }}"
-            class="text-indigo-500 hover:text-indigo-600 font-medium text-sm">Manage</a>
+            class="text-sm font-medium text-indigo-500 hover:text-indigo-600 dark:text-indigo-800">Manage</a>
     </div>
 
     <div class="h-64 mb-4">
@@ -23,13 +23,13 @@
                     '#EC4899',
                 ];
             @endphp
-            <div class="flex items-center justify-between gap-12 px-4 w-full">
+            <div class="flex items-center justify-between w-full gap-12 px-4">
                 <div class="flex items-center">
-                    <div class="w-3 h-3 rounded-full mr-3"
+                    <div class="w-3 h-3 mr-3 rounded-full"
                         style="background-color: {{ $categoryColors[$index] ?? '#6B7280' }}"></div>
-                    <span class="text-sm text-gray-600">{{ $label }}</span>
+                    <span class="text-sm text-gray-600 dark:text-gray-300">{{ $label }}</span>
                 </div>
-                <span class="text-sm font-medium text-gray-900">
+                <span class="text-sm font-medium text-gray-900 dark:text-gray-300">
                     ₱{{ number_format($categoryData[$index] ?? 0, 2) }}
                 </span>
             </div>

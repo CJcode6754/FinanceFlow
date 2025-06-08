@@ -10,28 +10,28 @@
         <x-header />
 
         {{-- Main Content --}}
-        <main class="px-4 sm:px-6 md:px-12 py-6 max-w-screen-xl mx-auto">
+        <main class="max-w-screen-xl px-4 py-6 mx-auto sm:px-6 md:px-12">
             <!-- Filter Section -->
             <section
-                class="flex flex-col md:flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-lg shadow-md">
+                class="flex flex-col items-start justify-between w-full gap-4 p-4 bg-white rounded-lg shadow-md md:flex-row dark:bg-gray-800">
                 <div>
-                    <h2 class="text-lg font-semibold">Budget Management</h2>
-                    <p class="text-sm text-gray-600">Track your spending limits and stay on budget</p>
+                    <h2 class="text-2xl font-semibold dark:text-white">Budget Management</h2>
+                    <p class="text-sm text-gray-600 dark:text-gray-300">Track your spending limits and stay on budget</p>
                 </div>
             </section>
 
             <!-- Budget Content -->
-            <section class="flex flex-col lg:flex-row gap-6 mt-6">
+            <section class="flex flex-col gap-6 mt-6 lg:flex-row">
                 <!-- My Budget -->
-                <div class="w-full lg:w-3/5 p-6 space-y-6 bg-white shadow-lg rounded-2xl">
+                <div class="w-full p-6 space-y-6 bg-white shadow-lg dark:bg-gray-800 lg:w-3/5 rounded-2xl">
                     <!-- Header -->
-                    <div class="flex items-center justify-between flex-wrap gap-2">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
                         <div>
-                            <h2 class="text-xl font-bold text-gray-800">My Budget</h2>
-                            <p class="text-sm text-gray-500">View and manage your current budget allocations.</p>
+                            <h2 class="text-xl font-bold text-gray-800 dark:text-white">My Budget</h2>
+                            <p class="text-sm text-gray-500 dark:text-gray-300">View and manage your current budget allocations.</p>
                         </div>
                         <a href="{{ route('budget.create') }}"
-                            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 transition border border-blue-600 rounded-md hover:bg-blue-600 hover:text-white">
+                            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 transition border border-blue-600 rounded-md hover:bg-blue-600 hover:text-white dark:text-gray-300">
                             <i class="fa-solid fa-plus"></i>
                             Add
                         </a>
@@ -47,35 +47,35 @@
                                 $bgcolor = 'bg-yellow-100';
                                 $bgborder = 'border-yellow-400';
                             } else {
-                                $bgcolor = 'bg-gray-50';
-                                $bgborder = 'border-gray-400';
+                                $bgcolor = 'bg-gray-50 dark:bg-gray-800';
+                                $bgborder = 'border-gray-400 dark:bg-gray-100';
                             }
                         @endphp
 
                         <div
-                            class="flex flex-col gap-4 p-4 border-l-6 {{ $bgborder }} {{ $bgcolor }} rounded-xl">
+                            class="flex flex-col gap-4 p-4 border-l-6 {{ $bgborder }} {{ $bgcolor }} rounded-xl shadow-lg">
                             <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                                 <div class="flex items-center gap-4">
                                     <img src="{{ asset('storage/' . ($item->category->image ?? 'category_image/default.png')) }}"
                                         alt="{{ $item->category->name }}"
                                         class="object-cover bg-white shadow w-14 h-14 rounded-xl">
                                     <div>
-                                        <h3 class="text-base font-semibold text-gray-800">{{ $item->category->name }}
+                                        <h3 class="text-base font-semibold text-gray-800 dark:text-white">{{ $item->category->name }}
                                         </h3>
-                                        <p class="text-sm text-gray-500">
+                                        <p class="text-sm text-gray-500 dark:text-gray-300">
                                             Budget from {{ \Carbon\Carbon::parse($item->start_date)->format('F d, y') }}
                                             to
                                             {{ \Carbon\Carbon::parse($item->end_date)->format('F d, y') }}
                                         </p>
                                     </div>
                                 </div>
-                                <div class="flex gap-2 w-full sm:w-auto">
+                                <div class="flex w-full gap-2 sm:w-auto">
                                     <a href="{{ route('budget.edit', $item->id) }}"
                                         class="p-2 text-white transition bg-blue-500 rounded-lg hover:bg-blue-600">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                     <button onclick="showModal({{ $item->id }})"
-                                        class="p-2 text-white transition bg-red-500 rounded-lg hover:bg-red-600 cursor-pointer">
+                                        class="p-2 text-white transition bg-red-500 rounded-lg cursor-pointer hover:bg-red-600">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </div>
@@ -84,16 +84,16 @@
                             <!-- Progress Bar -->
                             <div>
                                 <div class="flex items-center justify-between mb-2">
-                                    <p class="text-base font-semibold text-gray-800">PHP
+                                    <p class="text-base font-semibold text-gray-800 dark:text-gray-300">PHP
                                         {{ number_format($item->spent, 2) }} spent</p>
-                                    <p class="text-base font-semibold text-gray-800">PHP
+                                    <p class="text-base font-semibold text-gray-800 dark:text-gray-300">PHP
                                         {{ number_format($item->amount, 2) }} limit</p>
                                 </div>
                                 <div class="w-full h-3 overflow-hidden bg-gray-200 rounded-full">
-                                    <div class="h-full bg-green-500 transition-all"
+                                    <div class="h-full transition-all bg-green-500"
                                         style="width: {{ $item->percentage }}%"></div>
                                 </div>
-                                <div class="flex justify-between mt-2 text-sm text-gray-600">
+                                <div class="flex justify-between mt-2 text-sm text-gray-600 dark:text-gray-400">
                                     <span>{{ $item->percentage }}%</span>
                                     @if ($item->remaining < 0)
                                         <span class="text-red-600">Over budget by PHP
@@ -108,27 +108,27 @@
                 </div>
 
                 <!-- Sidebar -->
-                <div class="w-full lg:w-2/5 flex flex-col gap-4">
+                <div class="flex flex-col w-full gap-4 lg:w-2/5">
                     <!-- Overview -->
-                    <div class="p-6 bg-white rounded-lg shadow-md">
-                        <h2 class="mb-2 text-lg font-semibold text-gray-800">Budget Overview</h2>
-                        <p class="text-sm text-gray-600">Summary of spending, limits, and remaining balance.</p>
+                    <div class="p-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                        <h2 class="mb-2 text-2xl font-semibold text-gray-800 dark:text-white">Budget Overview</h2>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Summary of spending, limits, and remaining balance.</p>
                         <div
                             class="mt-4 min-h-[200px] sm:min-h-[260px] h-full rounded-md text-white flex items-center justify-center">
                             <canvas id="DoughnutChart" class="w-full h-full"></canvas>
                         </div>
 
-                        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 py-4">
+                        <div class="grid grid-cols-2 gap-4 py-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
                             <div class="text-center">
-                                <h3 class="text-lg text-gray-700">PHP {{ number_format($totalBudget, 2) }}</h3>
+                                <h3 class="text-lg text-gray-700">PHP {{ number_format($totalBudgets, 2) }}</h3>
                                 <p class="text-sm text-gray-500">Total Budget</p>
                             </div>
                             <div class="text-center">
-                                <h3 class="text-lg text-gray-700">PHP {{ number_format($totalSpent, 2) }}</h3>
+                                <h3 class="text-lg text-gray-700">PHP {{ number_format($totalBudgetSpent, 2) }}</h3>
                                 <p class="text-sm text-gray-500">Spent</p>
                             </div>
                             <div class="text-center">
-                                <h3 class="text-lg text-gray-700">PHP {{ number_format($totalRemaining, 2) }}</h3>
+                                <h3 class="text-lg text-gray-700">PHP {{ number_format($totalBudgetRemaining, 2) }}</h3>
                                 <p class="text-sm text-gray-500">Remaining</p>
                             </div>
                             <div class="text-center">
@@ -139,9 +139,9 @@
                     </div>
 
                     <!-- Alerts -->
-                    <div class="p-6 bg-white rounded-lg shadow-md">
-                        <h2 class="mb-2 text-lg font-semibold text-gray-800">Alerts</h2>
-                        <p class="text-sm text-gray-600">Important updates or warnings related to your budget.</p>
+                    <div class="p-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                        <h2 class="mb-2 text-lg font-semibold text-gray-800 dark:text-white">Alerts</h2>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Important updates or warnings related to your budget.</p>
 
                         <div class="py-4 space-y-4 max-h-[300px] overflow-y-auto">
                             @foreach ($budgets as $budget)
@@ -171,43 +171,61 @@
         </main>
 
         {{-- Modal for Budget Deletion --}}
-        <div id="modal" class="hidden fixed inset-0 z-50 overflow-y-auto">
-            <div id="modal-backdrop" class="fixed inset-0 bg-gray-300 bg-opacity-50 transition-opacity duration-300"
+        <div id="modal" class="relative z-50 hidden" aria-labelledby="modal-title" role="dialog"
+            aria-modal="true">
+            <div id="modal-backdrop"
+                class="fixed inset-0 transition-opacity duration-300 opacity-0 bg-black/50 backdrop-blur-sm"
                 aria-hidden="true"></div>
 
             <div id="modal-wrapper"
-                class="flex items-center justify-center min-h-screen px-4 py-6 sm:p-0 transition-all duration-300">
-                <div
-                    class="relative bg-white rounded-lg shadow-xl w-full max-w-md sm:max-w-lg transform opacity-100 scale-100">
-                    <div class="px-6 py-5">
-                        <div class="flex items-center gap-4">
-                            <div class="flex-shrink-0 bg-red-100 text-red-600 rounded-full p-3">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                        d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                                </svg>
+                class="fixed inset-0 z-10 w-screen overflow-y-auto transition duration-300 ease-out scale-95 opacity-0">
+                <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
+                    <div
+                        class="relative overflow-hidden text-left transition-all transform bg-white border border-gray-200 shadow-2xl dark:bg-gray-800 rounded-2xl sm:my-8 sm:w-full sm:max-w-lg dark:border-gray-700">
+                        {{-- Modal Header --}}
+                        <div class="px-6 py-6">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="flex items-center justify-center w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-xl">
+                                    <i class="text-xl text-red-600 fas fa-exclamation-triangle dark:text-red-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100"
+                                        id="modal-title">
+                                        Delete Transaction
+                                    </h3>
+                                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                                        This action cannot be undone
+                                    </p>
+                                </div>
                             </div>
-                            <h3 class="text-lg font-medium text-gray-900">Delete Budget</h3>
                         </div>
 
-                        <p class="mt-4 text-sm text-gray-600">
-                            Are you sure you want to delete this budget? This action cannot be undone.
-                        </p>
-                    </div>
+                        {{-- Modal Body --}}
+                        <div class="px-6 pb-6">
+                            <p class="text-gray-700 dark:text-gray-300">
+                                Are you sure you want to delete this transaction? All associated data will be
+                                permanently removed from your records.
+                            </p>
+                        </div>
 
-                    <div class="px-6 py-4 bg-gray-50 flex flex-col sm:flex-row sm:justify-end gap-3">
-                        <form id="deleteForm" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                class="w-full sm:w-auto bg-red-600 hover:bg-red-500 text-white font-semibold py-2 px-4 rounded-md shadow-sm transition">
-                                Yes, Delete
+                        {{-- Modal Footer --}}
+                        <div
+                            class="flex flex-col-reverse gap-3 px-6 py-4 bg-gray-50 dark:bg-gray-700/50 sm:flex-row sm:justify-end">
+                            <button onclick="hideModal()" type="button"
+                                class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-gray-700 transition-colors duration-200 bg-white border border-gray-300 dark:text-gray-300 dark:bg-gray-600 dark:border-gray-500 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-500">
+                                Cancel
                             </button>
-                        </form>
-                        <button onclick="hideModal()" type="button"
-                            class="w-full sm:w-auto border border-gray-300 text-gray-700 hover:bg-gray-100 py-2 px-4 rounded-md transition">
-                            Cancel
-                        </button>
+                            <form id="deleteForm" action="" method="post" class="inline-flex">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="inline-flex justify-center items-center px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+                                    <i class="mr-2 fas fa-trash"></i>
+                                    Delete Transaction
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -247,6 +265,26 @@
                 modal.classList.add('hidden');
             }, 300);
         }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('modal');
+            const backdrop = document.getElementById('modal-backdrop');
+
+            if (event.target === backdrop) {
+                hideModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modal = document.getElementById('modal');
+                if (!modal.classList.contains('hidden')) {
+                    hideModal();
+                }
+            }
+        });
 
         // CHART
         const data = {

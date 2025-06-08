@@ -18,9 +18,9 @@ class BudgetController extends Controller
         $budgets = Budget::with('category')
             ->where('user_id', Auth::user()->id)
             ->get();
-        $totalSpent = 0;
-        $totalBudget = 0;
-        $totalRemaining = 0;
+        $totalBudgetSpent = 0;
+        $totalBudgets = 0;
+        $totalBudgetRemaining = 0;
         $category_IDs = [];
         $chartLabels = [];
         
@@ -33,9 +33,9 @@ class BudgetController extends Controller
             $budget->remaining = $budget->amount - $spentAmount;
             $budget->percentage = $budget->amount > 0 ? min(100, ($spentAmount / $budget->amount) * 100) : 0;
 
-            $totalSpent += $spentAmount;
-            $totalBudget += $budget->amount;
-            $totalRemaining += $budget->remaining;
+            $totalBudgetSpent += $spentAmount;
+            $totalBudgets += $budget->amount;
+            $totalBudgetRemaining += $budget->remaining;
             $category_IDs[] = $budget->category_id;
 
             $chartLabels[] = $budget->category->name;
@@ -50,9 +50,9 @@ class BudgetController extends Controller
 
         return view('admin.budget.index', compact(
             'budgets',
-            'totalSpent',
-            'totalBudget',
-            'totalRemaining',
+            'totalBudgetSpent',
+            'totalBudgets',
+            'totalBudgetRemaining',
             'totalCategoryIDs',
             'chartLabels',
             'chartData'

@@ -1,141 +1,338 @@
 <x-app-layout title="Transactions">
     {{-- Toast Component --}}
-    <x-toast/>
+    <x-toast />
 
     {{-- Sidebar Component --}}
     <x-sidebar-layout />
 
-    <div class="flex-1 md:ml-64">
+    <div class="flex-1 min-h-screen transition-colors duration-300 md:ml-64 bg-gray-50 dark:bg-gray-900">
         {{-- Header Component --}}
         <x-header />
 
         {{-- Main Content --}}
-        <main class="px-4 py-2 md:py-8 md:px-16">
-            <div class="flex flex-col gap-4 md:flex-row md:justify-between md:items-center">
-                <h1 class="text-2xl font-bold text-gray-800">Transactions</h1>
+        <main class="px-4 py-6 md:py-8 md:px-8 lg:px-12">
+            {{-- Header Section --}}
+            <div class="mb-8">
+                <div class="flex flex-col gap-6 lg:flex-row lg:justify-between lg:items-start">
+                    {{-- Title Section --}}
+                    <div class="space-y-2">
+                        <h1 class="text-3xl font-bold text-gray-900 lg:text-4xl dark:text-gray-100">
+                            Transactions
+                        </h1>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            Manage and track all your financial transactions
+                        </p>
+                    </div>
 
-                {{-- Filters --}}
-                <div class="flex flex-wrap gap-3">
-                    <form action="{{ route('transaction.index') }}" method="GET" class="flex flex-wrap gap-3">
-                        <select name="type"
-                            class="px-4 py-2 text-sm border-gray-300 rounded-md apperance-none focus:border-blue-500 focus:ring-blue-500">
-                            <option value="">Filter by Type</option>
-                            <option value="expense" {{ request('type') == 'expense' ? 'selected' : '' }}>Expense</option>
-                            <option value="income" {{ request('type') == 'income' ? 'selected' : '' }}>Income</option>
-                            <option value="transfer" {{ request('type') == 'transfer' ? 'selected' : '' }}>Transfer</option>
-                        </select>
-
-                        <select name="wallet"
-                            class="px-4 py-2 text-sm border-gray-300 rounded-md apperance-none focus:border-blue-500 focus:ring-blue-500">
-                            <option value="">Filter by Wallet</option>
-                            <option value="bank" {{ request('wallet') == 'bank' ? 'selected' : '' }}>Bank</option>
-                            <option value="cash" {{ request('wallet') == 'cash' ? 'selected' : '' }}>Cash</option>
-                            <option value="e-wallet" {{ request('wallet') == 'e-wallet' ? 'selected' : '' }}>E-wallet</option>
-                        </select>
-
-                        <select name="date_filter"
-                            class="px-4 py-2 text-sm border-gray-300 rounded-md focus:border-blue-500 focus:ring-blue-500">
-                            <option value="">Filter by Date</option>
-                            <option value="today" {{ request('date_filter') == 'today' ? 'selected' : '' }}>Today</option>
-                            <option value="this_week" {{ request('date_filter') == 'this_week' ? 'selected' : '' }}>This Week</option>
-                            <option value="this_month" {{ request('date_filter') == 'this_month' ? 'selected' : '' }}>This Month</option>
-                            <option value="last_month" {{ request('date_filter') == 'last_month' ? 'selected' : '' }}>Last Month</option>
-                            <option value="last_3_month" {{ request('date_filter') == 'last_3_month' ? 'selected' : '' }}>Last 3 Months</option>
-                            <option value="last_6_month" {{ request('date_filter') == 'last_6_month' ? 'selected' : '' }}>Last 6 Months</option>
-                            <option value="this_year" {{ request('date_filter') == 'this_year' ? 'selected' : '' }}>This Year</option>
-                        </select>
-
-                        <button type="submit"
-                            class="px-4 py-2 text-sm text-white transition bg-blue-600 rounded-md cursor-pointer hover:bg-blue-700">
-                            Filter
-                        </button>
-                    </form>
-
-                    <a href="{{ route('transaction.create') }}"
-                        class="px-4 py-2 text-sm text-blue-600 transition border border-blue-600 rounded-md hover:bg-blue-600 hover:text-white">
-                        <i class="mr-1 fa-solid fa-plus"></i> Add
-                    </a>
+                    {{-- Quick Add Button --}}
+                    <div class="flex gap-3">
+                        <a href="{{ route('transaction.create') }}"
+                            class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+                            <i class="text-sm fas fa-plus"></i>
+                            <span>Add Transaction</span>
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <div class="mt-4 overflow-x-auto">
-                    <table class="w-full overflow-hidden text-sm border rounded-md">
-                        <thead class="text-center text-gray-600 bg-gray-100">
-                            <tr class="text-sm font-semibold">
-                                <th class="px-2 py-3">Category</th>
-                                <th>Notes</th>
-                                <th>Amount</th>
-                                <th>Type</th>
-                                <th>Wallet</th>
-                                <th>Date/Time</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+            {{-- Filters Section --}}
+            <div class="mb-8">
+                <div
+                    class="p-6 transition-colors duration-300 bg-white border border-gray-200 shadow-sm dark:bg-gray-800 rounded-2xl dark:border-gray-700">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-2 bg-blue-100 rounded-lg dark:bg-blue-900/30">
+                            <i class="text-blue-600 fas fa-filter dark:text-blue-400"></i>
+                        </div>
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Filters</h2>
+                    </div>
+
+                    <form action="{{ route('transaction.index') }}" method="GET" class="space-y-4">
+                        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+                            {{-- Type Filter --}}
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Type</label>
+                                <select name="type"
+                                    class="w-full px-4 py-3 text-gray-900 transition-all duration-200 border border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 rounded-xl dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">All Types</option>
+                                    <option value="expense" {{ request('type') == 'expense' ? 'selected' : '' }}>
+                                        💸 Expense
+                                    </option>
+                                    <option value="income" {{ request('type') == 'income' ? 'selected' : '' }}>
+                                        💰 Income
+                                    </option>
+                                </select>
+                            </div>
+
+                            {{-- Wallet Filter --}}
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Wallet</label>
+                                <select name="wallet"
+                                    class="w-full px-4 py-3 text-gray-900 transition-all duration-200 border border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 rounded-xl dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">All Wallets</option>
+                                    <option value="bank" {{ request('wallet') == 'bank' ? 'selected' : '' }}>
+                                        🏦 Bank
+                                    </option>
+                                    <option value="cash" {{ request('wallet') == 'cash' ? 'selected' : '' }}>
+                                        💵 Cash
+                                    </option>
+                                    <option value="e-wallet" {{ request('wallet') == 'e-wallet' ? 'selected' : '' }}>
+                                        📱 E-wallet
+                                    </option>
+                                </select>
+                            </div>
+
+                            {{-- Date Filter --}}
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Period</label>
+                                <select name="date_filter"
+                                    class="w-full px-4 py-3 text-gray-900 transition-all duration-200 border border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 rounded-xl dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">All Time</option>
+                                    <option value="today" {{ request('date_filter') == 'today' ? 'selected' : '' }}>
+                                        Today</option>
+                                    <option value="this_week"
+                                        {{ request('date_filter') == 'this_week' ? 'selected' : '' }}>This Week</option>
+                                    <option value="this_month"
+                                        {{ request('date_filter') == 'this_month' ? 'selected' : '' }}>This Month
+                                    </option>
+                                    <option value="last_month"
+                                        {{ request('date_filter') == 'last_month' ? 'selected' : '' }}>Last Month
+                                    </option>
+                                    <option value="last_3_month"
+                                        {{ request('date_filter') == 'last_3_month' ? 'selected' : '' }}>Last 3 Months
+                                    </option>
+                                    <option value="last_6_month"
+                                        {{ request('date_filter') == 'last_6_month' ? 'selected' : '' }}>Last 6 Months
+                                    </option>
+                                    <option value="this_year"
+                                        {{ request('date_filter') == 'this_year' ? 'selected' : '' }}>This Year
+                                    </option>
+                                </select>
+                            </div>
+
+                            {{-- Filter Button --}}
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-transparent">Action</label>
+                                <button type="submit"
+                                    class="w-full px-4 py-3 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+                                    <i class="mr-2 fas fa-search"></i>
+                                    Apply Filters
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {{-- Transactions Table --}}
+            <div
+                class="overflow-hidden transition-colors duration-300 bg-white border border-gray-200 shadow-sm dark:bg-gray-800 rounded-2xl dark:border-gray-700">
+                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2 bg-green-100 rounded-lg dark:bg-green-900/30">
+                            <i class="text-green-600 fas fa-list dark:text-green-400"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Recent Transactions</h3>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50 dark:bg-gray-700">
+                            <tr>
+                                <th
+                                    class="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-600 uppercase dark:text-gray-300">
+                                    Category
+                                </th>
+                                <th
+                                    class="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-600 uppercase dark:text-gray-300">
+                                    Notes
+                                </th>
+                                <th
+                                    class="px-6 py-4 text-xs font-semibold tracking-wider text-right text-gray-600 uppercase dark:text-gray-300">
+                                    Amount
+                                </th>
+                                <th
+                                    class="px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase dark:text-gray-300">
+                                    Type
+                                </th>
+                                <th
+                                    class="px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase dark:text-gray-300">
+                                    Wallet
+                                </th>
+                                <th
+                                    class="px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase dark:text-gray-300">
+                                    Date
+                                </th>
+                                <th
+                                    class="px-6 py-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase dark:text-gray-300">
+                                    Actions
+                                </th>
                             </tr>
                         </thead>
-                        <tbody class="text-center text-gray-700">
+                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                             @foreach ($transaction as $item)
-                                <tr class="border-t hover:bg-gray-100">
-                                    <td class="py-2">{{ $item->category->name }}</td>
-                                    <td>{{ $item->note }}</td>
-                                    <td class="font-semibold">₱ {{ $item->amount }}</td>
-                                    <td class="capitalize">{{ $item->type }}</td>
-                                    <td>{{ $item->wallet->name }}</td>
-                                    <td>{{ $item->date }}</td>
-                                    <td><a href="{{ route('transaction.edit', $item->id) }}"><i
-                                                class="text-blue-500 transition duration-150 cursor-pointer fa-solid fa-pen-to-square hover:text-blue-700"></i></a>
+                                <tr class="transition-colors duration-150 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                                    {{-- Category --}}
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div
+                                                class="flex items-center justify-center w-10 h-10 text-sm font-semibold text-white bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl">
+                                                {{ substr($item->category->name, 0, 2) }}
+                                            </div>
+                                            <div>
+                                                <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                                                    {{ $item->category->name }}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
-                                    <td><button onclick="showModal({{ $item->id }})"><i
-                                                class="text-red-500 transition duration-150 cursor-pointer fa-solid fa-trash hover:text-red-700"></i></button>
+
+                                    {{-- Notes --}}
+                                    <td class="px-6 py-4">
+                                        <div class="max-w-xs text-sm text-gray-600 truncate dark:text-gray-300">
+                                            {{ $item->note ?: 'No notes' }}
+                                        </div>
+                                    </td>
+
+                                    {{-- Amount --}}
+                                    <td class="px-6 py-4 text-right">
+                                        <div
+                                            class="text-lg font-bold {{ $item->type === 'income' ? 'text-green-600 dark:text-green-400' : ($item->type === 'expense' ? 'text-red-600 dark:text-red-400' : 'text-blue-600 dark:text-blue-400') }}">
+                                            {{ $item->type === 'income' ? '+' : ($item->type === 'expense' ? '-' : '') }}₱{{ number_format($item->amount, 2) }}
+                                        </div>
+                                    </td>
+
+                                    {{-- Type --}}
+                                    <td class="px-6 py-4 text-center">
+                                        <span
+                                            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium
+                                            {{ $item->type === 'income'
+                                                ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300'
+                                                : ($item->type === 'expense'
+                                                    ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300'
+                                                    : 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300') }}">
+                                            {{ $item->type === 'income' ? '💰' : ($item->type === 'expense' ? '💸' : '🔄') }}
+                                            <span class="ml-1 capitalize">{{ $item->type }}</span>
+                                        </span>
+                                    </td>
+
+                                    {{-- Wallet --}}
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                            {{ $item->wallet->name }}
+                                        </div>
+                                    </td>
+
+                                    {{-- Date --}}
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="text-sm text-gray-600 dark:text-gray-300">
+                                            {{ \Carbon\Carbon::parse($item->date)->format('M d, Y') }}
+                                        </div>
+                                        <div class="text-xs text-gray-400 dark:text-gray-500">
+                                            {{ \Carbon\Carbon::parse($item->date)->format('g:i A') }}
+                                        </div>
+                                    </td>
+
+                                    {{-- Actions --}}
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center justify-center gap-2">
+                                            <a href="{{ route('transaction.edit', $item->id) }}"
+                                                class="inline-flex items-center justify-center w-8 h-8 text-blue-600 transition-colors duration-200 bg-blue-100 rounded-lg dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 dark:text-blue-400"
+                                                title="Edit Transaction">
+                                                <i class="text-sm fas fa-edit"></i>
+                                            </a>
+                                            <button onclick="showModal({{ $item->id }})"
+                                                class="inline-flex items-center justify-center w-8 h-8 text-red-600 transition-colors duration-200 bg-red-100 rounded-lg dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50 dark:text-red-400"
+                                                title="Delete Transaction">
+                                                <i class="text-sm fas fa-trash"></i>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+
+                    <div class="px-4 py-4">
+                        {{ $transaction->onEachSide(1)->links() }}
+                    </div>
+                    
+                    @if (count($transaction) === 0)
+                        <div class="py-12 text-center">
+                            <div
+                                class="inline-flex items-center justify-center w-16 h-16 mb-4 bg-gray-100 rounded-full dark:bg-gray-700">
+                                <i class="text-2xl text-gray-400 fas fa-receipt dark:text-gray-500"></i>
+                            </div>
+                            <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-gray-100">No transactions
+                                found</h3>
+                            <p class="mb-6 text-gray-600 dark:text-gray-400">Get started by adding your first
+                                transaction.</p>
+                            <a href="{{ route('transaction.create') }}"
+                                class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+                                <i class="text-sm fas fa-plus"></i>
+                                <span>Add Your First Transaction</span>
+                            </a>
+                        </div>
+                    @endif
+                </div>
             </div>
         </main>
 
-        {{-- Modal for Car deletion --}}
-        <div id="modal" class="relative z-10 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div id="modal-backdrop" class="fixed inset-0 transition-opacity duration-300 opacity-0 bg-gray-500/75"
+        {{-- Modern Delete Modal --}}
+        <div id="modal" class="relative z-50 hidden" aria-labelledby="modal-title" role="dialog"
+            aria-modal="true">
+            <div id="modal-backdrop"
+                class="fixed inset-0 transition-opacity duration-300 opacity-0 bg-black/50 backdrop-blur-sm"
                 aria-hidden="true"></div>
 
             <div id="modal-wrapper"
                 class="fixed inset-0 z-10 w-screen overflow-y-auto transition duration-300 ease-out scale-95 opacity-0">
                 <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
                     <div
-                        class="relative overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-lg">
-                        <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
-                            <div class="sm:flex sm:items-start">
+                        class="relative overflow-hidden text-left transition-all transform bg-white border border-gray-200 shadow-2xl dark:bg-gray-800 rounded-2xl sm:my-8 sm:w-full sm:max-w-lg dark:border-gray-700">
+                        {{-- Modal Header --}}
+                        <div class="px-6 py-6">
+                            <div class="flex items-center gap-4">
                                 <div
-                                    class="flex items-center justify-center mx-auto bg-red-100 rounded-full size-12 shrink-0 sm:mx-0 sm:size-10">
-                                    <svg class="text-red-600 size-6" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                                    </svg>
+                                    class="flex items-center justify-center w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-xl">
+                                    <i class="text-xl text-red-600 fas fa-exclamation-triangle dark:text-red-400"></i>
                                 </div>
-                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                    <h3 class="text-base font-semibold text-gray-900" id="modal-title">
-                                        Delete Category</h3>
-                                    <div class="mt-2">
-                                        <p class="text-sm text-gray-500">Are you sure you want to delete
-                                            this category? All of your data will be permanently removed.
-                                            This
-                                            action cannot be undone.</p>
-                                    </div>
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100"
+                                        id="modal-title">
+                                        Delete Transaction
+                                    </h3>
+                                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                                        This action cannot be undone
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        <div class="px-4 py-3 bg-gray-50 sm:flex sm:flex-row-reverse sm:px-6">
-                            <form id="deleteForm" action="" method="post">
+
+                        {{-- Modal Body --}}
+                        <div class="px-6 pb-6">
+                            <p class="text-gray-700 dark:text-gray-300">
+                                Are you sure you want to delete this transaction? All associated data will be
+                                permanently removed from your records.
+                            </p>
+                        </div>
+
+                        {{-- Modal Footer --}}
+                        <div
+                            class="flex flex-col-reverse gap-3 px-6 py-4 bg-gray-50 dark:bg-gray-700/50 sm:flex-row sm:justify-end">
+                            <button onclick="hideModal()" type="button"
+                                class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-gray-700 transition-colors duration-200 bg-white border border-gray-300 dark:text-gray-300 dark:bg-gray-600 dark:border-gray-500 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-500">
+                                Cancel
+                            </button>
+                            <form id="deleteForm" action="" method="post" class="inline-flex">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
-                                    class="inline-flex justify-center w-full px-3 py-2 text-sm font-semibold text-white bg-red-600 rounded-md shadow-xs cursor-pointer hover:bg-red-500 sm:ml-3 sm:w-auto">Yes,
-                                    Delete</button>
+                                    class="inline-flex justify-center items-center px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+                                    <i class="mr-2 fas fa-trash"></i>
+                                    Delete Transaction
+                                </button>
                             </form>
-                            <button onclick="hideModal()" type="button"
-                                class="inline-flex justify-center w-full px-3 py-2 mt-3 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-xs cursor-pointer ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -174,5 +371,25 @@
                 modal.classList.add('hidden');
             }, 300);
         }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('modal');
+            const backdrop = document.getElementById('modal-backdrop');
+
+            if (event.target === backdrop) {
+                hideModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modal = document.getElementById('modal');
+                if (!modal.classList.contains('hidden')) {
+                    hideModal();
+                }
+            }
+        });
     </script>
 </x-app-layout>

@@ -4,7 +4,7 @@
     <div class="flex-1 md:ml-64">
         <x-header />
 
-        <main class="w-full px-8 py-6 mx-auto mt-8 bg-white rounded-lg shadow-lg md:w-1/2 md:px-8">
+        <main class="w-full px-8 py-6 mx-auto mt-8 bg-white rounded-lg shadow-lg dark:bg-gray-800 md:w-1/2 md:px-8">
             <h1 class="mb-6 text-2xl font-bold text-center">Edit Your Own Category</h1>
 
             <form action="{{route('category.update', $category->id)}}" method="POST" class="space-y-5" enctype="multipart/form-data">
@@ -15,7 +15,7 @@
                 <div class="mb-4">
                     <label for="name" class="label">Category Name</label>
                     <input type="text" name="name" id="name"
-                        class="w-full px-4 py-3 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 @error('name') border-red-400 @enderror"
+                        class="w-full px-4 py-3 border rounded-lg text-sm dark:bg-gray-700  focus:outline-none focus:ring-2 focus:ring-blue-500 @error('name') border-red-400 @enderror"
                         value="{{ old('name', $category->name) }}" placeholder="e.g., Groceries, Utilities">
                     @error('name')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -26,7 +26,7 @@
                 <div class="mb-4">
                     <label for="typeDropdown" class="label">Type</label>
                     <select id="typeDropdown" name="type"
-                        class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="">Select Type</option>
                         <option value="expense" {{ old('type', $category->type) == 'expense' ? 'selected' : '' }}>
                             Expense</option>
@@ -46,13 +46,13 @@
                     @endif
                 </div>
                 <div class="mb-4">
-                    <h3 class="text-lg font-medium text-gray-900">Category Type Image</h3>
-                    <p class="mt-1 text-sm text-gray-500">Upload one image related to category name (PNG, JPG, JPEG)</p>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-300">Category Type Image</h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Upload one image related to category name (PNG, JPG, JPEG)</p>
 
                     <div class="mt-3">
                         <label for="categoryFormImageUpload" class="block w-full cursor-pointer">
                             <div
-                                class="flex flex-col items-center justify-center px-6 py-4 mt-2 transition duration-150 border-2 border-gray-300 border-dashed rounded-lg hover:bg-gray-50 group">
+                                class="flex flex-col items-center justify-center px-6 py-4 mt-2 transition duration-150 border-2 border-gray-300 border-dashed rounded-lg dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 group">
                                 <div class="flex flex-col items-center space-y-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor"
@@ -63,9 +63,9 @@
                                     <div class="text-center">
                                         <span class="font-medium text-blue-600 hover:text-blue-700">Click to
                                             upload</span>
-                                        <span class="text-gray-500"> or drag and drop</span>
+                                        <span class="text-gray-500 dark:text-gray-300"> or drag and drop</span>
                                     </div>
-                                    <p class="text-xs text-gray-500">
+                                    <p class="text-xs text-gray-500 dark:text-gray-300">
                                         Select one image
                                     </p>
                                 </div>

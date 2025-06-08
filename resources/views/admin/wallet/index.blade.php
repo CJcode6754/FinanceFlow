@@ -15,9 +15,9 @@
             <section class="flex flex-col gap-4 px-2 py-4 lg:flex-row md:gap-6 md:px-8">
                 <div class="w-full space-y-3 lg:w-2/5">
                     <div class="flex items-center justify-between gap-4">
-                        <h2 class="text-lg font-bold">Wallets</h2>
+                        <h2 class="text-2xl font-bold">Wallets</h2>
                         <a href="{{ route('wallet.create') }}"
-                            class="px-4 py-2 text-sm font-semibold text-gray-500 transition duration-150 border border-blue-500 rounded-lg hover:bg-blue-600 hover:text-white group"><i
+                            class="px-4 py-2 text-sm font-semibold text-gray-500 transition duration-150 border border-blue-500 rounded-lg hover:bg-blue-600 hover:text-white group dark:text-white"><i
                                 class="fa-solid fa-plus"></i> Add</a>
                     </div>
                     <!-- Wallet Card -->
@@ -47,22 +47,22 @@
                 <!-- Total Balance -->
                 <div class="w-full space-y-4">
                     <section
-                        class="flex flex-col gap-4 p-6 bg-white rounded-lg shadow-md md:flex-row md:items-center md:justify-between">
+                        class="flex flex-col gap-4 p-6 bg-white rounded-lg shadow-md dark:bg-gray-800 md:flex-row md:items-center md:justify-between">
                         <div class="flex flex-col gap-1">
-                            <h3 class="text-sm font-medium text-gray-500">Total Balance</h3>
-                            <p class="text-3xl font-bold text-gray-800">PHP {{ number_format($totalBalance, 2) }}</p>
+                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-300">Total Balance</h3>
+                            <p class="text-3xl font-bold text-gray-800 dark:text-white">₱ {{ number_format($totalBalance, 2) }}</p>
                         </div>
                         <div
-                            class="flex flex-col items-center w-full gap-6 p-6 bg-gray-800 lg:flex-row rounded-2xl md:w-auto">
+                            class="flex flex-col items-center w-full gap-6 p-6 bg-gray-800 dark:bg-white lg:flex-row rounded-2xl md:w-auto">
                             <!-- Income -->
                             <div class="flex-1 text-white">
                                 <div class="flex items-center justify-between mb-1">
-                                    <h3 class="text-base font-semibold">Total Income</h3>
+                                    <h3 class="text-base font-semibold dark:text-gray-800">Total Income</h3>
                                     <p class="flex items-center gap-1 text-emerald-400">
                                         <i class="fa-solid fa-arrow-up"></i> 2.89%
                                     </p>
                                 </div>
-                                <p class="text-2xl font-bold">PHP {{ number_format($income, 2) ?? 0 }}</p>
+                                <p class="text-2xl font-bold dark:text-gray-800">₱ {{ number_format($income, 2) ?? 0 }}</p>
                             </div>
 
                             <!-- Expense -->
@@ -73,7 +73,7 @@
                                         <i class="fa-solid fa-arrow-down"></i> 2.89%
                                     </p>
                                 </div>
-                                <p class="text-2xl font-bold text-gray-700">PHP {{ number_format($expense, 2) ?? 0 }}
+                                <p class="text-2xl font-bold text-gray-700">₱ {{ number_format($expense, 2) ?? 0 }}
                                 </p>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                     {{-- <section class="py-4">
                         <div
                             class="grid grid-cols-2 gap-4 p-6 bg-white shadow rounded-xl sm:grid-cols-3 lg:grid-cols-5">
-                            @php
+                            @₱
                                 $actions = [
                                     ['icon' => 'wallet', 'label' => 'Deposit', 'color' => 'text-blue-600'],
                                     ['icon' => 'arrow-up-from-bracket', 'label' => 'Send', 'color' => 'text-green-600'],
@@ -99,7 +99,7 @@
                                     ],
                                     ['icon' => 'check', 'label' => 'Checkout', 'color' => 'text-indigo-600'],
                                 ];
-                            @endphp
+                            @end₱
 
                             @foreach ($actions as $action)
                                 <div class="flex items-center gap-2">
@@ -111,7 +111,7 @@
                     </section> --}}
 
                     <!-- Graph -->
-                    <section class="w-full p-4 bg-white shadow-md rounded-xl">
+                    <section class="w-full shadow-md rounded-xl">
                          <!-- Spending by Category -->
                         <x-category-chart :categoryLabels="$chartLabels" :categoryData="$chartData" />
                     </section>
@@ -120,47 +120,60 @@
         </main>
 
         {{-- Modal for Car deletion --}}
-        <div id="modal" class="relative z-10 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div id="modal-backdrop" class="fixed inset-0 transition-opacity duration-300 opacity-0 bg-gray-500/75"
+        <div id="modal" class="relative z-50 hidden" aria-labelledby="modal-title" role="dialog"
+            aria-modal="true">
+            <div id="modal-backdrop"
+                class="fixed inset-0 transition-opacity duration-300 opacity-0 bg-black/50 backdrop-blur-sm"
                 aria-hidden="true"></div>
 
             <div id="modal-wrapper"
                 class="fixed inset-0 z-10 w-screen overflow-y-auto transition duration-300 ease-out scale-95 opacity-0">
                 <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
                     <div
-                        class="relative overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-lg">
-                        <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
-                            <div class="sm:flex sm:items-start">
+                        class="relative overflow-hidden text-left transition-all transform bg-white border border-gray-200 shadow-2xl dark:bg-gray-800 rounded-2xl sm:my-8 sm:w-full sm:max-w-lg dark:border-gray-700">
+                        {{-- Modal Header --}}
+                        <div class="px-6 py-6">
+                            <div class="flex items-center gap-4">
                                 <div
-                                    class="flex items-center justify-center mx-auto bg-red-100 rounded-full size-12 shrink-0 sm:mx-0 sm:size-10">
-                                    <svg class="text-red-600 size-6" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                                    </svg>
+                                    class="flex items-center justify-center w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-xl">
+                                    <i class="text-xl text-red-600 fas fa-exclamation-triangle dark:text-red-400"></i>
                                 </div>
-                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                    <h3 class="text-base font-semibold text-gray-900" id="modal-title">
-                                        Delete Category</h3>
-                                    <div class="mt-2">
-                                        <p class="text-sm text-gray-500">Are you sure you want to delete
-                                            this category? All of your data will be permanently removed.
-                                            This
-                                            action cannot be undone.</p>
-                                    </div>
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100"
+                                        id="modal-title">
+                                        Delete Transaction
+                                    </h3>
+                                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                                        This action cannot be undone
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        <div class="px-4 py-3 bg-gray-50 sm:flex sm:flex-row-reverse sm:px-6">
-                            <form id="deleteForm" action="" method="post">
+
+                        {{-- Modal Body --}}
+                        <div class="px-6 pb-6">
+                            <p class="text-gray-700 dark:text-gray-300">
+                                Are you sure you want to delete this transaction? All associated data will be
+                                permanently removed from your records.
+                            </p>
+                        </div>
+
+                        {{-- Modal Footer --}}
+                        <div
+                            class="flex flex-col-reverse gap-3 px-6 py-4 bg-gray-50 dark:bg-gray-700/50 sm:flex-row sm:justify-end">
+                            <button onclick="hideModal()" type="button"
+                                class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-gray-700 transition-colors duration-200 bg-white border border-gray-300 dark:text-gray-300 dark:bg-gray-600 dark:border-gray-500 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-500">
+                                Cancel
+                            </button>
+                            <form id="deleteForm" action="" method="post" class="inline-flex">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
-                                    class="inline-flex justify-center w-full px-3 py-2 text-sm font-semibold text-white bg-red-600 rounded-md shadow-xs cursor-pointer hover:bg-red-500 sm:ml-3 sm:w-auto">Yes,
-                                    Delete</button>
+                                    class="inline-flex justify-center items-center px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+                                    <i class="mr-2 fas fa-trash"></i>
+                                    Delete Transaction
+                                </button>
                             </form>
-                            <button onclick="hideModal()" type="button"
-                                class="inline-flex justify-center w-full px-3 py-2 mt-3 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-xs cursor-pointer ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -200,5 +213,25 @@
                 modal.classList.add('hidden');
             }, 300);
         }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('modal');
+            const backdrop = document.getElementById('modal-backdrop');
+
+            if (event.target === backdrop) {
+                hideModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modal = document.getElementById('modal');
+                if (!modal.classList.contains('hidden')) {
+                    hideModal();
+                }
+            }
+        });
     </script>
 </x-app-layout>

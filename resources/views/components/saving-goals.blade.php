@@ -1,6 +1,6 @@
 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
     @foreach ($savings as $saving)
-        <div class="relative w-full max-w-sm p-6 space-y-5 bg-white shadow-md rounded-2xl">
+        <div class="relative w-full max-w-sm p-6 space-y-5 bg-white shadow-md dark:bg-gray-800 rounded-2xl">
             <!-- Icon -->
             <div class="flex items-center justify-center">
                 <i class="p-4 text-2xl shadow-sm {{ $saving->icon }} bg-emerald-100 text-emerald-600 rounded-xl"></i>
@@ -19,26 +19,26 @@
 
             <!-- Title and Target -->
             <div class="text-center">
-                <h2 class="text-xl font-semibold">{{ $saving->name }}</h2>
-                <p class="text-gray-500">Target: PHP {{ number_format($saving->target_amount, 2) }}</p>
+                <h2 class="text-xl font-semibold dark:text-white">{{ $saving->name }}</h2>
+                <p class="text-gray-500 dark:text-gray-300">Target: ₱ {{ number_format($saving->target_amount, 2) }}</p>
             </div>
 
             @if ($saving->note)
-                <p class="text-sm italic text-center text-gray-600">
+                <p class="text-sm italic text-center text-gray-600 dark:text-gray-300">
                     "{{ $saving->note }}"
                 </p>
             @endif
 
             <!-- Progress -->
             <div class="space-y-1">
-                <div class="flex items-center justify-between text-sm text-gray-600">
-                    <p>PHP {{ number_format($saving->current_amount, 2) }}</p>
-                    <p>of PHP {{ number_format($saving->target_amount) }}</p>
+                <div class="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300">
+                    <p>₱ {{ number_format($saving->current_amount, 2) }}</p>
+                    <p>of ₱ {{ number_format($saving->target_amount) }}</p>
                 </div>
 
-                <div class="flex items-center justify-between text-sm text-gray-600">
+                <div class="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300">
                     <p>{{ $saving->process_percent }}%</p>
-                    <p>PHP {{ number_format($saving->target_amount - $saving->current_amount, 2) }} to
+                    <p>₱ {{ number_format($saving->target_amount - $saving->current_amount, 2) }} to
                         go</p>
                 </div>
                 <div class="w-full h-3 overflow-hidden bg-gray-200 rounded-full">
@@ -53,7 +53,7 @@
                     class="w-full py-3 font-medium text-center text-white transition-all bg-emerald-500 hover:bg-emerald-600 lg:w-1/2 rounded-xl"><i
                         class="mr-2 fa-solid fa-sack-dollar"></i>Deposit</a>
                 <a href="{{ route('savings.transaction', [$saving->id, 'method' => 'withdraw']) }}"
-                    class="w-full py-3 font-medium text-center transition-all bg-gray-100 hover:bg-gray-400 hover:text-white lg:w-1/2 rounded-xl">
+                    class="w-full py-3 font-medium text-center transition-all bg-gray-100 dark:text-gray-600 hover:bg-gray-400 hover:text-white lg:w-1/2 rounded-xl">
                     <i class="mr-2 fa-solid fa-money-bill-wave"></i>Withdraw
                 </a>
             </div>

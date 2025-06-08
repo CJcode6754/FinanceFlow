@@ -23,7 +23,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
     <script src="https://unpkg.com/feather-icons"></script>
 </head>
-<body>
+<body class="text-gray-800 transition-colors duration-300 bg-gray-100 dark:bg-gray-800 dark:text-gray-100">
     {{$slot}}
 </body>
 </html>

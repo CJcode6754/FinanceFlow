@@ -58,7 +58,7 @@ class TransactionController extends Controller
             }
         }
 
-        $transaction = $query->latest()->get();
+        $transaction = $query->latest()->paginate(10);
 
         return view('admin.transaction.index', compact('transaction'));
     }

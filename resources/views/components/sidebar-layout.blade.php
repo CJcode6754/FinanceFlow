@@ -1,5 +1,5 @@
 <button id="hamburger-button" aria-controls="default-sidebar" type="button"
-    class="inline-flex items-center p-2 mt-2 text-sm text-gray-500 rounded-lg ms-3 md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:focus:ring-gray-600">
+    class="inline-flex items-center p-2 mt-2 text-sm text-gray-500 dark:text-gray-400 rounded-lg ms-3 md:hidden hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-600 transition-colors">
     <span class="sr-only">Open sidebar</span>
     <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
         <path clip-rule="evenodd" fill-rule="evenodd"
@@ -11,10 +11,22 @@
 <aside id="default-sidebar"
     class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full md:translate-x-0"
     aria-label="Sidebar">
-    <div class="flex flex-col justify-between h-full px-3 overflow-y-auto bg-gray-50">
+    <div class="flex flex-col justify-between h-full px-3 overflow-y-auto bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
         <div>
-            <div class="flex justify-center">
-                <img class="w-32" src="{{ asset('assets/logo.png') }}" alt="Logo  ">
+            <div class="flex justify-center py-4">
+                <img class="w-32" src="{{ asset('assets/logo.png') }}" alt="Logo">
+            </div>
+
+            {{-- Dark Mode Toggle for Mobile --}}
+            <div class="flex justify-center mb-4 md:hidden">
+                <button 
+                    onclick="toggleDarkMode()" 
+                    class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200"
+                    title="Toggle Dark Mode"
+                >
+                    <i id="sunIconMobile" class="fas fa-sun text-yellow-500 hidden"></i>
+                    <i id="moonIconMobile" class="fas fa-moon text-blue-400"></i>
+                </button>
             </div>
 
             <ul class="space-y-3 font-medium">
@@ -61,16 +73,16 @@
         </div>
 
         <div class="pb-4 space-y-2 sm:hidden">
-            <div class="flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer hover:bg-gray-100">
-                <i class="p-3 text-sm text-white bg-gray-500 rounded-full fa-solid fa-user"></i>
+            <div class="flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <i class="p-3 text-sm text-white bg-gray-500 dark:bg-gray-600 rounded-full fa-solid fa-user"></i>
                 <div class="flex items-center gap-3 text-sm">
-                    <h3 class="font-medium">{{ auth()->user()->name }}</h3>
+                    <h3 class="font-medium text-gray-900 dark:text-gray-100">{{ auth()->user()->name }}</h3>
                 </div>
 
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit"
-                        class="flex items-center w-full gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        class="flex items-center w-full gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </button>
                 </form>
@@ -78,3 +90,38 @@
         </div>
     </div>
 </aside>
+
+<script>
+// Update mobile toggle icons as well
+function updateToggleButton() {
+    const toggleButton = document.getElementById('darkModeToggle');
+    const sunIcon = document.getElementById('sunIcon');
+    const moonIcon = document.getElementById('moonIcon');
+    const sunIconMobile = document.getElementById('sunIconMobile');
+    const moonIconMobile = document.getElementById('moonIconMobile');
+    
+    const isDark = document.documentElement.classList.contains('dark');
+    
+    // Desktop icons
+    if (sunIcon && moonIcon) {
+        if (isDark) {
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+        } else {
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+        }
+    }
+    
+    // Mobile icons
+    if (sunIconMobile && moonIconMobile) {
+        if (isDark) {
+            sunIconMobile.classList.remove('hidden');
+            moonIconMobile.classList.add('hidden');
+        } else {
+            sunIconMobile.classList.add('hidden');
+            moonIconMobile.classList.remove('hidden');
+        }
+    }
+}
+</script>

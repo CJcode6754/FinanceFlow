@@ -12,20 +12,20 @@
         {{-- Main Content --}}
         <main class="px-4 py-2 sm:px-6 lg:px-16 md:py-8">
             <div class="flex flex-col gap-4 py-6 lg:flex-row lg:items-center lg:justify-between">
-                <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-center lg:text-left">Categories</h1>
+                <h1 class="text-xl font-bold text-center text-gray-900 sm:text-2xl lg:text-3xl lg:text-left dark:text-gray-100">Categories</h1>
 
-                <div class="flex flex-wrap justify-center lg:justify-end gap-2">
-                    <a class="px-4 py-2 rounded-lg transition text-sm sm:text-base {{ request('type') === 'expense' ? 'bg-blue-500 text-white' : 'border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white' }}"
+                <div class="flex flex-wrap justify-center gap-2 lg:justify-end">
+                    <a class="px-4 py-2 rounded-lg transition text-sm sm:text-base {{ request('type') === 'expense' ? 'bg-blue-500 text-white' : 'border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-500 dark:hover:text-white' }}"
                         href="{{ route('category.index', ['type' => 'expense']) }}">Expense</a>
 
-                    <a class="px-4 py-2 rounded-lg transition text-sm sm:text-base {{ request('type') === 'income' ? 'bg-blue-500 text-white' : 'border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white' }}"
+                    <a class="px-4 py-2 rounded-lg transition text-sm sm:text-base {{ request('type') === 'income' ? 'bg-blue-500 text-white' : 'border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-500 dark:hover:text-white' }}"
                         href="{{ route('category.index', ['type' => 'income']) }}">Income</a>
 
-                    <a class="px-4 py-2 border border-gray-500 text-gray-600 rounded-lg hover:bg-gray-100 text-sm sm:text-base"
+                    <a class="px-4 py-2 text-sm text-gray-600 transition-colors border border-gray-500 rounded-lg dark:border-gray-400 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 sm:text-base"
                         href="{{ route('category.index') }}">All</a>
 
                     <a href="{{ route('category.create') }}"
-                        class="px-4 py-2 border border-blue-500 rounded-lg hover:bg-blue-600 hover:text-white group text-sm sm:text-base"
+                        class="px-4 py-2 text-sm transition-colors border border-blue-500 rounded-lg dark:border-blue-400 hover:bg-blue-600 hover:text-white dark:text-blue-400 dark:hover:bg-blue-500 dark:hover:text-white group sm:text-base"
                         title="Add Category">
                         <i class="fa-solid fa-plus"></i>
                     </a>
@@ -35,20 +35,20 @@
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
                 @foreach ($categories as $category)
                     <div
-                        class="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-4 transition bg-white rounded-lg shadow hover:shadow-xl">
+                        class="flex flex-col items-center justify-between gap-4 px-4 py-4 transition bg-white rounded-lg shadow sm:flex-row dark:bg-gray-800 hover:shadow-xl dark:shadow-gray-900/20 dark:hover:shadow-gray-900/40">
                         <div class="flex items-center gap-4 text-center sm:text-left">
-                            <img class="rounded-full w-16 h-16 object-cover"
+                            <img class="object-cover w-16 h-16 rounded-full"
                                 src="{{ asset('storage/' . ($category->image ?? 'category_image/default.png')) }}"
                                 alt="Category Image">
-                            <h2 class="text-base sm:text-lg font-semibold break-words">{{ $category->name }}</h2>
+                            <h2 class="text-base font-semibold text-gray-900 break-words sm:text-lg dark:text-gray-100">{{ $category->name }}</h2>
                         </div>
 
                         <div class="flex items-center gap-4">
                             <a href="{{ route('category.edit', $category->id) }}">
-                                <i class="fa-solid fa-pen-to-square text-blue-500 hover:text-blue-700 transition"></i>
+                                <i class="text-blue-500 transition-colors fa-solid fa-pen-to-square dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"></i>
                             </a>
                             <button onclick="showModal({{ $category->id }})">
-                                <i class="fa-solid fa-trash text-red-500 hover:text-red-700 transition"></i>
+                                <i class="text-red-500 transition-colors fa-solid fa-trash dark:text-red-400 hover:text-red-700 dark:hover:text-red-300"></i>
                             </button>
                         </div>
                     </div>
@@ -56,50 +56,66 @@
             </div>
         </main>
 
-
         {{-- Modal for Category Deletion --}}
-        <div id="modal" class="hidden fixed inset-0 z-50 overflow-y-auto">
-            <div id="modal-backdrop" class="fixed inset-0 bg-gray-300 bg-opacity-50 transition-opacity duration-300"
+        <div id="modal" class="relative z-50 hidden" aria-labelledby="modal-title" role="dialog"
+            aria-modal="true">
+            <div id="modal-backdrop"
+                class="fixed inset-0 transition-opacity duration-300 opacity-0 bg-black/50 backdrop-blur-sm"
                 aria-hidden="true"></div>
 
             <div id="modal-wrapper"
-                class="flex items-center justify-center min-h-screen px-4 py-6 sm:p-0 transition-all duration-300">
-                <div
-                    class="relative bg-white rounded-lg shadow-xl w-full max-w-md sm:max-w-lg transform opacity-100 scale-100">
-                    <div class="px-6 py-5">
-                        <div class="flex items-center gap-4">
-                            <div class="flex-shrink-0 bg-red-100 text-red-600 rounded-full p-3">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                        d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                                </svg>
+                class="fixed inset-0 z-10 w-screen overflow-y-auto transition duration-300 ease-out scale-95 opacity-0">
+                <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
+                    <div
+                        class="relative overflow-hidden text-left transition-all transform bg-white border border-gray-200 shadow-2xl dark:bg-gray-800 rounded-2xl sm:my-8 sm:w-full sm:max-w-lg dark:border-gray-700">
+                        {{-- Modal Header --}}
+                        <div class="px-6 py-6">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="flex items-center justify-center w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-xl">
+                                    <i class="text-xl text-red-600 fas fa-exclamation-triangle dark:text-red-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100"
+                                        id="modal-title">
+                                        Delete Transaction
+                                    </h3>
+                                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                                        This action cannot be undone
+                                    </p>
+                                </div>
                             </div>
-                            <h3 class="text-lg font-medium text-gray-900">Delete Category</h3>
                         </div>
 
-                        <p class="mt-4 text-sm text-gray-600">
-                            Are you sure you want to delete this category? This action cannot be undone.
-                        </p>
-                    </div>
+                        {{-- Modal Body --}}
+                        <div class="px-6 pb-6">
+                            <p class="text-gray-700 dark:text-gray-300">
+                                Are you sure you want to delete this transaction? All associated data will be
+                                permanently removed from your records.
+                            </p>
+                        </div>
 
-                    <div class="px-6 py-4 bg-gray-50 flex flex-col sm:flex-row sm:justify-end gap-3">
-                        <form id="deleteForm" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                class="w-full sm:w-auto bg-red-600 hover:bg-red-500 text-white font-semibold py-2 px-4 rounded-md shadow-sm transition">
-                                Yes, Delete
+                        {{-- Modal Footer --}}
+                        <div
+                            class="flex flex-col-reverse gap-3 px-6 py-4 bg-gray-50 dark:bg-gray-700/50 sm:flex-row sm:justify-end">
+                            <button onclick="hideModal()" type="button"
+                                class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-gray-700 transition-colors duration-200 bg-white border border-gray-300 dark:text-gray-300 dark:bg-gray-600 dark:border-gray-500 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-500">
+                                Cancel
                             </button>
-                        </form>
-                        <button onclick="hideModal()" type="button"
-                            class="w-full sm:w-auto border border-gray-300 text-gray-700 hover:bg-gray-100 py-2 px-4 rounded-md transition">
-                            Cancel
-                        </button>
+                            <form id="deleteForm" action="" method="post" class="inline-flex">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="inline-flex justify-center items-center px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+                                    <i class="mr-2 fas fa-trash"></i>
+                                    Delete Transaction
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
     <script>
@@ -133,5 +149,25 @@
                 modal.classList.add('hidden');
             }, 300);
         }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('modal');
+            const backdrop = document.getElementById('modal-backdrop');
+
+            if (event.target === backdrop) {
+                hideModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modal = document.getElementById('modal');
+                if (!modal.classList.contains('hidden')) {
+                    hideModal();
+                }
+            }
+        });
     </script>
 </x-app-layout>
