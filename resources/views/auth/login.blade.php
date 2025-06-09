@@ -9,9 +9,9 @@
         <form action="{{route('loginUser')}}" method="POST" class="space-y-4">
             @csrf
             <div>
-                <label for="email" class="block mb-2 text-sm font-medium">Email</label>
+                <label for="email" class="block mb-2 text-sm font-medium dark:text-gray-800">Email</label>
                 <input type="text" name="email" id="email"
-                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('email')
+                    class="w-full p-3 border rounded-lg focus:outline-none dark:text-gray-700 focus:ring-2 focus:ring-blue-500 @error('email')
                         ring-red-400
                     @enderror"
                     value="{{old('email')}}"
@@ -22,9 +22,9 @@
             </div>
 
             <div class="relative">
-                <label for="password" class="block mb-2 text-sm font-medium">Password</label>
+                <label for="password" class="block mb-2 text-sm font-medium dark:text-gray-800">Password</label>
                 <input type="password" name="password" id="password"
-                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('password')
+                    class="w-full p-3 border rounded-lg focus:outline-none dark:text-gray-700 focus:ring-2 focus:ring-blue-500 @error('password')
                         ring-red-400
                     @enderror"
                     placeholder="ex: 12345678">

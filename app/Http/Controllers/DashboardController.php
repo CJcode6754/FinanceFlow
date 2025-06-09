@@ -29,11 +29,6 @@ class DashboardController extends Controller
         return redirect('/');
     }
 
-    public function setting()
-    {
-        return view('admin.settings');
-    }
-
     private function getFilterMonths(Request $request): int
     {
         $allowedMonths = [1, 2, 3, 6, 9, 12];

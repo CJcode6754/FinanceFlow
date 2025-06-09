@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout title="Settings">
     {{-- Sidebar Component --}}
     <x-sidebar-layout />
 
@@ -6,7 +6,7 @@
         {{-- Header Component --}}
         <x-header />
 
-        <main class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+        <main>
             <div class="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
                 <div class="max-w-4xl mx-auto">
                     <!-- Header -->
@@ -23,21 +23,16 @@
                             <div
                                 class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                                 <div class="flex items-center mb-6">
-                                    <i data-lucide="user-circle" class="w-6 h-6 text-emerald-600 mr-3"></i>
                                     <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Profile Settings
                                     </h2>
                                 </div>
 
                                 <div class="space-y-6">
                                     <!-- Avatar Section -->
-                                    <div class="flex items-center space-x-6">
+                                    <div class="flex items-center space-x-4">
                                         <div class="relative">
-                                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                                alt="Profile" class="w-20 h-20 rounded-full object-cover">
-                                            <button
-                                                class="absolute -bottom-1 -right-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full p-2 shadow-lg transition-colors">
-                                                <i data-lucide="camera" class="w-4 h-4"></i>
-                                            </button>
+                                            <i
+                                                class="p-6 text-sm text-white bg-gray-500 rounded-full dark:bg-gray-600 fa-solid fa-user"></i>
                                         </div>
                                         <div>
                                             <h3 class="text-lg font-medium text-gray-900 dark:text-white">Profile Photo
@@ -53,14 +48,14 @@
                                             <label
                                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full
                                                 Name</label>
-                                            <input type="text" value="John Doe"
+                                            <input type="text" value="{{ auth()->user()->name }}"
                                                 class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all">
                                         </div>
                                         <div>
                                             <label
                                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email
                                                 Address</label>
-                                            <input type="email" value="john.doe@example.com"
+                                            <input type="email" value="{{ auth()->user()->email }}"
                                                 class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all">
                                         </div>
                                     </div>
@@ -75,24 +70,6 @@
                                             class="bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-xl font-medium transition-colors">
                                             Change Password
                                         </button>
-                                    </div>
-
-                                    <!-- Two-Factor Authentication -->
-                                    <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
-                                        <div class="flex items-center justify-between">
-                                            <div>
-                                                <h4 class="text-sm font-medium text-gray-900 dark:text-white">Two-Factor
-                                                    Authentication</h4>
-                                                <p class="text-sm text-gray-500 dark:text-gray-400">Add an extra layer
-                                                    of security to your account</p>
-                                            </div>
-                                            <label class="relative inline-flex items-center cursor-pointer">
-                                                <input type="checkbox" class="sr-only peer">
-                                                <div
-                                                    class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 dark:peer-focus:ring-emerald-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-emerald-600">
-                                                </div>
-                                            </label>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -169,86 +146,11 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Notifications Section -->
-                            <div
-                                class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-                                <div class="flex items-center mb-6">
-                                    <i data-lucide="bell" class="w-6 h-6 text-emerald-600 mr-3"></i>
-                                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Notifications</h2>
-                                </div>
-
-                                <div class="space-y-6">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <h4 class="text-sm font-medium text-gray-900 dark:text-white">Transaction
-                                                Alerts</h4>
-                                            <p class="text-sm text-gray-500 dark:text-gray-400">Get notified when new
-                                                transactions are recorded</p>
-                                        </div>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" class="sr-only peer" checked>
-                                            <div
-                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 dark:peer-focus:ring-emerald-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-emerald-600">
-                                            </div>
-                                        </label>
-                                    </div>
-
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <h4 class="text-sm font-medium text-gray-900 dark:text-white">Budget
-                                                Reminders</h4>
-                                            <p class="text-sm text-gray-500 dark:text-gray-400">Receive alerts when
-                                                approaching budget limits</p>
-                                        </div>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" class="sr-only peer" checked>
-                                            <div
-                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 dark:peer-focus:ring-emerald-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-emerald-600">
-                                            </div>
-                                        </label>
-                                    </div>
-
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <h4 class="text-sm font-medium text-gray-900 dark:text-white">Weekly
-                                                Summaries</h4>
-                                            <p class="text-sm text-gray-500 dark:text-gray-400">Get weekly reports of
-                                                your spending habits</p>
-                                        </div>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" class="sr-only peer">
-                                            <div
-                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 dark:peer-focus:ring-emerald-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-emerald-600">
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                         <!-- Sidebar with Danger Zone -->
                         <div class="lg:col-span-1">
                             <div class="sticky top-8 space-y-6">
-                                <!-- Quick Actions -->
-                                <div
-                                    class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Actions
-                                    </h3>
-                                    <div class="space-y-3">
-                                        <button
-                                            class="w-full flex items-center justify-center px-4 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-colors">
-                                            <i data-lucide="download" class="w-4 h-4 mr-2"></i>
-                                            Export Data
-                                        </button>
-                                        <button
-                                            class="w-full flex items-center justify-center px-4 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-colors">
-                                            <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
-                                            Import Data
-                                        </button>
-                                    </div>
-                                </div>
-
                                 <!-- Danger Zone -->
                                 <div
                                     class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-red-200 dark:border-red-900 p-6">
@@ -267,16 +169,19 @@
                                                 be undone. All your data will be permanently deleted.</p>
                                             <button
                                                 class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-                                                onclick="confirmDelete()">
+                                                onclick="showModal({{auth()->user()->id}})">
                                                 Delete Account
                                             </button>
                                         </div>
 
-                                        <button
-                                            class="w-full flex items-center justify-center px-4 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-colors">
-                                            <i data-lucide="log-out" class="w-4 h-4 mr-2"></i>
-                                            Log Out
-                                        </button>
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button
+                                                class="w-full flex items-center justify-center px-4 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-colors">
+                                                <i data-lucide="log-out" class="w-4 h-4 mr-2"></i>
+                                                Log Out
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -285,25 +190,64 @@
                 </div>
             </div>
 
-            <!-- Delete Confirmation Modal -->
-            <div id="deleteModal"
-                class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
-                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-md mx-4 w-full">
-                    <div class="flex items-center mb-4">
-                        <i data-lucide="alert-triangle" class="w-6 h-6 text-red-600 mr-3"></i>
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Confirm Account Deletion</h3>
-                    </div>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6">Are you absolutely sure you want to delete your
-                        account? This action cannot be undone and all your financial data will be permanently lost.</p>
-                    <div class="flex space-x-3">
-                        <button onclick="closeDeleteModal()"
-                            class="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-lg font-medium transition-colors">
-                            Cancel
-                        </button>
-                        <button
-                            class="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors">
-                            Delete Forever
-                        </button>
+            {{-- Modern Delete Modal --}}
+            <div id="deleteModal" class="relative z-50 hidden" aria-labelledby="modal-title" role="dialog"
+                aria-modal="true">
+                <div id="modal-backdrop"
+                    class="fixed inset-0 transition-opacity duration-300 opacity-0 bg-black/50 backdrop-blur-sm"
+                    aria-hidden="true"></div>
+
+                <div id="modal-wrapper"
+                    class="fixed inset-0 z-10 w-screen overflow-y-auto transition duration-300 ease-out scale-95 opacity-0">
+                    <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
+                        <div
+                            class="relative overflow-hidden text-left transition-all transform bg-white border border-gray-200 shadow-2xl dark:bg-gray-800 rounded-2xl sm:my-8 sm:w-full sm:max-w-lg dark:border-gray-700">
+                            {{-- Modal Header --}}
+                            <div class="px-6 py-6">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="flex items-center justify-center w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-xl">
+                                        <i
+                                            class="text-xl text-red-600 fas fa-exclamation-triangle dark:text-red-400"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100"
+                                            id="modal-title">
+                                            Delete Acount
+                                        </h3>
+                                        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                                            This action cannot be undone
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Modal Body --}}
+                            <div class="px-6 pb-6">
+                                <p class="text-gray-700 dark:text-gray-300">
+                                    Are you sure you want to delete this acount? All associated data will be
+                                    permanently removed from your records.
+                                </p>
+                            </div>
+
+                            {{-- Modal Footer --}}
+                            <div
+                                class="flex flex-col-reverse gap-3 px-6 py-4 bg-gray-50 dark:bg-gray-700/50 sm:flex-row sm:justify-end">
+                                <button onclick="hideModal()" type="button"
+                                    class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-gray-700 transition-colors duration-200 bg-white border border-gray-300 dark:text-gray-300 dark:bg-gray-600 dark:border-gray-500 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-500">
+                                    Cancel
+                                </button>
+                                <form id="deleteForm" action="" method="post" class="inline-flex">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="inline-flex justify-center items-center px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+                                        <i class="mr-2 fas fa-trash"></i>
+                                        Delete Acount
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -333,13 +277,35 @@
                     }
                 });
 
-                // Delete confirmation modal
-                function confirmDelete() {
-                    document.getElementById('deleteModal').classList.remove('hidden');
+                function showModal(itemID) {
+                    const modal = document.getElementById('deleteModal');
+                    const backdrop = document.getElementById('modal-backdrop');
+                    const wrapper = document.getElementById('modal-wrapper');
+                    const form = document.getElementById('deleteForm');
+
+                    // form.action = `transaction/${itemID}`;
+                    modal.classList.remove('hidden');
+
+                    // Animate in
+                    setTimeout(() => {
+                        backdrop.classList.remove('opacity-0');
+                        wrapper.classList.remove('opacity-0', 'scale-95');
+                    }, 10);
                 }
 
-                function closeDeleteModal() {
-                    document.getElementById('deleteModal').classList.add('hidden');
+                function hideModal() {
+                    const modal = document.getElementById('modal');
+                    const backdrop = document.getElementById('modal-backdrop');
+                    const wrapper = document.getElementById('modal-wrapper');
+
+                    // Animate out
+                    backdrop.classList.add('opacity-0');
+                    wrapper.classList.add('opacity-0', 'scale-95');
+
+                    // Hide after animation
+                    setTimeout(() => {
+                        modal.classList.add('hidden');
+                    }, 300);
                 }
 
                 // Theme color selection

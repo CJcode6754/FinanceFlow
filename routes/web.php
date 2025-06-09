@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SavingController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
@@ -36,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/email/verification-notification', [AuthController::class, 'resendEmail'])->middleware(['throttle:6,1'])->name('verification.send');
 
     Route::post('/logout', [DashboardController::class, 'logout'])->name('logout');
-    Route::get('/setting', [DashboardController::class, 'setting'])->name('setting');
+    Route::get('/setting', [SettingsController::class, 'index'])->name('setting');
 
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
     Route::resource('/category', CategoryController::class);

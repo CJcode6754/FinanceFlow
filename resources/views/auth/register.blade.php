@@ -9,9 +9,9 @@
         <form action="{{route('register.store')}}" method="POST" class="space-y-4">
             @csrf
             <div>
-                <label for="name" class="block mb-2 text-sm font-medium">Full Name</label>
+                <label for="name" class="block mb-2 text-sm font-medium dark:text-gray-800">Full Name</label>
                 <input type="text" name="name" id="name"
-                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('name')
+                    class="w-full p-3 border rounded-lg focus:outline-none dark:text-gray-700 focus:ring-2 focus:ring-blue-500 @error('name')
                         ring-red-400
                     @enderror"
                     value="{{old('name')}}"
@@ -21,9 +21,9 @@
                 @enderror
             </div>
             <div>
-                <label for="email" class="block mb-2 text-sm font-medium">Email</label>
+                <label for="email" class="block mb-2 text-sm font-medium dark:text-gray-800">Email</label>
                 <input type="text" name="email" id="email"
-                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('email')
+                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 dark:text-gray-700 focus:ring-blue-500 @error('email')
                         ring-red-400
                     @enderror"
                     value="{{old('email')}}"
@@ -34,9 +34,9 @@
             </div>
 
             <div class="relative">
-                <label for="password" class="block mb-2 text-sm font-medium">Password</label>
+                <label for="password" class="block mb-2 text-sm font-medium dark:text-gray-800">Password</label>
                 <input type="password" name="password" id="password"
-                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('password')
+                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 dark:text-gray-700 focus:ring-blue-500 @error('password')
                         ring-red-500
                     @enderror"
                     placeholder="ex: 12345678">
@@ -50,10 +50,10 @@
             </div>
 
             <div class="relative">
-                <label for="password_confirmation" class="block mb-2 text-sm font-medium">Confirm
+                <label for="password_confirmation" class="block mb-2 text-sm font-medium dark:text-gray-800">Confirm
                     Password</label>
                 <input type="password" name="password_confirmation" id="password_confirmation"
-                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full p-3 border rounded-lg focus:outline-none dark:text-gray-700 focus:ring-2 focus:ring-blue-500"
                     placeholder="ex: 12345678">
 
                 <span id="toggleConfirmPassword" class="absolute" style="right: 15px; top: 40px; cursor: pointer;">
