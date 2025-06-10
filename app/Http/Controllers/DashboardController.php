@@ -8,12 +8,16 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function __construct(private DashboardService $dashboardService) {}
+    public function __construct(
+        private DashboardService $dashboardService
+    ) {}
+    
     public function index(Request $request)
     {
         $months = $this->getFilterMonths($request);
         $dashboardData = $this->dashboardService->getDashboardData(Auth::id(), $months);
 
+        // dd($dashboardData);
         return view('admin.dashboard', $dashboardData);
     }
 

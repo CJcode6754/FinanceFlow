@@ -22,7 +22,7 @@ class AnalyticsController extends Controller
         return view('admin.analytics.index',$datas);
     }
 
-    private function getFilterMonths(Request $request): int
+    protected function getFilterMonths(Request $request): int
     {
         $allowedMonths = [1, 2, 3, 6, 9, 12];
         $requestedMonths = (int) $request->filter_by_months;

@@ -11,19 +11,19 @@ class CacheService{
     }
 
     public function getDashBoardCacheKey(int $userId, int $months){
-        return "dashboard.{$userId}.{$months}" . now()->format('Y-m-d-H');
+        return "dashboard.{$userId}.{$months}";
     }
 
     public function getWalletCacheKey(int $userId, int $months){
-        return "wallet.{$userId}.{$months}" . now()->format('Y-m-d-H');
+        return "wallet.{$userId}.{$months}";
     }
 
     public function getAnalyticsCacheKey(int $userId, int $months){
-        return "analytics.{$userId}.{$months}" . now()->format('Y-m-d-H');
+        return "analytics.{$userId}.{$months}";
     }
 
     public function getSavingsCacheKey(int $userId, int $months){
-        return "savings.{$userId}.{$months}" . now()->format('Y-m-d-H');
+        return "savings.{$userId}.{$months}";
     }
 
     public function forget(string $key): bool
