@@ -1,4 +1,4 @@
-i<div class="p-6 bg-white border border-gray-100 shadow-sm dark:bg-gray-800 dark:border-0 rounded-2xl">
+<div class="p-6 bg-white border border-gray-100 shadow-sm dark:bg-gray-800 dark:border-0 rounded-2xl">
     <div class="flex items-center justify-between mb-6">
         <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Wallet Overview</h3>
         <a href="{{ route('wallet.index') }}" class="text-sm font-medium text-indigo-500 hover:text-indigo-600">Manage</a>
