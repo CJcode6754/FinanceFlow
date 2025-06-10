@@ -28,7 +28,8 @@
                     <div class="flex flex-wrap items-center justify-between gap-2">
                         <div>
                             <h2 class="text-xl font-bold text-gray-800 dark:text-white">My Budget</h2>
-                            <p class="text-sm text-gray-500 dark:text-gray-300">View and manage your current budget allocations.</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-300">View and manage your current budget
+                                allocations.</p>
                         </div>
                         <a href="{{ route('budget.create') }}"
                             class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 transition border border-blue-600 rounded-md hover:bg-blue-600 hover:text-white dark:text-gray-300">
@@ -38,7 +39,7 @@
                     </div>
 
                     <!-- Budget Cards -->
-                    @foreach ($budgets as $item)
+                    @forelse ($budgets as $item)
                         @php
                             if ($item->percentage >= 90) {
                                 $bgcolor = 'bg-red-200';
@@ -60,7 +61,8 @@
                                         alt="{{ $item->category->name }}"
                                         class="object-cover bg-white shadow w-14 h-14 rounded-xl">
                                     <div>
-                                        <h3 class="text-base font-semibold text-gray-800 dark:text-white">{{ $item->category->name }}
+                                        <h3 class="text-base font-semibold text-gray-800 dark:text-white">
+                                            {{ $item->category->name }}
                                         </h3>
                                         <p class="text-sm text-gray-500 dark:text-gray-300">
                                             Budget from {{ \Carbon\Carbon::parse($item->start_date)->format('F d, y') }}
@@ -104,7 +106,15 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="text-center py-20">
+                            <p class="text-gray-500 dark:text-gray-400 mb-4">No budgets available yet.</p>
+                            <a href="{{ route('budget.create') }}"
+                                class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded-lg">
+                                Create Your First Budget
+                            </a>
+                        </div>
+                    @endforelse
                 </div>
 
                 <!-- Sidebar -->
@@ -112,7 +122,8 @@
                     <!-- Overview -->
                     <div class="p-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
                         <h2 class="mb-2 text-2xl font-semibold text-gray-800 dark:text-white">Budget Overview</h2>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">Summary of spending, limits, and remaining balance.</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Summary of spending, limits, and remaining
+                            balance.</p>
                         <div
                             class="mt-4 min-h-[200px] sm:min-h-[260px] h-full rounded-md text-white flex items-center justify-center">
                             <canvas id="DoughnutChart" class="w-full h-full"></canvas>
@@ -128,7 +139,8 @@
                                 <p class="text-sm text-gray-500">Spent</p>
                             </div>
                             <div class="text-center">
-                                <h3 class="text-lg text-gray-700">PHP {{ number_format($totalBudgetRemaining, 2) }}</h3>
+                                <h3 class="text-lg text-gray-700">PHP {{ number_format($totalBudgetRemaining, 2) }}
+                                </h3>
                                 <p class="text-sm text-gray-500">Remaining</p>
                             </div>
                             <div class="text-center">
@@ -141,7 +153,8 @@
                     <!-- Alerts -->
                     <div class="p-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
                         <h2 class="mb-2 text-lg font-semibold text-gray-800 dark:text-white">Alerts</h2>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">Important updates or warnings related to your budget.</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Important updates or warnings related to
+                            your budget.</p>
 
                         <div class="py-4 space-y-4 max-h-[300px] overflow-y-auto">
                             @foreach ($budgets as $budget)
@@ -171,8 +184,7 @@
         </main>
 
         {{-- Modal for Budget Deletion --}}
-        <div id="modal" class="relative z-50 hidden" aria-labelledby="modal-title" role="dialog"
-            aria-modal="true">
+        <div id="modal" class="relative z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <div id="modal-backdrop"
                 class="fixed inset-0 transition-opacity duration-300 opacity-0 bg-black/50 backdrop-blur-sm"
                 aria-hidden="true"></div>
@@ -190,8 +202,7 @@
                                     <i class="text-xl text-red-600 fas fa-exclamation-triangle dark:text-red-400"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100"
-                                        id="modal-title">
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100" id="modal-title">
                                         Delete Transaction
                                     </h3>
                                     <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">

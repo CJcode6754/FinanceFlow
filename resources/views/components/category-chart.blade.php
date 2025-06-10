@@ -1,13 +1,30 @@
-<div class="p-6 bg-white border border-gray-100 shadow-sm dark:border-0 dark:bg-gray-800 rounded-2xl">
+@php
+    $hasData = collect($categoryLabels)->count() > 0 || collect($categoryData)->sum() > 0;
+@endphp
+
+<div class="p-6 bg-white border border-gray-100 shadow-sm dark:shadow-md dark:border-0 dark:bg-gray-800 rounded-2xl">
     <div class="flex items-center justify-between mb-6">
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Spending by Category</h3>
+        <div class="flex gap-2 items-center">
+            <i class="fa-solid fa-tags text-stone-500"></i>
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Spending by Category</h3>
+        </div>
         <a href="{{ route('category.index') }}"
             class="text-sm font-medium text-indigo-500 hover:text-indigo-600 dark:text-indigo-800">Manage</a>
     </div>
 
-    <div class="h-64 mb-4">
-        <canvas id="categoryChart"></canvas>
-    </div>
+    @if ($hasData)
+        <div class="h-64 mb-4">
+            <canvas id="categoryChart"></canvas>
+        </div>
+    @else
+        <div class="text-center py-20">
+            <p class="text-gray-500 dark:text-gray-400 mb-4">No category available yet.</p>
+            <a href="{{ route('category.create') }}"
+                class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded-lg">
+                Create Your First Category
+            </a>
+        </div>
+    @endif
 
     <div class="space-y-2">
         @foreach ($categoryLabels as $index => $label)

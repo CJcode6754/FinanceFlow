@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('name');
             $table->enum('type', ['income', 'expense']);
-            $table->string('image')->nullable();
+            $table->string('icon');
             $table->timestamps();
         });
     }

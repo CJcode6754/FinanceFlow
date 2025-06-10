@@ -1,11 +1,24 @@
-<div class="p-6 bg-white border border-gray-200 shadow-sm dark:bg-gray-800 dark:border-0 rounded-2xl">
+@php
+    $hasData = collect($budgetName)->count() > 0 || collect($setBudget)->sum() > 0 || collect($actualBudget)->sum() > 0;
+@endphp
+<div class="p-6 bg-white border border-gray-200 shadow-sm dark:shadow-md dark:bg-gray-800 dark:border-0 rounded-2xl">
     <div class="flex items-center gap-2 mb-6">
         <i class="text-purple-600 fas fa-bullseye"></i>
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Budget vs Actual</h2>
     </div>
-    <div class="h-80">
+    
+    @if ($hasData)
+        <div class="h-80">
         <canvas id="budgetChart"></canvas>
     </div>
+    @else
+        <div class="text-center py-20">
+            <p class="text-gray-500 dark:text-gray-400 mb-4">No budgets available yet.</p>
+            <a href="{{ route('budget.create') }}" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded-lg">
+                Create Your First Budget
+            </a>
+        </div>
+    @endif
 </div>
 
 <script>

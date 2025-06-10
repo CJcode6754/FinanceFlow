@@ -12,7 +12,9 @@
         {{-- Main Content --}}
         <main class="px-4 py-2 sm:px-6 lg:px-16 md:py-8">
             <div class="flex flex-col gap-4 py-6 lg:flex-row lg:items-center lg:justify-between">
-                <h1 class="text-xl font-bold text-center text-gray-900 sm:text-2xl lg:text-3xl lg:text-left dark:text-gray-100">Categories</h1>
+                <h1
+                    class="text-xl font-bold text-center text-gray-900 sm:text-2xl lg:text-3xl lg:text-left dark:text-gray-100">
+                    Categories</h1>
 
                 <div class="flex flex-wrap justify-center gap-2 lg:justify-end">
                     <a class="px-4 py-2 rounded-lg transition text-sm sm:text-base {{ request('type') === 'expense' ? 'bg-blue-500 text-white' : 'border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-500 dark:hover:text-white' }}"
@@ -27,38 +29,48 @@
                     <a href="{{ route('category.create') }}"
                         class="px-4 py-2 text-sm transition-colors border border-blue-500 rounded-lg dark:border-blue-400 hover:bg-blue-600 hover:text-white dark:text-blue-400 dark:hover:bg-blue-500 dark:hover:text-white group sm:text-base"
                         title="Add Category">
-                        <i class="fa-solid fa-plus"></i>
+                        <i class="fa-solid fa-plus mr-2"></i>Add
                     </a>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
-                @foreach ($categories as $category)
+                @forelse ($categories as $category)
                     <div
                         class="flex flex-col items-center justify-between gap-4 px-4 py-4 transition bg-white rounded-lg shadow sm:flex-row dark:bg-gray-800 hover:shadow-xl dark:shadow-gray-900/20 dark:hover:shadow-gray-900/40">
                         <div class="flex items-center gap-4 text-center sm:text-left">
                             <img class="object-cover w-16 h-16 rounded-full"
                                 src="{{ asset('storage/' . ($category->image ?? 'category_image/default.png')) }}"
                                 alt="Category Image">
-                            <h2 class="text-base font-semibold text-gray-900 break-words sm:text-lg dark:text-gray-100">{{ $category->name }}</h2>
+                            <h2 class="text-base font-semibold text-gray-900 break-words sm:text-lg dark:text-gray-100">
+                                {{ $category->name }}</h2>
                         </div>
 
                         <div class="flex items-center gap-4">
                             <a href="{{ route('category.edit', $category->id) }}">
-                                <i class="text-blue-500 transition-colors fa-solid fa-pen-to-square dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"></i>
+                                <i
+                                    class="text-blue-500 transition-colors fa-solid fa-pen-to-square dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"></i>
                             </a>
                             <button onclick="showModal({{ $category->id }})">
-                                <i class="text-red-500 transition-colors fa-solid fa-trash dark:text-red-400 hover:text-red-700 dark:hover:text-red-300"></i>
+                                <i
+                                    class="text-red-500 transition-colors fa-solid fa-trash dark:text-red-400 hover:text-red-700 dark:hover:text-red-300"></i>
                             </button>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="text-center py-20 col-span-4">
+                        <p class="text-gray-500 dark:text-gray-400 mb-4">No category available yet.</p>
+                        <a href="{{ route('category.create') }}"
+                            class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded-lg">
+                            Create Your First Category
+                        </a>
+                    </div>
+                @endforelse
             </div>
         </main>
 
         {{-- Modal for Category Deletion --}}
-        <div id="modal" class="relative z-50 hidden" aria-labelledby="modal-title" role="dialog"
-            aria-modal="true">
+        <div id="modal" class="relative z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <div id="modal-backdrop"
                 class="fixed inset-0 transition-opacity duration-300 opacity-0 bg-black/50 backdrop-blur-sm"
                 aria-hidden="true"></div>
@@ -76,8 +88,7 @@
                                     <i class="text-xl text-red-600 fas fa-exclamation-triangle dark:text-red-400"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100"
-                                        id="modal-title">
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100" id="modal-title">
                                         Delete Transaction
                                     </h3>
                                     <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">

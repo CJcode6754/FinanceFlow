@@ -21,7 +21,7 @@
                                 class="fa-solid fa-plus"></i> Add</a>
                     </div>
                     <!-- Wallet Card -->
-                    @foreach ($wallets as $wallet)
+                    @forelse ($wallets as $wallet)
                         <div
                             class="flex flex-col justify-between w-full h-48 p-5 text-white shadow-xl rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
                             <div class="flex items-center justify-between">
@@ -40,7 +40,15 @@
                                 <div class="text-sm font-semibold capitalize">{{ $wallet->user->name }}</div>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="text-center py-20">
+                            <p class="text-gray-500 dark:text-gray-400 mb-4">No wallets available yet.</p>
+                            <a href="{{ route('wallet.create') }}"
+                                class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded-lg">
+                                Create Your First Wallet
+                            </a>
+                        </div>
+                    @endforelse
 
                 </div>
 
@@ -50,7 +58,8 @@
                         class="flex flex-col gap-4 p-6 bg-white rounded-lg shadow-md dark:bg-gray-800 md:flex-row md:items-center md:justify-between">
                         <div class="flex flex-col gap-1">
                             <h3 class="text-sm font-medium text-gray-500 dark:text-gray-300">Total Balance</h3>
-                            <p class="text-3xl font-bold text-gray-800 dark:text-white">₱ {{ number_format($totalBalance, 2) }}</p>
+                            <p class="text-3xl font-bold text-gray-800 dark:text-white">₱
+                                {{ number_format($totalBalance, 2) }}</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-full gap-6 p-6 bg-gray-800 dark:bg-white lg:flex-row rounded-2xl md:w-auto">
@@ -62,7 +71,8 @@
                                         <i class="fa-solid fa-arrow-up"></i> 2.89%
                                     </p>
                                 </div>
-                                <p class="text-2xl font-bold dark:text-gray-800">₱ {{ number_format($income, 2) ?? 0 }}</p>
+                                <p class="text-2xl font-bold dark:text-gray-800">₱ {{ number_format($income, 2) ?? 0 }}
+                                </p>
                             </div>
 
                             <!-- Expense -->
@@ -112,7 +122,7 @@
 
                     <!-- Graph -->
                     <section class="w-full shadow-md rounded-xl">
-                         <!-- Spending by Category -->
+                        <!-- Spending by Category -->
                         <x-category-chart :categoryLabels="$chartLabels" :categoryData="$chartData" />
                     </section>
                 </div>
@@ -120,8 +130,7 @@
         </main>
 
         {{-- Modal for Car deletion --}}
-        <div id="modal" class="relative z-50 hidden" aria-labelledby="modal-title" role="dialog"
-            aria-modal="true">
+        <div id="modal" class="relative z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <div id="modal-backdrop"
                 class="fixed inset-0 transition-opacity duration-300 opacity-0 bg-black/50 backdrop-blur-sm"
                 aria-hidden="true"></div>
@@ -139,8 +148,7 @@
                                     <i class="text-xl text-red-600 fas fa-exclamation-triangle dark:text-red-400"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100"
-                                        id="modal-title">
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100" id="modal-title">
                                         Delete Transaction
                                     </h3>
                                     <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">

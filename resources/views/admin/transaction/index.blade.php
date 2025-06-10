@@ -5,7 +5,7 @@
     {{-- Sidebar Component --}}
     <x-sidebar-layout />
 
-    <div class="flex-1 min-h-screen transition-colors duration-300 md:ml-64 bg-gray-50 dark:bg-gray-900">
+    <div class="flex-1 min-h-screen transition-colors duration-300 md:ml-64 bg-gray-50 dark:bg-gray-800">
         {{-- Header Component --}}
         <x-header />
 

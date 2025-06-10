@@ -15,13 +15,14 @@
             <section
                 class="flex flex-col items-start justify-between w-full gap-4 p-4 bg-white rounded-lg shadow-md dark:bg-gray-800 md:flex-row">
                 <div>
-                    <h2 class="mb-2 text-2xl font-semibold dark:text-white">My Savings <i class="fa-solid fa-piggy-bank"></i></h2>
+                    <h2 class="mb-2 text-2xl font-semibold dark:text-white">My Savings <i
+                            class="fa-solid fa-piggy-bank"></i></h2>
                     <p class="text-sm text-gray-600 dark:text-gray-300">Track your spending limits and stay on budget</p>
                 </div>
 
                 <div class="flex items-center gap-2 md:gap-4">
                     {{-- Filter --}}
-                    <x-savings-filter/>
+                    <x-savings-filter />
 
                     <a href="{{ route('savings.create') }}"
                         class="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium text-blue-600 transition border border-blue-600 rounded-md dark:text-gray-300 hover:bg-blue-600 hover:text-white">
@@ -36,12 +37,14 @@
                 {{-- Overview --}}
                 <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
                     <div class="p-8 text-center bg-white rounded-lg shadow-md dark:bg-gray-800">
-                        <h2 class="text-xl font-bold text-gray-600 dark:text-gray-300">₱ {{ number_format($totalSaved, 2) }}</h2>
+                        <h2 class="text-xl font-bold text-gray-600 dark:text-gray-300">₱
+                            {{ number_format($totalSaved, 2) }}</h2>
                         <p class="text-sm font-medium text-gray-400 dark:text-gray-400">Total Saved</p>
                     </div>
 
                     <div class="p-8 text-center bg-white rounded-lg shadow-md dark:bg-gray-800">
-                        <h2 class="text-xl font-bold text-gray-600 dark:text-gray-300">₱ {{ number_format($totalGoals, 2) }}</h2>
+                        <h2 class="text-xl font-bold text-gray-600 dark:text-gray-300">₱
+                            {{ number_format($totalGoals, 2) }}</h2>
                         <p class="text-sm font-medium text-gray-400 dark:text-gray-400">Total Goals</p>
                     </div>
 
@@ -51,7 +54,8 @@
                     </div>
 
                     <div class="p-8 text-center bg-white rounded-lg shadow-md dark:bg-gray-800">
-                        <h2 class="text-xl font-bold text-gray-600 dark:text-gray-300">{{ number_format($avgProgress, 2) }}%</h2>
+                        <h2 class="text-xl font-bold text-gray-600 dark:text-gray-300">
+                            {{ number_format($avgProgress, 2) }}%</h2>
                         <p class="text-sm font-medium text-gray-400 dark:text-gray-400">Avg Progress</p>
                     </div>
                 </div>
@@ -60,18 +64,20 @@
             <section class="py-4">
                 <h1 class="mb-6 text-2xl font-bold">Saving Goals</h1>
 
-                <x-saving-goals :savings="$savings"/>
+                <x-saving-goals :savings="$savings" />
             </section>
 
             <section class="py-4">
                 <div class="p-2 bg-white shadow dark:bg-gray-800 lg:p-8 rounded-2xl">
                     <div class="flex items-center justify-between">
                         <h2 class="text-xl font-bold text-gray-600 dark:text-white">Recent Activity</h2>
-                        <a href="{{route('transaction.index')}}" class="text-base font-semibold text-gray-400 dark:text-gray-300">View All</a>
+                        <a href="{{ route('transaction.index') }}"
+                            class="text-base font-semibold text-gray-400 dark:text-gray-300">View All</a>
                     </div>
 
                     <div class="mt-4 overflow-x-auto">
-                        <table class="hidden w-full text-sm border border-gray-200 rounded-md shadow-lg dark:border-0 md:table">
+                        <table
+                            class="hidden w-full text-sm border border-gray-200 rounded-md shadow-lg dark:border-0 md:table">
                             <thead class="text-center text-gray-600 bg-gray-100 dark:text-white dark:bg-gray-800">
                                 <tr class="text-sm font-semibold">
                                     <th class="px-4 py-4">Type</th>
@@ -82,7 +88,7 @@
                                 </tr>
                             </thead>
                             <tbody class="text-center text-gray-700 dark:text-gray-300">
-                                @foreach ($transactionHistory as $history)
+                                @forelse ($transactionHistory as $history)
                                     <tr class="font-medium border-t hover:bg-gray-50 dark:hover:bg-gray-600">
                                         <td class="p-2 capitalize md:p-4">
                                             {!! $history->type == 'deposit'
@@ -102,7 +108,20 @@
                                                 : '<span class="text-red-500">- ₱ ' . $history->amount . '</span>' !!}
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="5">
+                                            <div class="text-center py-20 w-full col-span-2">
+                                                <p class="text-gray-500 dark:text-gray-400 mb-4">No savings available
+                                                    yet.</p>
+                                                <a href="{{ route('savings.create') }}"
+                                                    class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded-lg">
+                                                    Create Your First Savings
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
 
@@ -148,8 +167,7 @@
         </main>
 
         {{-- Modal for Savings Deletion --}}
-        <div id="modal" class="relative z-50 hidden" aria-labelledby="modal-title" role="dialog"
-            aria-modal="true">
+        <div id="modal" class="relative z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <div id="modal-backdrop"
                 class="fixed inset-0 transition-opacity duration-300 opacity-0 bg-black/50 backdrop-blur-sm"
                 aria-hidden="true"></div>
@@ -167,8 +185,7 @@
                                     <i class="text-xl text-red-600 fas fa-exclamation-triangle dark:text-red-400"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100"
-                                        id="modal-title">
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100" id="modal-title">
                                         Delete Transaction
                                     </h3>
                                     <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">

@@ -46,20 +46,14 @@ class CategoryController extends Controller
         $request->validate([
             'name' => ['required', 'max:100', 'string'],
             'type' => ['required', 'in:expense, income'],
-            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
+            'icon' => ['required', 'string', 'max:50'],
         ]);
-
-        $path = null;
-
-        if($request->hasFile('image')){
-            $path = Storage::disk('public')->put('category_image', $request->image);
-        }
 
         Category::create([
             'user_id' => Auth::user()->id,
             'name' => $request->input('name'),
             'type' => $request->input('type'),
-            'image' => $path
+            'icon' => $request->input('icon')
         ]);
 
         return redirect()->route('category.index')->with('success', 'Succesfully created category');
