@@ -13,8 +13,9 @@
     aria-label="Sidebar">
     <div class="flex flex-col justify-between h-full px-3 overflow-y-auto bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
         <div>
-            <div class="flex justify-center py-4">
-                <img class="w-32" src="{{ asset('assets/logo.png') }}" alt="Logo">
+            <div class="flex justify-center items-center py-4">
+                <img class="w-22" src="{{ asset('assets/logo.png') }}" alt="Logo">
+                <span class="tracking-wide text-lg font-semibold">Finance Flow</span>
             </div>
 
             {{-- Dark Mode Toggle for Mobile --}}
