@@ -39,9 +39,7 @@
                     <div
                         class="flex flex-col items-center justify-between gap-4 px-4 py-4 transition bg-white rounded-lg shadow sm:flex-row dark:bg-gray-800 hover:shadow-xl dark:shadow-gray-900/20 dark:hover:shadow-gray-900/40">
                         <div class="flex items-center gap-4 text-center sm:text-left">
-                            <img class="object-cover w-16 h-16 rounded-full"
-                                src="{{ asset('storage/' . ($category->image ?? 'category_image/default.png')) }}"
-                                alt="Category Image">
+                            <div class="w-16 h-16 rounded-full"> <i class="p-4 text-2xl shadow-sm {{ $category->icon }} bg-emerald-100 text-emerald-600 rounded-xl"></i> </div>
                             <h2 class="text-base font-semibold text-gray-900 break-words sm:text-lg dark:text-gray-100">
                                 {{ $category->name }}</h2>
                         </div>

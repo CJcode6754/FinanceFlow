@@ -57,9 +57,9 @@
                             class="flex flex-col gap-4 p-4 border-l-6 {{ $bgborder }} {{ $bgcolor }} rounded-xl shadow-lg">
                             <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                                 <div class="flex items-center gap-4">
-                                    <img src="{{ asset('storage/' . ($item->category->image ?? 'category_image/default.png')) }}"
-                                        alt="{{ $item->category->name }}"
-                                        class="object-cover bg-white shadow w-14 h-14 rounded-xl">
+                                    <div>
+                                        <i class="p-4 text-2xl shadow-sm {{ $item->category->icon }} bg-emerald-100 text-emerald-600 rounded-xl"></i>
+                                    </div>
                                     <div>
                                         <h3 class="text-base font-semibold text-gray-800 dark:text-white">
                                             {{ $item->category->name }}

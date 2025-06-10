@@ -90,39 +90,4 @@
         </main>
 
     </div>
-
-    <script>
-        function previewImage(event) {
-            const files = event.target.files;
-            const previewArea = document.getElementById('imagePreviewArea');
-            const previewGrid = document.getElementById('imagePreviewGrid');
-
-            // Clear previous previews
-            previewGrid.innerHTML = '';
-
-            if (files.length > 0) {
-                previewArea.classList.remove('hidden');
-
-                Array.from(files).forEach(file => {
-                    if (!file.type.startsWith('image/')) return;
-
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        img.className = 'w-full h-32 object-cover rounded-lg border';
-
-                        const container = document.createElement('div');
-                        container.appendChild(img);
-
-                        previewGrid.appendChild(container);
-                    };
-                    reader.readAsDataURL(file);
-                });
-            } else {
-                previewArea.classList.add('hidden');
-            }
-        }
-    </script>
-
 </x-app-layout>
