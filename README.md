@@ -5,7 +5,7 @@
 
 <h1 align="center">💸 FinanceFlow</h1>
 <p align="center">
-  <b>Personal Money Tracker App</b><br>
+  <b>Personal Money Tracker Website</b><br>
   Built with Laravel · Tailwind CSS · JavaScript · Chart.js · MySQL
 </p>
 
