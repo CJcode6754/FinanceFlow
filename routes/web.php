@@ -8,6 +8,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SavingController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\SocialiteController;
+use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +27,12 @@ Route::middleware('guest')->group(function () {
     Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetPasswordForm'])->name('password.reset');
 
     Route::post('/reset-password', [ResetPasswordController::class, 'passwordUpdate'])->name('password.update');
+
+    Route::controller(SocialiteController::class)->group(function () {
+        Route::get('/auth/redirection/{provider}', 'authProviderRedirect')->name('auth.redirection');
+
+        Route::get('/auth/{provider}/callback', 'socialAuthentication')->name('auth.callback');
+    });
 });
 
 Route::middleware('auth')->group(function () {
