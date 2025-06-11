@@ -1,94 +1,159 @@
+<!-- LOGO & TITLE -->
 <p align="center">
-  <a href="https://laravel.com" target="_blank">
-    <img src="public/assets/logo.png" width="400" alt="Finance Flow Logo">
-    <p>Finance Flow</p>
-  </a>
+  <img src="public/assets/logo.png" alt="Finance Flow Logo" width="180">
 </p>
 
-# 💸 FinanceFlow - Personal Money Tracker App
-
-**FinanceFlow** is a modern and user-friendly personal finance tracker built with **Laravel**, **JavaScript**, **Tailwind CSS**, **Chart.js**, and **MySQL**. Designed to help individuals manage income, track expenses, track budgets, monitor savings goals, and gain insights through a beautifully crafted dashboard and analytics.
+<h1 align="center">💸 FinanceFlow</h1>
+<p align="center">
+  <b>Personal Money Tracker App</b><br>
+  Built with Laravel · Tailwind CSS · JavaScript · Chart.js · MySQL
+</p>
 
 ---
 
+<!-- INTRO -->
+## ✨ Overview
+
+**FinanceFlow** is a modern and user-friendly personal finance tracker built with **Laravel**, **Tailwind CSS**, **JavaScript**, **Chart.js**, and **MySQL**.
+
+It’s designed to help individuals:
+- ✅ Track income & expenses
+- ✅ Manage multiple wallets & budgets
+- ✅ Set savings goals
+- ✅ Visualize financial insights in a sleek dashboard
+
+---
+
+<!-- FEATURES -->
 ## 🚀 Key Features
 
 ### 📊 Dashboard
-- **Modern UI**: Clean, responsive interface with a consistent blue-red-white color theme.
-- **At-a-Glance Widgets**: Get a quick overview of your account balances, spending, and recent transactions.
-- **Interactive Charts**: Visualize your daily, weekly, monthly, and yearly income and expenses using dynamic Chart.js graphs.
+- Clean, responsive interface with a consistent theme
+- Widgets showing balances, spending, and transactions
+- Dynamic Chart.js graphs for:
+  - Income vs Expenses (1–12 months)
+  - Spending per category
+  - Budget vs Actual
+  - Wallet distributions
 
-### 💼 My Wallet
-- **Card-Based Layout**: Wallets and accounts are displayed in stylish cards for easy access.
-- **Real-Time Balance Display**: View up-to-date balances for each wallet.
-- **Detailed Transactions**: Browse, filter, and sort recent transactions efficiently.
+### 💼 Wallet
+- Stylish card layout for each wallet
+- Real-time balance display
+- Searchable and filterable transaction list
 
 ### 🐷 Piggy Bank
-- **Savings Goal Tracking**: Set financial goals and monitor progress with visual progress bars.
-- **Engaging Illustrations**: Icons and visuals make saving more enjoyable.
-- **Interactive UI**: Add, edit, and manage goals directly from the interface.
+- Visual savings goal tracker
+- Animated progress bars and icons
+- Easily add/edit goals
 
 ### 📈 Analytics
-- **Powerful Data Visualization**: Use pie, bar, and line charts to analyze your financial habits.
-- **Smart Filters**: Customize views by date range, category, or specific wallets.
-- **Insights & Recommendations**: Get helpful tips based on your financial behavior.
+- Pie, bar, and line charts for in-depth analysis
+- Filter by time range, category, or wallet
+- Smart recommendations based on user habits
 
 ### ⚙️ Settings
-- **User Profile Management**: Edit personal details and update profile info.
-- **App Customization**: Modify UI preferences and default behaviors.
-- **Privacy & Security**: Configure password settings, enable 2FA, and manage data privacy.
+- Update profile and preferences
 
-### 🔐 Login & 🔓 Sign Up
-- **Minimalist Design**: Clean, modern login and registration screens.
-- **Step-by-Step Registration**: Guide users through signup with helpful progress indicators.
-- **Social Authentication**: (Coming Soon) Sign in with Google, Facebook, etc.
-- **Password Recovery**: Easily reset forgotten passwords via email.
+### 🔐 Auth System
+- Minimalist login and registration UI
+- Step-based onboarding
+- Email-based password recovery
+- **(Coming Soon)** Social login (Google, Facebook)
 
 ---
 
+<!-- BUILT WITH -->
 ## 🧑‍💻 Built With
 
-- **Backend**: [Laravel](https://laravel.com/)
-- **Frontend**: [Tailwind CSS](https://tailwindcss.com/)
-- **Charts & Graphs**: [Chart.js](https://www.chartjs.org/)
-- **Database**: [MySQL](https://www.mysql.com/)
+| Tech       | Description                     |
+|------------|---------------------------------|
+| [Laravel](https://laravel.com/) | Backend framework |
+| [Tailwind CSS](https://tailwindcss.com/) | Utility-first CSS |
+| [Chart.js](https://www.chartjs.org/) | Charts and graphs |
+| [MySQL](https://www.mysql.com/) | Relational database |
 
 ---
 
 ## 📸 Screenshots
 
-> _Add high-quality screenshots or animated GIFs showcasing the dashboard, wallet, piggy bank, and analytics pages._
+---
+
+### 🖥️ Dashboard
+<p align="center">
+  <img src="public/assets/website/dashboard1.png" width="380" alt="Dashboard 1" style="margin: 10px;">
+  <img src="public/assets/website/dashboard2.png" width="380" alt="Dashboard 2" style="margin: 10px;">
+</p>
 
 ---
 
+### 💼 Wallet
+<p align="center">
+  <img src="public/assets/website/wallets.png" width="500" alt="Wallet" style="margin: 10px;">
+</p>
+
+---
+
+### 📄 Transactions & 🗂️ Categories
+<p align="center">
+  <img src="public/assets/website/transactions.png" width="380" alt="Transactions" style="margin: 10px;">
+  <img src="public/assets/website/category.png" width="380" alt="Categories" style="margin: 10px;">
+</p>
+
+---
+
+### 📊 Budget & 🐷 Savings
+<p align="center">
+  <img src="public/assets/website/budget.png" width="380" alt="Budget" style="margin: 10px;">
+  <img src="public/assets/website/savings.png" width="380" alt="Savings" style="margin: 10px;">
+</p>
+
+---
+
+### 📈 Analytics
+<p align="center">
+  <img src="public/assets/website/analytics.png" width="380" alt="Analytics 1" style="margin: 10px;">
+  <img src="public/assets/website/analytics2.png" width="380" alt="Analytics 2" style="margin: 10px;">
+</p>
+
+---
+
+### ⚙️ Settings
+<p align="center">
+  <img src="public/assets/website/settings.png" width="500" alt="Settings" style="margin: 10px;">
+</p>
+
+
+---
+
+<!-- INSTALLATION -->
 ## ⚙️ Installation
 
 ```bash
 # Clone the repository
 git clone https://github.com/CJcode6754/FinanceFlow.git
 
-# Navigate to the project folder
+# Navigate into the project
 cd FinanceFlow
 
 # Install PHP dependencies
 composer install
 
-# Install JavaScript dependencies
+# Install JS dependencies
 npm install
 
-# Copy environment file and set up environment variables
+# Copy .env and configure
 cp .env.example .env
 
 # Generate application key
 php artisan key:generate
 
-# Configure your database connection in `.env`
+# Set your DB credentials in `.env`
 
-# Run database migrations
+# Run migrations
 php artisan migrate
 
 # Build frontend assets
 npm run dev
 
-# Start the development server
+# Start local server
 php artisan serve
