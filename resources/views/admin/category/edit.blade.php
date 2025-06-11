@@ -80,7 +80,7 @@
                         class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:ring-emerald-500">
                         <option value="">Select Icon</option>
                         @foreach ($icons as $class => $label)
-                            <option value="{{ $class }}" {{ old('icon') == $class ? 'selected' : '' }}>
+                            <option value="{{ $class }}" {{ old('icon', $category->icon) == $class ? 'selected' : '' }}>
                                 {{ $label }}
                             </option>
                         @endforeach
