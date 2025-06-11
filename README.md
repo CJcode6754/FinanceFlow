@@ -20,7 +20,7 @@ It’s designed to help individuals:
 - ✅ Track income & expenses
 - ✅ Manage multiple wallets & budgets
 - ✅ Set savings goals
-- ✅ Visualize financial insights in a sleek dashboard
+- ✅ Visualize financial insights in a sleek dashboard and analytics page
 
 ---
 
