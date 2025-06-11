@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('wallet_id')->constrained('wallets');
-            $table->foreignId('category_id')->constrained('categories');
+            $table->foreignId('wallet_id')->constrained('wallets')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->enum('type', ['income', 'expense', 'transfer']);
             $table->bigInteger('amount');
             $table->text('note');

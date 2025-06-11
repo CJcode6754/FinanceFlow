@@ -25,7 +25,7 @@ return new class extends Migration
 
         Schema::create('savings_transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('saving_id')->constrained('savings');
+            $table->foreignId('saving_id')->constrained('savings')->onDelete('cascade');
             $table->bigInteger('amount');
             $table->enum('type', ['deposit', 'withdraw']);
             $table->date('date');
