@@ -45,7 +45,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/email/verification-notification', [AuthController::class, 'resendEmail'])->middleware(['throttle:6,1'])->name('verification.send');
 
     Route::post('/logout', [DashboardController::class, 'logout'])->name('logout');
-    Route::get('/setting', [SettingsController::class, 'index'])->name('setting');
+    
+    Route::controller(SettingsController::class)->group(function (){
+        Route::get('/setting', 'index')->name('setting');
+        Route::get('/settings/{id}/edit', 'edit')->name('settings.edit');
+        Route::patch('/settings/{user}', 'update')->name('settings.update');
+        Route::delete('/settings/{user}', 'deleteAccount')->name('settings.delete');
+    });
 
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
     Route::resource('/category', CategoryController::class);

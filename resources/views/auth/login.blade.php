@@ -1,6 +1,8 @@
 <x-guest-layout title="Login" pageText="Or Sign in with" headerText="Login to Finance Flow Dashboard"
     image="{{ asset('assets/pic 1.jpg') }}" header="Hi, Welcome">
 
+    {{-- Toast Component --}}
+    <x-toast />
     <x-slot:socials>
         <x-google-component/>
         <x-facebook-component/>
