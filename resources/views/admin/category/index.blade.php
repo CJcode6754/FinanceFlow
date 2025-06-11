@@ -17,17 +17,17 @@
                     Categories</h1>
 
                 <div class="flex flex-wrap justify-center gap-2 lg:justify-end">
-                    <a class="px-4 py-2 rounded-lg transition text-sm sm:text-base {{ request('type') === 'expense' ? 'bg-blue-500 text-white' : 'border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-500 dark:hover:text-white' }}"
+                    <a class="px-4 py-2 rounded-lg transition text-sm sm:text-base {{ request('type') === 'expense' ? 'bg-blue-500 text-white' : 'border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white dark:border-emerald-400 dark:text-emerald-400 dark:hover:bg-emerald-500 dark:hover:text-white' }}"
                         href="{{ route('category.index', ['type' => 'expense']) }}">Expense</a>
 
-                    <a class="px-4 py-2 rounded-lg transition text-sm sm:text-base {{ request('type') === 'income' ? 'bg-blue-500 text-white' : 'border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-500 dark:hover:text-white' }}"
+                    <a class="px-4 py-2 rounded-lg transition text-sm sm:text-base {{ request('type') === 'income' ? 'bg-emerald-500 text-white' : 'border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white dark:border-emerald-400 dark:text-emerald-400 dark:hover:bg-emerald-500 dark:hover:text-white' }}"
                         href="{{ route('category.index', ['type' => 'income']) }}">Income</a>
 
-                    <a class="px-4 py-2 text-sm text-gray-600 transition-colors border border-gray-500 rounded-lg dark:border-gray-400 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 sm:text-base"
+                    <a class="px-4 py-2 text-sm text-emerald-600 transition-colors border border-emerald-500 rounded-lg dark:border-emerald-400 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-700 sm:text-base"
                         href="{{ route('category.index') }}">All</a>
 
                     <a href="{{ route('category.create') }}"
-                        class="px-4 py-2 text-sm transition-colors border border-blue-500 rounded-lg dark:border-blue-400 hover:bg-blue-600 hover:text-white dark:text-blue-400 dark:hover:bg-blue-500 dark:hover:text-white group sm:text-base"
+                        class="btn px-4 py-2"
                         title="Add Category">
                         <i class="fa-solid fa-plus mr-2"></i>Add
                     </a>

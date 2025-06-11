@@ -27,7 +27,7 @@
                     {{-- Quick Add Button --}}
                     <div class="flex gap-3">
                         <a href="{{ route('transaction.create') }}"
-                            class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+                            class="btn w-full px-6 py-3">
                             <i class="text-sm fas fa-plus"></i>
                             <span>Add Transaction</span>
                         </a>
@@ -113,7 +113,7 @@
                             <div class="space-y-2">
                                 <label class="text-sm font-medium text-transparent">Action</label>
                                 <button type="submit"
-                                    class="w-full px-4 py-3 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+                                    class="btn w-full px-4 py-3">
                                     <i class="mr-2 fas fa-search"></i>
                                     Apply Filters
                                 </button>

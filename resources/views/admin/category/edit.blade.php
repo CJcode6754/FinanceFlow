@@ -39,54 +39,57 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="currentImage">Current Image</label>
-                    @if ($category->image)
-                        <img id="currentImage" class="rounded-lg w-25" src="{{ asset('storage/' . $category->image) }}"
-                            alt="Category Image">
+                    <label for="currentImage">Current Icon</label>
+                    @if ($category->icon)
+                        <div class="w-16 h-16 rounded-full mt-2"> <i class="p-4 text-2xl shadow-sm {{ $category->icon }} bg-emerald-100 text-emerald-600 rounded-xl"></i> </div>
                     @endif
                 </div>
+                @php
+                    $icons = [
+                        'fa-solid fa-bag-shopping' => 'Shopping',
+                        'fa-solid fa-utensils' => 'Food & Drinks',
+                        'fa-solid fa-car' => 'Transportation',
+                        'fa-solid fa-house' => 'Housing',
+                        'fa-solid fa-stethoscope' => 'Healthcare',
+                        'fa-solid fa-gamepad' => 'Entertainment',
+                        'fa-solid fa-gift' => 'Gifts & Donations',
+                        'fa-solid fa-graduation-cap' => 'Education',
+                        'fa-solid fa-suitcase-rolling' => 'Vacation',
+                        'fa-solid fa-plane' => 'Travel',
+                        'fa-solid fa-heart' => 'Self-care',
+                        'fa-solid fa-bolt' => 'Utilities',
+                        'fa-solid fa-paw' => 'Pets',
+                        'fa-solid fa-tshirt' => 'Clothing',
+                        'fa-solid fa-wrench' => 'Repairs',
+                        'fa-solid fa-ring' => 'Wedding',
+                        'fa-solid fa-wallet' => 'Salary',
+                        'fa-solid fa-coins' => 'Freelance',
+                        'fa-solid fa-dollar-sign' => 'Investments',
+                        'fa-solid fa-piggy-bank' => 'Savings',
+                        'fa-solid fa-briefcase' => 'Business',
+                        'fa-solid fa-landmark' => 'Bank Interest',
+                        'fa-solid fa-star' => 'Bonus',
+                        'fa-solid fa-hand-holding-dollar' => 'Rental Income',
+                    ];
+                @endphp
+
+                <!-- Icon -->
                 <div class="mb-4">
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-300">Category Type Image</h3>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Upload one image related to category name (PNG, JPG, JPEG)</p>
-
-                    <div class="mt-3">
-                        <label for="categoryFormImageUpload" class="block w-full cursor-pointer">
-                            <div
-                                class="flex flex-col items-center justify-center px-6 py-4 mt-2 transition duration-150 border-2 border-gray-300 border-dashed rounded-lg dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 group">
-                                <div class="flex flex-col items-center space-y-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor"
-                                        class="w-10 h-10 text-gray-400 group-hover:text-gray-500">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                                    </svg>
-                                    <div class="text-center">
-                                        <span class="font-medium text-blue-600 hover:text-blue-700">Click to
-                                            upload</span>
-                                        <span class="text-gray-500 dark:text-gray-300"> or drag and drop</span>
-                                    </div>
-                                    <p class="text-xs text-gray-500 dark:text-gray-300">
-                                        Select one image
-                                    </p>
-                                </div>
-                            </div>
-                        </label>
-                        <input id="categoryFormImageUpload" type="file" name="image" class="hidden"
-                            value="{{ $category->image }}" @error('image') aria-invalid="true" @enderror
-                            onchange="previewImage(event)" />
-
-                        @error('image')
-                            <span class="mt-1 text-xs text-red-600">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    {{-- Preview Area (initially hidden, shown with JS) --}}
-                    <div id="imagePreviewArea" class="hidden mt-4">
-                        <h4 class="mb-2 text-sm font-medium text-gray-700">Selected Images</h4>
-                        <div id="imagePreviewGrid" class="grid grid-cols-3 gap-3"></div>
-                    </div>
-
+                    <label for="iconDropdown" class="label">Icon</label>
+                    <select id="iconDropdown" name="icon"
+                        class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:ring-emerald-500">
+                        <option value="">Select Icon</option>
+                        @foreach ($icons as $class => $label)
+                            <option value="{{ $class }}" {{ old('icon') == $class ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('icon')
+                        <span class="mt-1 text-xs text-red-600">{{ $message }}</span>
+                    @enderror
                 </div>
+
                 <!-- Submit Button -->
                 <button type="submit"
                     class="w-full py-3 text-white transition-all duration-200 bg-blue-500 rounded-lg hover:bg-blue-600">

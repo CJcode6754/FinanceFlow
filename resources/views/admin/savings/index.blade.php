@@ -25,7 +25,7 @@
                     <x-savings-filter />
 
                     <a href="{{ route('savings.create') }}"
-                        class="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium text-blue-600 transition border border-blue-600 rounded-md dark:text-gray-300 hover:bg-blue-600 hover:text-white">
+                        class="btn px-6 py-2">
                         <i class="fa-solid fa-plus"></i>
                         Goal
                     </a>

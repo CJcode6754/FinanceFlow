@@ -17,21 +17,21 @@
                     <div class="flex items-center justify-between gap-4">
                         <h2 class="text-2xl font-bold">Wallets</h2>
                         <a href="{{ route('wallet.create') }}"
-                            class="px-4 py-2 text-sm font-semibold text-gray-500 transition duration-150 border border-blue-500 rounded-lg hover:bg-blue-600 hover:text-white group dark:text-white"><i
+                            class="btn px-4 py-2"><i
                                 class="fa-solid fa-plus"></i> Add</a>
                     </div>
                     <!-- Wallet Card -->
                     @forelse ($wallets as $wallet)
                         <div
-                            class="flex flex-col justify-between w-full h-48 p-5 text-white shadow-xl rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+                            class="flex flex-col justify-between w-full h-48 p-5 text-white shadow-xl rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-300">
                             <div class="flex items-center justify-between">
                                 <h1 class="text-lg font-semibold">{{ $wallet->name }}</h1>
 
                                 <div class="flex items-center gap-4">
                                     <a href="{{ route('wallet.edit', $wallet->id) }}"><i
-                                            class="text-gray-500 transition duration-150 cursor-pointer fa-solid fa-pen-to-square hover:text-gray-700"></i></a>
+                                            class="text-blue-500 transition duration-150 cursor-pointer fa-solid fa-pen-to-square hover:text-blue-700"></i></a>
                                     <button onclick="showModal({{ $wallet->id }})"><i
-                                            class="text-gray-500 transition duration-150 cursor-pointer fa-solid fa-trash hover:text-gray-700"></i></button>
+                                            class="text-red-500 transition duration-150 cursor-pointer fa-solid fa-trash hover:text-red-700"></i></button>
                                 </div>
                             </div>
                             <div class="font-mono text-lg tracking-widest">Balance: {{ $wallet->balance }}</div>
@@ -56,75 +56,56 @@
                 <div class="w-full space-y-4">
                     <section
                         class="flex flex-col gap-4 p-6 bg-white rounded-lg shadow-md dark:bg-gray-800 md:flex-row md:items-center md:justify-between">
+                        <!-- Total Balance -->
                         <div class="flex flex-col gap-1">
                             <h3 class="text-sm font-medium text-gray-500 dark:text-gray-300">Total Balance</h3>
                             <p class="text-3xl font-bold text-gray-800 dark:text-white">₱
                                 {{ number_format($totalBalance, 2) }}</p>
                         </div>
+
+                        <!-- Income & Expense Box -->
                         <div
-                            class="flex flex-col items-center w-full gap-6 p-6 bg-gray-800 dark:bg-white lg:flex-row rounded-2xl md:w-auto">
+                            class="flex flex-col items-center w-full gap-6 p-6 bg-gray-800 rounded-2xl dark:bg-white lg:flex-row md:w-auto">
                             <!-- Income -->
-                            <div class="flex-1 text-white">
+                            <div class="flex-1 w-full">
                                 <div class="flex items-center justify-between mb-1">
-                                    <h3 class="text-base font-semibold dark:text-gray-800">Total Income</h3>
+                                    <h3 class="text-base font-semibold text-white dark:text-gray-800">Total Income</h3>
                                     <p class="flex items-center gap-1 text-emerald-400">
                                         <i class="fa-solid fa-arrow-up"></i> 2.89%
                                     </p>
                                 </div>
-                                <p class="text-2xl font-bold dark:text-gray-800">₱ {{ number_format($income, 2) ?? 0 }}
-                                </p>
+                                <p class="text-2xl font-bold text-white dark:text-gray-800">₱
+                                    {{ number_format($income, 2) ?? 0 }}</p>
                             </div>
 
                             <!-- Expense -->
-                            <div class="flex-1 w-full p-4 bg-white rounded-xl md:w-auto">
+                            <div class="flex-1 w-full p-4 bg-white rounded-xl md:w-auto dark:bg-gray-100">
                                 <div class="flex justify-between mb-1 text-gray-600">
                                     <h4 class="text-base font-semibold">Total Expense</h4>
-                                    <p class="flex items-center gap-1">
+                                    <p class="flex items-center gap-1 text-rose-400">
                                         <i class="fa-solid fa-arrow-down"></i> 2.89%
                                     </p>
                                 </div>
-                                <p class="text-2xl font-bold text-gray-700">₱ {{ number_format($expense, 2) ?? 0 }}
-                                </p>
+                                <p class="text-2xl font-bold text-gray-700">₱ {{ number_format($expense, 2) ?? 0 }}</p>
                             </div>
                         </div>
                     </section>
 
-                    <!-- Actions -->
-                    {{-- <section class="py-4">
-                        <div
-                            class="grid grid-cols-2 gap-4 p-6 bg-white shadow rounded-xl sm:grid-cols-3 lg:grid-cols-5">
-                            @₱
-                                $actions = [
-                                    ['icon' => 'wallet', 'label' => 'Deposit', 'color' => 'text-blue-600'],
-                                    ['icon' => 'arrow-up-from-bracket', 'label' => 'Send', 'color' => 'text-green-600'],
-                                    [
-                                        'icon' => 'arrow-down-to-bracket',
-                                        'label' => 'Receive',
-                                        'color' => 'text-yellow-600',
-                                    ],
-                                    [
-                                        'icon' => 'file-invoice-dollar',
-                                        'label' => 'Invoicing',
-                                        'color' => 'text-purple-600',
-                                    ],
-                                    ['icon' => 'check', 'label' => 'Checkout', 'color' => 'text-indigo-600'],
-                                ];
-                            @end₱
 
-                            @foreach ($actions as $action)
-                                <div class="flex items-center gap-2">
-                                    <i class="fa-solid fa-{{ $action['icon'] }} text-xl {{ $action['color'] }}"></i>
-                                    <h5 class="text-sm font-semibold">{{ $action['label'] }}</h5>
-                                </div>
-                            @endforeach
+                    <!-- Graph Section -->
+                    <section
+                        class="flex flex-col lg:flex-row gap-8 w-full p-4 bg-white dark:bg-gray-800 shadow-md rounded-xl">
+                        <!-- Wallet Distribution Graph -->
+                        <div class="w-full lg:w-1/2">
+                            <x-wallet-distribution-graph :walletLabels="$walletLabels" :walletData="$walletData" />
                         </div>
-                    </section> --}}
 
-                    <!-- Graph -->
-                    <section class="w-full shadow-md rounded-xl">
-                        <!-- Spending by Category -->
-                        <x-category-chart :categoryLabels="$chartLabels" :categoryData="$chartData" />
+                        <!-- Spending by Category Chart -->
+                        <div class="w-full lg:w-1/2">
+                            <x-category-chart :categoryLabels="$chartLabels" :categoryData="$chartData" />
+                        </div>
                     </section>
+
                 </div>
             </section>
         </main>

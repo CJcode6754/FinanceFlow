@@ -87,24 +87,14 @@ class CategoryController extends Controller
         $request->validate([
             'name' => ['max:100', 'string'],
             'type' => ['in:expense,income'],
-            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
+            'icon' => ['required', 'string', 'max:50'],
         ]);
-
-        $path = $category->image ?? null;
-
-        if($request->hasFile('image')){
-            if($category->image){
-                Storage::disk('public')->delete($category->image);
-            }
-
-            $path = Storage::disk('public')->put('category_image', $request->image);
-        }
 
         $category->update([
             'user_id' => Auth::user()->id,
             'name' => $request->input('name'),
             'type' => $request->input('type'),
-            'image' => $path
+            'icon' => $request->input('icon')
         ]);
 
         return redirect()->route('category.index')->with('success', 'Succesfully edited category');

@@ -10,6 +10,21 @@
                 <div class="w-3 h-3 mr-2 bg-red-500 rounded-full"></div>
                 <span class="text-sm text-gray-600 dark:text-gray-400">Expenses</span>
             </div>
+
+            <form action="{{ route('dashboard') }}" method="get">
+                <select name="filter_by_months"
+                    class="w-45 px-3 py-2 text-sm bg-white border border-gray-300 rounded-md dark:bg-gray-700 dark:hover:bg-gray-600 md:w-35 mr-2">
+                    <option value="1">📅 Last Month</option>
+                    <option value="2">📅 Last 2 Month</option>
+                    <option value="3">📅 Last 3 Months</option>
+                    <option value="6">📅 Last 6 Months</option>
+                    <option value="9">📅 Last 9 Months</option>
+                    <option value="12">📅 Last 12 Months</option>
+                </select>
+
+                <button type="submit"
+                    class="w-full px-2 py-2 text-sm bg-white border border-gray-300 rounded-md dark:bg-gray-700 dark:hover:bg-gray-600 md:w-25">Filter</button>
+            </form>
         </div>
     </div>
     <div class="h-80">

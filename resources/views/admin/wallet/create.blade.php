@@ -14,7 +14,7 @@
                 <div class="mb-4">
                     <label for="name" class="label">Wallet Name</label>
                     <input type="text" name="name" id="name"
-                        class="w-full px-4 py-3 border rounded-lg dark:bg-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 @error('name') border-red-400 @enderror"
+                        class="w-full px-4 py-3 border rounded-lg dark:bg-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 @error('name') border-red-400 @enderror"
                         value="{{ old('name') }}" placeholder="e.g., GCash, Cash on Hand">
                     @error('name')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -25,7 +25,7 @@
                 <div class="mb-4">
                     <label for="typeDropdown" class="label">Type</label>
                     <select id="typeDropdown" name="type"
-                        class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg dark:text-gray-300 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg dark:text-gray-300 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
                         <option value="">Select Type</option>
                         <option value="bank" {{ old('type') == 'bank' ? 'selected' : '' }}>Bank</option>
                         <option value="cash" {{ old('type') == 'cash' ? 'selected' : '' }}>Cash</option>
@@ -40,7 +40,7 @@
                 <div class="mb-4">
                     <label for="amount" class="label">Balance</label>
                     <input type="number" name="balance" id="balance"
-                        class="w-full px-4 py-3 border rounded-lg text-sm dark:bg-gray-700  focus:outline-none focus:ring-2 focus:ring-blue-500 @error('balance') border-red-400 @enderror"
+                        class="w-full px-4 py-3 border rounded-lg text-sm dark:bg-gray-700  focus:outline-none focus:ring-2 focus:ring-emerald-500 @error('balance') border-red-400 @enderror"
                         value="{{ old('balance') }}" placeholder="e.g., 1000, 2000">
                     @error('balance')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -49,7 +49,7 @@
 
                 <!-- Submit Button -->
                 <button type="submit"
-                    class="w-full py-3 text-white transition-all duration-200 bg-blue-500 rounded-lg cursor-pointer hover:bg-blue-600">
+                    class="w-full py-3 text-white transition-all duration-200 bg-emerald-500 rounded-lg cursor-pointer hover:bg-emerald-600">
                     Save
                 </button>
             </form>

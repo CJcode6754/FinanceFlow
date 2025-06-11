@@ -2,12 +2,12 @@
     <div class="flex flex-col items-center justify-end gap-4 md:flex-row">
         <div class="relative flex items-center gap-4" id="profileDropdownWrapper">
             {{-- Dark Mode Toggle --}}
-            <button onclick="toggleDarkMode()" id="darkModeToggle"
+            {{-- <button onclick="toggleDarkMode()" id="darkModeToggle"
                 class="p-2 transition-colors duration-200 bg-gray-200 rounded-lg dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
                 title="Toggle Dark Mode">
                 <i id="sunIcon" class="hidden text-yellow-500 fas fa-sun"></i>
                 <i id="moonIcon" class="text-blue-400 fas fa-moon"></i>
-            </button>
+            </button> --}}
 
             <div class="flex items-center gap-3 cursor-pointer" id="profileToggle">
                 <i class="p-3 text-sm text-white bg-gray-500 rounded-full dark:bg-gray-600 fa-solid fa-user"></i>
@@ -31,7 +31,7 @@
         </div>
     </div>
 </header>
-<script>
+{{-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         const profileToggle = document.getElementById('profileToggle');
         const dropdownMenu = document.getElementById('dropdownMenu');
@@ -47,4 +47,4 @@
             }
         });
     });
-</script>
+</script> --}}

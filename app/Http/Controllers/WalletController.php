@@ -38,12 +38,14 @@ class WalletController extends Controller
         // Extract chart data from the service response
         $chartLabels = $chartDatas['categoryLabels'] ?? [];
         $chartData = $chartDatas['categoryData'] ?? [];
+        $walletLabels = $chartDatas['walletLabels'] ?? [];
+        $walletData = $chartDatas['walletData'] ?? [];
 
         $income = $transactions->where('type', 'income')->sum('amount');
         $expense = $transactions->where('type', 'expense')->sum('amount');
         $totalBalance = $wallets->sum('balance');
 
-        return view('admin.wallet.index', compact('wallets', 'expense', 'income', 'totalBalance', 'categories', 'chartLabels', 'chartData'));
+        return view('admin.wallet.index', compact('wallets', 'expense', 'income', 'totalBalance', 'chartLabels', 'chartData', 'walletLabels', 'walletData'));
     }
 
     /**

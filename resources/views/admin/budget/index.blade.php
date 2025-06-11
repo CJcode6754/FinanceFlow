@@ -32,8 +32,7 @@
                                 allocations.</p>
                         </div>
                         <a href="{{ route('budget.create') }}"
-                            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 transition border border-blue-600 rounded-md hover:bg-blue-600 hover:text-white dark:text-gray-300">
-                            <i class="fa-solid fa-plus"></i>
+                            class="btn px-6 py-2"></i>
                             Add
                         </a>
                     </div>

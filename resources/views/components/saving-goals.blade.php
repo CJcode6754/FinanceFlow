@@ -1,6 +1,6 @@
 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
     @foreach ($savings as $saving)
-        <div class="relative w-full max-w-sm p-6 space-y-5 bg-white shadow-md dark:bg-gray-800 rounded-2xl">
+        <div class="relative w-full max-w-sm p-6 space-y-5 bg-white shadow transition dark:bg-gray-800 hover:shadow-xl dark:shadow-gray-900/20 dark:hover:shadow-gray-900/40 rounded-2xl">
             <!-- Icon -->
             <div class="flex items-center justify-center">
                 <i class="p-4 text-2xl shadow-sm {{ $saving->icon }} bg-emerald-100 text-emerald-600 rounded-xl"></i>

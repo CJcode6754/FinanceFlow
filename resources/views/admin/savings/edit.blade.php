@@ -14,7 +14,7 @@
                 <div class="mb-4">
                     <label for="name" class="label">Savings Name</label>
                     <input type="text" name="name" id="name"
-                        class="w-full px-4 py-3 border rounded-lg text-sm focus:outline-none dark:bg-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 @error('name') border-red-400 @enderror"
+                        class="w-full px-4 py-3 border rounded-lg text-sm focus:outline-none dark:bg-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-emerald-500 @error('name') border-red-400 @enderror"
                         value="{{ old('name', $saving->name) }}" placeholder="e.g., Trip to Abroad, Medicine">
                     @error('name')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -51,7 +51,7 @@
                 <div class="mb-4">
                     <label for="iconDropdown" class="label">Icon</label>
                     <select id="iconDropdown" name="icon"
-                        class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:ring-blue-500">
+                        class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:ring-emerald-500">
                         <option value="">Select Icon</option>
                         @foreach ($icons as $class => $label)
                             <option value="{{ $class }}" {{ old('icon', $saving->icon) == $class ? 'selected' : '' }}>
@@ -68,7 +68,7 @@
                 <div class="mb-4">
                     <label for="target_amount" class="label">Target Amount</label>
                     <input type="number" name="target_amount" id="target_amount"
-                        class="w-full px-4 py-3 border rounded-lg text-sm focus:outline-none dark:bg-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 @error('target_amount') border-red-400 @enderror"
+                        class="w-full px-4 py-3 border rounded-lg text-sm focus:outline-none dark:bg-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-emerald-500 @error('target_amount') border-red-400 @enderror"
                         value="{{ old('target_amount', $saving->target_amount) }}" placeholder="e.g., 1000, 2000">
                     @error('target_amount')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -79,7 +79,7 @@
                 <div class="mb-4">
                     <label for="current_amount" class="label">Current Amount</label>
                     <input type="number" name="current_amount" id="current_amount"
-                        class="w-full px-4 py-3 border rounded-lg text-sm focus:outline-none dark:bg-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 @error('current_amount') border-red-400 @enderror"
+                        class="w-full px-4 py-3 border rounded-lg text-sm focus:outline-none dark:bg-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-emerald-500 @error('current_amount') border-red-400 @enderror"
                         value="{{ old('current_amount', $saving->current_amount) }}" placeholder="Default is 0">
                     @error('current_amount')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -90,7 +90,7 @@
                 <div class="mb-4">
                     <label for="note" class="label">Notes</label>
                     <input type="text" name="note" id="note"
-                        class="w-full px-4 py-3 border rounded-lg text-sm focus:outline-none dark:bg-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 @error('note') border-red-400 @enderror"
+                        class="w-full px-4 py-3 border rounded-lg text-sm focus:outline-none dark:bg-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-emerald-500 @error('note') border-red-400 @enderror"
                         value="{{ old('note', $saving->note) }}" placeholder="Make this short">
                     @error('note')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -101,7 +101,7 @@
                 <div class="mb-4">
                     <label for="deadline">Deadline</label>
                     <input type="date" name="deadline" id="deadline" value="{{ old('deadline', \Carbon\Carbon::parse($saving->deadline)->format('Y-m-d')) }}"
-                        class="w-full px-4 py-3 border rounded-lg text-sm focus:outline-none dark:bg-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 @error('deadline') border-red-400 @enderror">
+                        class="w-full px-4 py-3 border rounded-lg text-sm focus:outline-none dark:bg-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-emerald-500 @error('deadline') border-red-400 @enderror">
                     @error('deadline')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                     @enderror
@@ -109,7 +109,7 @@
 
                 <!-- Submit Button -->
                 <button type="submit"
-                    class="w-full py-3 text-white transition-all duration-200 bg-blue-500 rounded-lg hover:bg-blue-600">
+                    class="w-full py-3 text-white transition-all duration-200 bg-emerald-500 rounded-lg hover:bg-emerald-600">
                     Save
                 </button>
             </form>

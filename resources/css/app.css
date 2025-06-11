@@ -12,12 +12,8 @@
 
 
 @layer components {
-    .sidebar-link{
-        @apply flex items-center py-2 pl-5 text-gray-900 rounded-lg hover:text-blue-800 hover:bg-blue-100;
-    }
-
-    .sidebar-link-active{
-        @apply flex items-center py-2 pl-5 text-blue-800 bg-blue-100 rounded-lg;
+    .btn{
+        @apply bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200;
     }
 
     .label{

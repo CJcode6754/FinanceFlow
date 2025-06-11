@@ -2,7 +2,7 @@
     <div class="flex items-center justify-between mb-6">
         <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Recent Transactions</h3>
         <a href="{{ route('transaction.index') }}"
-            class="text-sm font-medium text-indigo-500 hover:text-indigo-600 dark:text-indigo-800">View All</a>
+            class="text-sm font-medium text-indigo-500 hover:text-indigo-600 dark:text-indigo-600">View All</a>
     </div>
     <div class="space-y-4">
         @forelse ($transactions as $transaction)

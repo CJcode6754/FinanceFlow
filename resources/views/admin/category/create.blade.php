@@ -14,7 +14,7 @@
                 <div class="mb-4">
                     <label for="name" class="label">Category Name</label>
                     <input type="text" name="name" id="name"
-                        class="w-full px-4 py-3 border rounded-lg text-sm dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 @error('name') border-red-400 @enderror"
+                        class="w-full px-4 py-3 border rounded-lg text-sm dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 @error('name') border-red-400 @enderror"
                         value="{{ old('name') }}" placeholder="e.g., Groceries, Utilities">
                     @error('name')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -25,7 +25,7 @@
                 <div class="mb-4">
                     <label for="typeDropdown" class="label">Type</label>
                     <select id="typeDropdown" name="type"
-                        class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500">
                         <option value="">Select Type</option>
                         <option value="expense" {{ old('type') == 'expense' ? 'selected' : '' }}>Expense</option>
                         <option value="income" {{ old('type') == 'income' ? 'selected' : '' }}>Income</option>
@@ -68,7 +68,7 @@
                 <div class="mb-4">
                     <label for="iconDropdown" class="label">Icon</label>
                     <select id="iconDropdown" name="icon"
-                        class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:ring-blue-500">
+                        class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-lg dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:ring-emerald-500">
                         <option value="">Select Icon</option>
                         @foreach ($icons as $class => $label)
                             <option value="{{ $class }}" {{ old('icon') == $class ? 'selected' : '' }}>
@@ -83,7 +83,7 @@
 
                 <!-- Submit Button -->
                 <button type="submit"
-                    class="w-full py-3 text-white transition-all duration-200 bg-blue-500 rounded-lg hover:bg-blue-600">
+                    class="w-full py-3 text-white transition-all duration-200 bg-emerald-500 rounded-lg hover:bg-emerald-600">
                     Save
                 </button>
             </form>

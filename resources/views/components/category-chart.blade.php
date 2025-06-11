@@ -9,7 +9,7 @@
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Spending by Category</h3>
         </div>
         <a href="{{ route('category.index') }}"
-            class="text-sm font-medium text-indigo-500 hover:text-indigo-600 dark:text-indigo-800">Manage</a>
+            class="text-sm font-medium text-indigo-500 hover:text-indigo-600 dark:text-indigo-600">Manage</a>
     </div>
 
     @if ($hasData)
