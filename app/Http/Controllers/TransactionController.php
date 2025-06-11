@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Transaction;
 use App\Models\Wallet;
+use App\Services\CacheService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Gate;
 
 class TransactionController extends Controller
 {
+    public function __construct(private CacheService $cacheService){}
     /**
      * Display a listing of the resource.
      */
@@ -107,6 +109,8 @@ class TransactionController extends Controller
 
         $wallet->save();
 
+        $this->cacheService->flushUserDashboard(Auth::user()->id, 6);
+
         return redirect()->route('transaction.index')->with('success', 'Successfully create new transaction');
     }
 
@@ -154,6 +158,8 @@ class TransactionController extends Controller
             'wallet_id' => $request->input('wallet_id'),
             'date' => $request->input('date'),
         ]);
+
+        $this->cacheService->flushUserDashboard(Auth::user()->id, 6);
 
         return redirect()->route('transaction.index')->with('success', 'Successdully update transaction');
     }

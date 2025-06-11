@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Budget;
 use App\Models\Category;
+use App\Services\CacheService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class BudgetController extends Controller
 {
+    public function __construct(private CacheService $cacheService){}
     /**
      * Display a listing of the resource.
      */
@@ -88,6 +90,8 @@ class BudgetController extends Controller
             'end_date' => $request->input('end_date'),
         ]);
 
+        $this->cacheService->flushUserDashboard(Auth::user()->id, 6);
+
         return redirect()->route('budget.index')->with('success', 'Successfully created new budget');
     }
 
@@ -133,6 +137,8 @@ class BudgetController extends Controller
             'end_date' => $request->input('end_date'),
         ]);
 
+        $this->cacheService->flushUserDashboard(Auth::user()->id, 6);
+        
         return redirect()->route('budget.index')->with('success', 'Successfully edit the selected budget');
     }
 

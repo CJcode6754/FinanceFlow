@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Services\CacheService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
+
+    public function __construct(private CacheService $cacheService){}
     /**
      * Display a listing of the resource.
      */
@@ -56,6 +59,8 @@ class CategoryController extends Controller
             'icon' => $request->input('icon')
         ]);
 
+        $this->cacheService->flushUserDashboard(Auth::user()->id, 6);
+
         return redirect()->route('category.index')->with('success', 'Succesfully created category');
     }
 
@@ -97,6 +102,7 @@ class CategoryController extends Controller
             'icon' => $request->input('icon')
         ]);
 
+        $this->cacheService->flushUserDashboard(Auth::user()->id, 6);
         return redirect()->route('category.index')->with('success', 'Succesfully edited category');
     }
 

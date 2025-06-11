@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Saving;
 use App\Models\SavingsTransaction;
+use App\Services\CacheService;
 use App\Services\SavingsService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -13,7 +14,8 @@ use Illuminate\Support\Facades\Gate;
 class SavingController extends Controller
 {
     public function __construct(
-        private SavingsService $savingsService
+        private SavingsService $savingsService,
+        private CacheService $cacheService
     ) {}
     /**
      * Display a listing of the resource.
@@ -65,6 +67,8 @@ class SavingController extends Controller
             'deadline' => $request->input('deadline'),
         ]);
 
+        $this->cacheService->flushUserDashboard(Auth::user()->id, 6);
+
         return redirect()->route('savings.index')->with('success', 'Successfully Added New Savings');
     }
 
@@ -110,6 +114,8 @@ class SavingController extends Controller
             'note' => $request->input('note'),
             'deadline' => $request->input('deadline'),
         ]);
+
+        $this->cacheService->flushUserDashboard(Auth::user()->id, 6);
 
         return redirect()->route('savings.index')->with('success', 'Successfully Edit Savings Details');
     }

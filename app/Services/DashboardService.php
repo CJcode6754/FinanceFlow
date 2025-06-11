@@ -16,7 +16,7 @@ class DashboardService
         private CacheService $cacheService
     ) {}
 
-    public function getDashboardData(int $userId, int $months = 6): array
+    public function getDashboardData(int $userId, int $months): array
     {
         $cacheKey = $this->cacheService->getDashboardCacheKey($userId, $months);
 
@@ -39,8 +39,8 @@ class DashboardService
         });
     }
 
-    public function clearCache(int $userId): void
+    public function clearCache(int $userId, int $months): void
     {
-        $this->cacheService->flushUserDashboard($userId);
+        $this->cacheService->flushUserDashboard($userId, $months);
     }
 }
